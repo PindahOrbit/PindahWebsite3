@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PindahWebsite3.Areas.Identity.Data;
 using PindahWebsite3.Models;
+using System;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,8 +15,7 @@ namespace PindahWebsite3.Data
     {
         public static async Task SeedAsync(PindahWebsite3Context context, UserManager<PindahWebsite3User> userManager, RoleManager<IdentityRole> roleManager, IWebHostEnvironment env)
         {
-            // Creates the database and tables if they don't exist
-            context.Database.EnsureCreated();
+            await EnsureDatabaseSchemaAsync(context);
 
             // Seed Roles
             if (!await roleManager.RoleExistsAsync("Admin"))
@@ -85,6 +86,51 @@ namespace PindahWebsite3.Data
 
                 context.SaveChanges();
             }
+        }
+
+        private static async Task EnsureDatabaseSchemaAsync(PindahWebsite3Context context)
+        {
+            var appliedMigrations = await context.Database.GetAppliedMigrationsAsync();
+            var hasMigrationHistory = appliedMigrations.Any();
+            var hasLegacyTables = await TableExistsAsync(context, "ZimsecCategories");
+
+            if (hasMigrationHistory || !hasLegacyTables)
+            {
+                await context.Database.MigrateAsync();
+            }
+
+            if (!await TableExistsAsync(context, "News"))
+            {
+                await context.Database.ExecuteSqlRawAsync("""
+                    CREATE TABLE IF NOT EXISTS "News" (
+                        "Id" INTEGER NOT NULL CONSTRAINT "PK_News" PRIMARY KEY AUTOINCREMENT,
+                        "Heading" TEXT NOT NULL,
+                        "Content" TEXT NOT NULL,
+                        "Slug" TEXT NOT NULL,
+                        "DateCreated" TEXT NOT NULL,
+                        "CoverImageUrl" TEXT NOT NULL
+                    );
+                    """);
+            }
+        }
+
+        private static async Task<bool> TableExistsAsync(PindahWebsite3Context context, string tableName)
+        {
+            var connection = context.Database.GetDbConnection();
+            if (connection.State != ConnectionState.Open)
+            {
+                await connection.OpenAsync();
+            }
+
+            await using var command = connection.CreateCommand();
+            command.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = $name;";
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "$name";
+            parameter.Value = tableName;
+            command.Parameters.Add(parameter);
+
+            var result = await command.ExecuteScalarAsync();
+            return Convert.ToInt32(result) > 0;
         }
     }
 }

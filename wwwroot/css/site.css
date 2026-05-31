@@ -39,7 +39,7 @@
   line-height: 1.45;
 }
 
-/* Landing hero — consulting-style banner (flush under nav; photo + blue overlay) */
+/* Landing hero — photo visible with left-weighted scrim for readable text */
 .home-landing-banner,
 .module-landing-banner {
   width: 100vw;
@@ -50,22 +50,31 @@
   margin-right: -50vw;
   /* Cancel <main class="pt-5"> (3rem) so the hero sits directly under the nav */
   margin-top: -3rem;
-  padding: 2.5rem 0 3rem;
-  color: #f1f5f9;
+  padding: 2.75rem 0 3.25rem;
+  min-height: 18rem;
+  color: #f8fafc;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background-color: var(--mckinsey-deep);
   background-image:
     linear-gradient(
-      118deg,
-      rgba(0, 27, 46, 0.93) 0%,
-      rgba(12, 74, 114, 0.8) 45%,
-      rgba(0, 42, 70, 0.92) 100%
+      100deg,
+      rgba(0, 27, 46, 0.86) 0%,
+      rgba(0, 27, 46, 0.68) 38%,
+      rgba(0, 42, 70, 0.42) 62%,
+      rgba(0, 42, 70, 0.18) 100%
     ),
-    linear-gradient(180deg, rgba(0, 40, 68, 0.5) 0%, rgba(0, 17, 36, 0.82) 100%),
-    var(--hero-bg, url("../images/home/hero-enterprise.jpg"));
+    var(--hero-bg, url("../images/heroes/hero-home.jpg"));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.home-landing-banner .container,
+.module-landing-banner .container {
+  position: relative;
+  z-index: 1;
+  max-width: 42rem;
+  text-shadow: 0 1px 3px rgba(0, 17, 36, 0.45);
 }
 
 .home-landing-accent,
@@ -114,6 +123,21 @@
   .module-landing-banner {
     margin-top: -3rem;
     padding: 3.25rem 0 3.5rem;
+    min-height: 22rem;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .home-landing-banner,
+  .module-landing-banner {
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(0, 27, 46, 0.84) 0%,
+        rgba(0, 27, 46, 0.74) 50%,
+        rgba(0, 42, 70, 0.58) 100%
+      ),
+      var(--hero-bg, url("../images/heroes/hero-home.jpg"));
   }
 }
 
