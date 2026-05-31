@@ -1,0 +1,159 @@
+/* McKinsey-style blue system (deep navy + vivid accent) */
+:root {
+  --mckinsey-deep: #001b2e;
+  --mckinsey-navy: #002a46;
+  --mckinsey-blue-mid: #0c4a72;
+  --mckinsey-accent: #2251ff;
+  --mckinsey-accent-soft: #3481ff;
+}
+
+/* Typography — Inter body, Instrument Serif headings (McKinsey-style editorial) */
+.site-body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.site-body h1,
+.site-body h2,
+.site-body h3,
+.site-body h4,
+.site-body h5,
+.site-body h6,
+.site-body .navbar-brand {
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.site-body .navbar .nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.site-body .lead {
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+/* Landing hero — consulting-style banner (flush under nav; photo + blue overlay) */
+.home-landing-banner,
+.module-landing-banner {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  /* Cancel <main class="pt-5"> (3rem) so the hero sits directly under the nav */
+  margin-top: -3rem;
+  padding: 2.5rem 0 3rem;
+  color: #f1f5f9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--mckinsey-deep);
+  background-image:
+    linear-gradient(
+      118deg,
+      rgba(0, 27, 46, 0.93) 0%,
+      rgba(12, 74, 114, 0.8) 45%,
+      rgba(0, 42, 70, 0.92) 100%
+    ),
+    linear-gradient(180deg, rgba(0, 40, 68, 0.5) 0%, rgba(0, 17, 36, 0.82) 100%),
+    var(--hero-bg, url("../images/home/hero-enterprise.jpg"));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.home-landing-accent,
+.module-landing-accent {
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(90deg, var(--mckinsey-accent), rgba(52, 129, 255, 0.2));
+  margin-bottom: 1rem;
+  border-radius: 1px;
+}
+
+.home-landing-kicker,
+.module-landing-kicker {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.65);
+  margin-bottom: 0.5rem;
+}
+
+.site-body h1.home-landing-headline,
+.site-body h1.module-landing-headline {
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.home-landing-headline,
+.module-landing-headline {
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.85rem, 4vw, 2.85rem);
+  max-width: 22em;
+}
+
+.home-landing-dek,
+.module-landing-dek {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(241, 245, 249, 0.82);
+  font-weight: 400;
+}
+
+@media (min-width: 992px) {
+  .home-landing-banner,
+  .module-landing-banner {
+    margin-top: -3rem;
+    padding: 3.25rem 0 3.5rem;
+  }
+}
+
+#solutions,
+#inquiry {
+  scroll-margin-top: 1rem;
+}
+
+/* Home page imagery */
+.home-hero-img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+}
+
+.home-sector-card .card-img-top {
+  height: 220px;
+  object-fit: cover;
+}
+
+.home-inline-img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+}
+
+/* Menu bar: McKinsey deep blue (not generic Bootstrap gray) */
+.site-body .navbar.bg-mckinsey-nav {
+  background-color: var(--mckinsey-deep) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Primary actions — McKinsey accent blue */
+.site-body header .btn-primary {
+  background-color: var(--mckinsey-accent);
+  border-color: #1a46e6;
+}
+
+.site-body header .btn-primary:hover,
+.site-body header .btn-primary:focus {
+  background-color: #1a46e6;
+  border-color: #1539c7;
+}

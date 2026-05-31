@@ -1,0 +1,276 @@
+@model PindahWebsite3.ViewModels.ZimsecIndexViewModel
+@{
+    ViewData["Title"] = "Zimsec & Cambridge Past Papers | Free Educational Resources for Students by Pindah";
+    ViewData["Description"] = "Access the ultimate repository for Zimsec and Cambridge past papers, syllabus, and study materials. Powerful full-text search across all high school subjects. Built for students by Pindah.";
+    ViewData["Keywords"] = "Zimsec, Cambridge, past papers, pindah, students, education, syllabus, o level, a level, grade 7";
+    ViewData["Robots"] = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+    ViewData["OgType"] = "website";
+    ViewData["StructuredData"] = @"{ ""@context"": ""https://schema.org"", ""@type"": ""WebPage"", ""name"": ""Zimsec & Cambridge Past Papers"", ""description"": ""Free Zimsec and Cambridge educational resources, past papers, and syllabuses for students."", ""publisher"": { ""@type"": ""Organization"", ""name"": ""Pindah"" } }";
+}
+
+<!-- SEO Optimized Hero Section with Integrated Search -->
+<div class="module-landing-banner mb-4" style="background-image: none !important; background-color: #002878 !important;">
+    <div class="container pb-0 pt-0">
+        <div class="row object-fit-contain justify-content-center text-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="d-inline-block bg-white px-3 py-2 rounded mb-4">
+                    <img src="~/images/modules/zimsec_logo.jpg" alt="Zimsec Past Papers Logo" style="height: 65px; object-fit: contain;">
+                </div>
+                <h1 class="fw-bold mb-3">Zimsec & Cambridge Past Papers</h1>
+                <p class="lead mb-4" style="opacity: 0.9;">Search thousands of educational resources, syllabuses, and documents for students.</p>
+                
+                <form action="/Zimsec" method="get">
+                    <div class="input-group input-group-lg">
+                        <input type="text" name="q" class="form-control border-0" placeholder="Search by subject, topic or content (e.g. 'Mathematics > Vectors')" value="@Model.SearchQuery" required aria-label="Search past papers">
+                        <button type="submit" class="btn text-white px-4 fw-bold" style="background-color: var(--mckinsey-accent, #00A9E0); border-color: var(--mckinsey-accent, #00A9E0);">Search</button>
+                    </div>
+                </form>
+
+                <div class="mt-4">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a href="/Identity/Account/Manage/Uploads" class="btn btn-outline-light fw-bold rounded-pill px-4 shadow-sm" style="border-width: 2px;">My Contributions</a>
+                    }
+                    else
+                    {
+                        <a href="/Identity/Account/Login" class="btn btn-outline-light fw-bold rounded-pill px-4 shadow-sm" style="border-width: 2px;"><i class="fas fa-user-plus me-1"></i> Register as Contributor</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+
+    @if (Model.IsSearch)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="mb-0 fw-bold">Search Results: "@Model.SearchQuery"</h6>
+                    <a href="/Zimsec" class="btn btn-sm btn-outline-secondary">Clear</a>
+                </div>
+                
+                @if (Model.SearchCategoryResults.Any())
+                {
+                    <div class="card border rounded-0 mb-4">
+                        <div class="card-header bg-light border-bottom border-light">
+                            <span class="fw-bold small text-uppercase" style="letter-spacing: 0.05em;">Matching Categories</span>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach(var cat in Model.SearchCategoryResults)
+                            {
+                                <li class="list-group-item list-group-item-action py-2">
+                                    <h6 class="fw-bold mb-0">
+                                        <a href="/Zimsec?q=@Uri.EscapeDataString(cat.Name)" class="text-decoration-none">@cat.Name</a>
+                                    </h6>
+                                    @if (cat.ParentCategory != null)
+                                    {
+                                        <small class="text-muted">Network: @cat.ParentCategory.Name > @cat.Name</small>
+                                    }
+                                    @if (cat.SubCategories != null && cat.SubCategories.Any())
+                                    {
+                                        <div class="mt-2 text-muted small">
+                                            @foreach(var sub in cat.SubCategories)
+                                            {
+                                                <a href="/Zimsec?q=@Uri.EscapeDataString(cat.Name + " > " + sub.Name)" class="badge bg-light text-secondary text-decoration-none border mx-1 mb-1 fw-normal text-wrap text-start">@cat.Name > @sub.Name</a>
+                                            }
+                                        </div>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <div class="card border rounded-0 mb-4">
+                    <div class="card-header bg-light border-bottom border-light">
+                        <span class="fw-bold small text-uppercase" style="letter-spacing: 0.05em;">Matching Documents (@Model.SearchDocumentResults.Count)</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover table-sm mb-0">
+                            <tbody>
+                                @if (Model.SearchDocumentResults.Any())
+                                {
+                                    foreach(var doc in Model.SearchDocumentResults)
+                                    {
+                                        <tr>
+                                            <td class="align-middle px-3 py-2 border-bottom-0 border-top">
+                                                <h6 class="mb-0 fw-bold" style="font-size: 0.95rem;">@doc.Title</h6>
+                                                <small class="text-muted">
+                                                    Path: @(doc.Category?.ParentCategory?.Name != null ? doc.Category.ParentCategory.Name + " > " : "")@(doc.Category?.Name ?? "Uncategorized")
+                                                </small>
+                                            </td>
+                                            <td class="align-middle text-end pe-3 border-bottom-0 border-top" style="width: 140px;">
+                                                <a href="/Zimsec/ViewDocument/@doc.Id" class="btn btn-sm btn-primary py-0 px-2 fw-bold" style="background-color: var(--mckinsey-accent); border-color: var(--mckinsey-accent);">View</a>
+                                                <a href="@doc.FilePath" class="btn btn-sm btn-outline-secondary py-0 px-2" download>Download</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td class="text-center text-muted p-4 border-bottom-0 border-top">No documents found matching your query.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <div class="card mb-4 border-primary">
+            <div class="card-header bg-primary text-white">
+                Admin: Resource Management
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 pe-md-4 mb-4 mb-md-0">
+                        <h6 class="fw-bold">Create Subject / Category</h6>
+                        <form asp-action="CreateCategory" method="post">
+                            <div class="mb-2">
+                                <label class="form-label small">Category Name</label>
+                                <input type="text" name="name" class="form-control form-control-sm" required />
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label small">Parent Category (Optional)</label>
+                                <select name="parentCategoryId" class="form-select form-select-sm">
+                                    <option value="">-- None (Top Level) --</option>
+                                    @foreach(var cat in Model.FlatCategories)
+                                    {
+                                        <option value="@cat.Id">@cat.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">Create Category</button>
+                        </form>
+                    </div>
+                    <hr class="d-md-none border-secondary opacity-25">
+                    <div class="col-md-6 ps-md-4">
+                        <h6 class="fw-bold">Upload Documents (Extracts Text)</h6>
+                        <form asp-action="UploadDocuments" method="post" enctype="multipart/form-data">
+                            <div class="mb-2">
+                                <label class="form-label small">Category / Subject</label>
+                                <select name="categoryId" class="form-select form-select-sm" required>
+                                    <option value="">-- Select Category --</option>
+                                    @foreach(var cat in Model.FlatCategories)
+                                    {
+                                        <option value="@cat.Id">@cat.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label small">Files (PDF)</label>
+                                <input type="file" name="files" class="form-control form-control-sm" accept=".pdf" multiple required />
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-success">Upload & Process Text</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-end mb-3">
+            <a href="/Identity/Account/Login" class="btn btn-outline-secondary btn-sm shadow-sm fw-bold">Admin Login</a>
+        </div>
+    }
+
+    <div class="row">
+        <!-- Main Content Area -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Recently Added Papers</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        @if (Model.RecentDocuments != null && Model.RecentDocuments.Any())
+                        {
+                            foreach(var doc in Model.RecentDocuments)
+                            {
+                                <li class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-sm-center py-3">
+                                    <div class="mb-2 mb-sm-0">
+                                        <h6 class="mb-1 fw-bold" style="font-size: clamp(0.95rem, 2vw, 1.1rem);">@doc.Title</h6>
+                                        <small class="text-muted d-block">Category: @(doc.Category?.Name ?? "Uncategorized")</small>
+                                        <small class="text-muted">Added: @doc.UploadDate.ToString("MMM dd, yyyy")</small>
+                                    </div>
+                                    <div class="d-flex flex-nowrap gap-2 mt-2 mt-sm-0">
+                                        <a href="/Zimsec/ViewDocument/@doc.Id" class="btn btn-sm btn-primary shadow-sm fw-bold px-3 text-nowrap">View</a>
+                                        <a href="@doc.FilePath" class="btn btn-sm btn-outline-secondary text-nowrap" download>Download</a>
+                                    </div>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-group-item text-muted">No documents available yet.</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar / Info Area -->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Categories</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        @if (Model.Categories != null && Model.Categories.Any())
+                        {
+                            foreach(var cat in Model.Categories)
+                            {
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <strong>@cat.Name</strong>
+                                        @if (User.Identity?.IsAuthenticated == true)
+                                        {
+                                            <form asp-action="DeleteCategory" method="post" class="m-0">
+                                                <input type="hidden" name="id" value="@cat.Id" />
+                                                <button type="submit" class="btn btn-sm text-danger border-0 px-2 py-0" title="Delete" onclick="return confirm('Delete this category? Documents will be unlinked.');">&times;</button>
+                                            </form>
+                                        }
+                                    </div>
+                                    @if(cat.SubCategories != null && cat.SubCategories.Any())
+                                    {
+                                        <ul class="mt-2 ms-3 list-unstyled">
+                                            @foreach(var sub in cat.SubCategories)
+                                            {
+                                                <li class="d-flex justify-content-between align-items-center mb-1">
+                                                    <span>- @sub.Name</span>
+                                                    @if (User.Identity?.IsAuthenticated == true)
+                                                    {
+                                                        <form asp-action="DeleteCategory" method="post" class="m-0">
+                                                            <input type="hidden" name="id" value="@sub.Id" />
+                                                            <button type="submit" class="btn btn-sm text-danger border-0 px-2 py-0" title="Delete" onclick="return confirm('Delete this category? Documents will be unlinked.');">&times;</button>
+                                                        </form>
+                                                    }
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-group-item text-muted">No categories defined.</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

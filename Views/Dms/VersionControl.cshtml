@@ -1,0 +1,85 @@
+@{
+    ViewData["Title"] = "Document Version Control | DMS | Pindah";
+    ViewData["Description"] = "Complete document version history with check-out/check-in mechanisms, version comparison, rollback capabilities, and draft management for collaborative document editing.";
+    ViewData["Keywords"] = "document version control, version history, check out check in, document rollback, version comparison, draft management";
+    ViewData["CanonicalUrl"] = "https://pindah.org/dms/versioncontrol";
+    ViewData["OgImage"] = "https://storage.pindah.org/IMAGES/pindah-og-default.jpg";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/dms">DMS</a></li>
+                <li class="breadcrumb-item active">Version Control</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h1 class="display-4 fw-bold mb-3">Document Version Control</h1>
+        <p class="lead mb-4">
+            Comprehensive version management ensuring document integrity through controlled editing, 
+            complete history retention, and recovery capabilities for evolving business records.
+        </p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h2 class="h3 fw-bold mb-4">Check-Out and Check-In</h2>
+        <p>
+            The check-out mechanism reserves documents for exclusive editing preventing simultaneous 
+            modifications that create conflict. When a user checks out a document, others see read-only 
+            access with visibility of who holds the editing lock and when checkout occurred.
+        </p>
+        <p>
+            Check-in returns the document to the repository creating a new version with comments 
+            describing changes made. The system maintains the checked-out copy as the latest version 
+            while preserving all previous iterations in the version history.
+        </p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h2 class="h3 fw-bold mb-4">Version History and Comparison</h2>
+        <p>
+            Complete version history tracks every document iteration with timestamps, editors, and 
+            change descriptions. Users can browse historical versions understanding how documents 
+            evolved over time and who contributed specific modifications.
+        </p>
+        <p>
+            Version comparison tools highlight differences between iterations showing additions, 
+            deletions, and modifications in visual diff views. This capability supports audit 
+            requirements and helps users understand what changed without manually comparing files.
+        </p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h2 class="h3 fw-bold mb-4">Rollback and Draft Management</h2>
+        <p>
+            Rollback capabilities restore previous versions when current content requires correction 
+            or when changes prove inappropriate. The rollback itself creates a new version maintaining 
+            the full audit trail including the reversion decision and authorizing user.
+        </p>
+        <p>
+            Draft status management distinguishes work-in-progress from published documents. Drafts 
+            remain invisible to general users until explicitly published ensuring only approved 
+            content represents the organization officially.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <p class="small mb-0">
+            <a href="/dms" class="text-decoration-none">← Back to DMS</a>
+        </p>
+    </div>
+</div>

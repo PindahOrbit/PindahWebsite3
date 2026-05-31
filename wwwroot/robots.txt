@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /account/
+Disallow: /errors/
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Sitemap: https://pindah.org/sitemap.xml

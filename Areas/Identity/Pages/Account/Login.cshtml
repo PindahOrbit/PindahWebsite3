@@ -1,0 +1,85 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "System Login";
+}
+
+<style>
+    body {
+        background: url('https://storage.pindah.org/IMAGES/magic-fairytale-book-concept(1)%20(1).webp') no-repeat center center fixed;
+        background-size: cover;
+    }
+    .login-card {
+        background-color: #ffffff !important;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+    }
+    .inspiring-text {
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    }
+</style>
+
+<div class="row align-items-center justify-content-around mt-5 mb-5" style="min-height: 75vh;">
+    <!-- Inspiring Text Area -->
+    <div class="col-md-6 col-lg-6 mb-5 mb-md-0 inspiring-text px-4">
+        <h1 class="display-4 fw-bold mb-4">Empower the Next Generation</h1>
+        <p class="lead fw-semibold mb-4">
+            Join hundreds of educators and contributors shaping the future. By sharing your Zimsec and Cambridge past papers, marking schemes, and syllabus guides, you help students everywhere achieve academic excellence.
+        </p>
+        <p class="fs-5">
+            <i class="fas fa-check-circle text-success me-2 pb-2"></i> Free access for millions of students<br/>
+            <i class="fas fa-check-circle text-success me-2 pb-2"></i> Instant document text processing<br/>
+            <i class="fas fa-check-circle text-success me-2 pb-2"></i> Build a comprehensive, global repository
+        </p>
+    </div>
+
+    <!-- Compact White Login Card -->
+    <div class="col-md-5 col-lg-4">
+        <div class="card login-card px-4 py-4">
+            <div class="text-center mb-4">
+                <h5 class="fw-bold mb-1 text-dark">Welcome Back</h5>
+                <p class="text-muted small">Sign in to manage your resources</p>
+            </div>
+            
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-2" role="alert"></div>
+                
+                <div class="mb-3">
+                    <label asp-for="Input.Email" class="form-label small fw-bold text-dark">Email Address</label>
+                    <input asp-for="Input.Email" class="form-control form-control-sm border" autocomplete="username" aria-required="true" placeholder="Enter your email" />
+                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="Input.Password" class="form-label small fw-bold text-dark">Password</label>
+                    <input asp-for="Input.Password" class="form-control form-control-sm border" autocomplete="current-password" aria-required="true" placeholder="********" />
+                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                </div>
+                
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <label asp-for="Input.RememberMe" class="form-check-label text-muted small">
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+                
+                <button id="login-submit" type="submit" class="w-100 btn btn-sm btn-primary fw-bold mb-3 shadow-none">Login Securely</button>
+                
+                <hr class="border-secondary opacity-25">
+                
+                <div class="text-center mt-2">
+                    <p class="text-muted small mb-2">Want to contribute?</p>
+                    <a href="/Identity/Account/Register" class="btn btn-sm btn-light border text-dark fw-bold w-100 mb-2">Create Contributor Account</a>
+                    <a href="/Zimsec" class="text-decoration-none small text-muted">← Back to Homepage</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

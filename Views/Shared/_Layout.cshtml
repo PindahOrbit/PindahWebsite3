@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(ViewData["Title"] ?? "Enterprise Software Solutions") | Pindah</title>
+    <meta name="description" content="@ViewData["Description"]" />
+    <meta name="keywords" content="@ViewData["Keywords"]" />
+    <meta name="robots" content="@(ViewData["Robots"] ?? "index, follow")" />
+    <link rel="canonical" href="@(ViewData["CanonicalUrl"] ?? Url.Action(ViewContext.RouteData.Values["action"]?.ToString(), ViewContext.RouteData.Values["controller"]?.ToString(), null, Context.Request.Scheme))" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Description"]" />
+    <meta property="og:type" content="@(ViewData["OgType"] ?? "website")" />
+    <meta property="og:url" content="@(ViewData["CanonicalUrl"] ?? Url.Action(ViewContext.RouteData.Values["action"]?.ToString(), ViewContext.RouteData.Values["controller"]?.ToString(), null, Context.Request.Scheme))" />
+    <meta property="og:image" content="@(ViewData["OgImage"] ?? "https://storage.pindah.org/IMAGES/pindah-og-default.jpg")" />
+    <meta property="og:site_name" content="Pindah Private Limited" />
+    <meta property="og:locale" content="en_ZW" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@ViewData["Title"]" />
+    <meta name="twitter:description" content="@ViewData["Description"]" />
+    <meta name="twitter:image" content="@(ViewData["OgImage"] ?? "https://storage.pindah.org/IMAGES/pindah-og-default.jpg")" />
+    <link rel="icon" type="image/x-icon" href="https://storage.pindah.org/IMAGES/PindahBranding.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PindahWebsite3.styles.css" asp-append-version="true" />
+    @if (ViewData["StructuredData"] != null)
+    {
+        <script type="application/ld+json">@Html.Raw(ViewData["StructuredData"])</script>
+    }
+</head>
+<body class="d-flex flex-column min-vh-100 site-body">
+    <header>
+        <!-- Top Tier: Company Info -->
+        <div class="bg-white border-bottom py-2">
+            <div class="container d-flex justify-content-between align-items-center">
+                <a class="navbar-brand fw-bold text-dark mb-0" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="https://storage.pindah.org/IMAGES/pindah_logo_webp.webp" alt="Pindah Logo" height="24" class="d-inline-block align-text-top me-2" />
+                    Pindah
+                </a>
+                <div class="d-flex align-items-center flex-wrap gap-2 justify-content-end">
+                    <div class="small text-muted">
+                        <span class="me-3 text-lowercase">admin@pindah.org</span>
+                        <span>+263 714 856 897</span>
+                    </div>
+                    <a class="btn btn-primary btn-sm px-3" href="https://basa.pindah.org" rel="noopener noreferrer">Pindah Basa Login</a>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Tier: Menus only -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-mckinsey-nav border-bottom py-1">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav w-100 justify-content-lg-between gap-lg-0 gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link px-0" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Accounting" asp-action="Index">Accounting</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Construction" asp-action="Index">Construction</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Crm" asp-action="Index">CRM</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Dms" asp-action="Index">DMS</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Erp" asp-action="Index">ERP</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Hospital" asp-action="Index">Health</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Hr" asp-action="Index">HR</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Insurance" asp-action="Index">Insurance</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Logistics" asp-action="Index">Logistics</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Manufacturing" asp-action="Index">Manufacturing</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Scm" asp-action="Index">SCM</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Sms" asp-action="Index">SMS</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="Zimsec" asp-action="Index">Zimsec</a></li>
+                        <li class="nav-item"><a class="nav-link px-0" asp-controller="News" asp-action="Index">News</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container flex-grow-1">
+        <main role="main" class="pb-3 pt-5">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top text-muted py-3 bg-light mt-auto">
+        <div class="container text-center">
+            <span class="small">&copy; @DateTime.Now.Year - Pindah - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">Privacy</a></span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

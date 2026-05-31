@@ -1,0 +1,47 @@
+@model List<News>
+
+@{
+    ViewData["Title"] = ViewData["Title"] ?? "Enterprise Software News & Insights | Pindah Blog";
+    ViewData["OgType"] = "website";
+    ViewData["OgImage"] = "https://storage.pindah.org/IMAGES/pindah-blog-default.jpg";
+}
+
+<div class="container py-4">
+    <header class="mb-4">
+        <h1 class="mb-2">Enterprise Software News & Insights</h1>
+        <p class="lead text-muted">Real-world case studies, implementation insights, and ROI metrics for ERP, CRM, Manufacturing, Insurance, and digital transformation in Zimbabwe.</p>
+    </header>
+    
+    @if (Model != null && Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var article in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        @if (!string.IsNullOrEmpty(article.CoverImageUrl))
+                        {
+                            <img src="@article.CoverImageUrl" class="card-img-top" alt="@article.Heading" style="height: 180px; object-fit: cover;" loading="lazy" />
+                        }
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@article.Heading</h5>
+                            <p class="card-text text-muted small mb-2">
+                                <i class="bi bi-calendar"></i> @article.DateCreated.ToString("MMMM dd, yyyy")
+                            </p>
+                            <p class="card-text flex-grow-1">
+                                @(article.Content.Length > 150 ? article.Content.Substring(0, 150) + "..." : article.Content)
+                            </p>
+                            <a asp-action="Details" asp-route-slug="@article.Slug" class="btn btn-outline-primary btn-sm mt-auto">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            No news articles available yet. Articles are generated automatically by our AI system.
+        </div>
+    }
+</div>

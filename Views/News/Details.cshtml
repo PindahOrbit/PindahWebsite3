@@ -1,0 +1,50 @@
+@model News
+
+@{
+    ViewData["Title"] = ViewData["Title"] ?? Model.Heading;
+    ViewData["OgType"] = "article";
+    ViewData["OgImage"] = Model.CoverImageUrl;
+    ViewData["Author"] = "Pindah Private Limited";
+    ViewData["PublishedTime"] = Model.DateCreated.ToString("yyyy-MM-ddTHH:mm:ssZ");
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">News</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Article</li>
+        </ol>
+    </nav>
+
+    <article itemscope itemtype="https://schema.org/Article">
+        @if (!string.IsNullOrEmpty(Model.CoverImageUrl))
+        {
+            <img src="@Model.CoverImageUrl" class="img-fluid rounded mb-4 w-100" alt="@Model.Heading" style="max-height: 400px; object-fit: cover;" itemprop="image" />
+        }
+
+        <h1 class="mb-3" itemprop="headline">@Model.Heading</h1>
+        
+        <meta itemprop="datePublished" content="@Model.DateCreated.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+        <meta itemprop="author" content="Pindah Private Limited" />
+        <meta itemprop="publisher" content="Pindah Private Limited" />
+
+        <p class="text-muted mb-4">
+            <i class="bi bi-calendar"></i> Published on @Model.DateCreated.ToString("MMMM dd, yyyy")
+        </p>
+
+        <div class="article-content" style="line-height: 1.8;">
+            @foreach (var paragraph in Model.Content.Split(new[] { "\r\n\r\n", "\n\n" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var trimmed = paragraph.Trim();
+                if (!string.IsNullOrEmpty(trimmed))
+                {
+                    <p>@trimmed</p>
+                }
+            }
+        </div>
+    </article>
+
+    <div class="mt-5">
+        <a asp-action="Index" class="btn btn-outline-secondary">&larr; Back to News</a>
+    </div>
+</div>

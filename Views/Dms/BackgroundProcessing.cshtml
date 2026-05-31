@@ -1,0 +1,103 @@
+@{
+    ViewData["Title"] = "Background Document Processing | DMS | Pindah";
+    ViewData["Description"] = "Queue-based document processing with OCR batch processing, PDF conversion, thumbnail generation, and automated workflow execution using Quartz.NET scheduling.";
+    ViewData["Keywords"] = "background processing, document processing, OCR batch processing, PDF conversion, thumbnail generation, Quartz.NET, document automation";
+    ViewData["CanonicalUrl"] = "https://pindah.org/dms/backgroundprocessing";
+    ViewData["OgImage"] = "https://storage.pindah.org/IMAGES/pindah-og-default.jpg";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/dms">DMS</a></li>
+                <li class="breadcrumb-item active">Background Processing</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h1 class="display-4 fw-bold mb-3">Background Document Processing</h1>
+        <p class="lead mb-4">
+            Automated background operations handling resource-intensive document processing tasks 
+            without impacting user experience using queue-based architecture and scheduled job execution.
+        </p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h2 class="h3 fw-bold mb-4">Queue-Based Processing Architecture</h2>
+        <p>
+            Quartz.NET job scheduler manages background processing queues ensuring reliable execution 
+            of document operations without manual intervention. Jobs queue for execution with priority 
+            handling ensuring urgent processing completes before routine batch operations.
+        </p>
+        <p>
+            Queue management provides visibility into processing status showing pending jobs, 
+            execution progress, and completed operations. Administrators can monitor processing 
+            loads and reschedule jobs during low-usage periods optimizing resource utilization.
+        </p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h2 class="h3 fw-bold mb-4">OCR and Document Enhancement</h2>
+        <p>
+            Background OCR processing handles large scan batches converting image documents to 
+            searchable text without blocking user interface responsiveness. OCR jobs process during 
+            off-peak hours ensuring daytime system performance remains optimal for user operations.
+        </p>
+        <p>
+            Automated PDF splitting and renaming processes bulk uploads separating combined 
+            documents and applying naming conventions based on extracted metadata. This automation 
+            eliminates manual sorting of scanned batches significantly reducing document management 
+            overhead.
+        </p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h2 class="h3 fw-bold mb-4">Format Conversion and Preview Generation</h2>
+        <p>
+            Conversion pipelines transform uploaded documents to standardized formats automatically. 
+            Word and Excel documents convert to PDF on upload ensuring consistent viewing across 
+            platforms without requiring native application installation.
+        </p>
+        <p>
+            Thumbnail and preview generation creates visual representations of all uploaded files 
+            enabling quick identification without opening full documents. Preview images display 
+            in search results and document listings accelerating document selection and verification.
+        </p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12">
+        <h2 class="h3 fw-bold mb-4">Pipeline Technology Foundation</h2>
+        <p>
+            The background processing infrastructure leverages PdfSharp for PDF manipulation with 
+            BouncyCastle providing cryptographic capabilities. This open-source foundation ensures 
+            cost-effective scalability without proprietary licensing constraints.
+        </p>
+        <p>
+            QuestPDF serves as the generation layer for document creation and modification 
+            operations providing modern PDF handling with strong performance characteristics. 
+            This technology stack represents a production-ready foundation for enterprise 
+            document processing requirements.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <p class="small mb-0">
+            <a href="/dms" class="text-decoration-none">← Back to DMS</a>
+        </p>
+    </div>
+</div>
