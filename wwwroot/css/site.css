@@ -219,3 +219,51 @@
   padding-left: 1rem;
   color: #495057;
 }
+
+.sales-chat-fab {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 1045;
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sales-chat-offcanvas {
+  width: min(420px, 100vw);
+}
+
+.sales-chat-messages {
+  overflow-y: auto;
+  background: #f8f9fa;
+  min-height: 0;
+}
+
+.sales-chat-bubble {
+  max-width: 92%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.925rem;
+  line-height: 1.5;
+}
+
+.sales-chat-bubble-user {
+  margin-left: auto;
+  background: var(--mckinsey-accent, #0d6efd);
+  color: #fff;
+}
+
+.sales-chat-bubble-assistant {
+  margin-right: auto;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  color: #212529;
+}
+
+.sales-chat-handoff {
+  background: #f1f8f4;
+}

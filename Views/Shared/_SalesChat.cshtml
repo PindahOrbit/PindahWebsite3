@@ -1,0 +1,45 @@
+<button type="button"
+        class="btn btn-primary sales-chat-fab shadow"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#salesChatOffcanvas"
+        aria-controls="salesChatOffcanvas"
+        aria-label="Chat with Pindah sales assistant">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.485 1.74-1.148 2.27-.636.515-1.398.84-2.086 1.03-.707.196-1.345.27-1.844.287A.98.98 0 0 0 .5 15.5c0 .143.07.27.187.354.117.085.27.13.422.122.48-.027 1.145-.173 1.887-.548.71-.36 1.437-.88 1.98-1.413.98.94 2.27 1.447 3.624 1.447"/>
+    </svg>
+    <span class="sales-chat-fab-label">Chat</span>
+</button>
+
+<div class="offcanvas offcanvas-end sales-chat-offcanvas" tabindex="-1" id="salesChatOffcanvas" aria-labelledby="salesChatOffcanvasLabel">
+    <div class="offcanvas-header border-bottom">
+        <div>
+            <h5 class="offcanvas-title mb-0" id="salesChatOffcanvasLabel">Pindah Assistant</h5>
+            <p class="small text-muted mb-0">ERP, modules, and indicative pricing</p>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column p-0">
+        <div id="sales-chat-messages" class="sales-chat-messages flex-grow-1 p-3">
+            <div class="sales-chat-bubble sales-chat-bubble-assistant">
+                Hello. I am the Pindah sales assistant. Tell me about your business, what you operate today, and whether you need a full ERP platform or specific modules — I will ask a few questions and suggest an indicative structure.
+            </div>
+        </div>
+
+        <div id="sales-chat-handoff" class="sales-chat-handoff border-top p-3 d-none">
+            <p class="small fw-semibold mb-2">Continue on WhatsApp</p>
+            <p class="small text-muted mb-2" id="sales-chat-handoff-summary"></p>
+            <a id="sales-chat-whatsapp-link" class="btn btn-success btn-sm w-100" href="#" target="_blank" rel="noopener noreferrer">
+                Open WhatsApp with summary
+            </a>
+        </div>
+
+        <div class="border-top p-3 bg-light">
+            <label for="sales-chat-input" class="form-label small fw-semibold mb-1">Your message</label>
+            <textarea id="sales-chat-input" class="form-control form-control-sm mb-2" rows="2" placeholder="e.g. We run a manufacturing company with 40 staff and need inventory and finance…"></textarea>
+            <div class="d-flex justify-content-between align-items-center gap-2">
+                <span class="small text-muted" id="sales-chat-status">Ready</span>
+                <button type="button" class="btn btn-primary btn-sm" id="sales-chat-send">Send</button>
+            </div>
+        </div>
+    </div>
+</div>

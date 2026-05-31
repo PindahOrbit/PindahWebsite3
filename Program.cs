@@ -45,6 +45,7 @@ if (!builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddHttpClient<PindahWebsite3.Services.OllamaChatService>();
+builder.Services.AddScoped<PindahWebsite3.Services.SalesAgentService>();
 
 
 // Quartz: Scheduled news generation (runs daily at 02:00 UTC)

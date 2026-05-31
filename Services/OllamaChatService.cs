@@ -42,10 +42,27 @@ public class OllamaChatService
         string prompt,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        await foreach (var chunk in StreamChatAsync(
+            [new OllamaChatMessage { Role = "user", Content = prompt }],
+            cancellationToken))
+        {
+            yield return chunk;
+        }
+    }
+
+    public async IAsyncEnumerable<OllamaStreamChunk> StreamChatAsync(
+        IReadOnlyList<OllamaChatMessage> messages,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
         var apiKey = _configuration["Ollama:ApiKey"];
         if (string.IsNullOrWhiteSpace(apiKey))
         {
             _logger.LogError("Ollama API key not configured");
+            yield break;
+        }
+
+        if (messages.Count == 0)
+        {
             yield break;
         }
 
@@ -57,7 +74,11 @@ public class OllamaChatService
         request.Content = JsonContent.Create(new OllamaChatRequest
         {
             Model = model,
-            Messages = [new OllamaChatMessage { Role = "user", Content = prompt }],
+            Messages = messages.Select(m => new OllamaApiMessage
+            {
+                Role = m.Role,
+                Content = m.Content
+            }).ToArray(),
             Stream = true
         });
 
@@ -120,13 +141,13 @@ public class OllamaChatService
         public string Model { get; set; } = string.Empty;
 
         [JsonPropertyName("messages")]
-        public OllamaChatMessage[] Messages { get; set; } = [];
+        public OllamaApiMessage[] Messages { get; set; } = [];
 
         [JsonPropertyName("stream")]
         public bool Stream { get; set; }
     }
 
-    private sealed class OllamaChatMessage
+    private sealed class OllamaApiMessage
     {
         [JsonPropertyName("role")]
         public string Role { get; set; } = string.Empty;
@@ -141,11 +162,17 @@ public class OllamaChatService
     private sealed class OllamaChatResponse
     {
         [JsonPropertyName("message")]
-        public OllamaChatMessage? Message { get; set; }
+        public OllamaApiMessage? Message { get; set; }
 
         [JsonPropertyName("done")]
         public bool Done { get; set; }
     }
+}
+
+public class OllamaChatMessage
+{
+    public string Role { get; set; } = "user";
+    public string Content { get; set; } = string.Empty;
 }
 
 public class OllamaStreamChunk
