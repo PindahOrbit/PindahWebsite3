@@ -13,19 +13,35 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PindahWebsite3.Areas.Identity.Data;
+using PindahWebsite3.Data;
 
 namespace PindahWebsite3.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<PindahWebsite3User> _signInManager;
+        private readonly UserManager<PindahWebsite3User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly PindahWebsite3Context _context;
+        private readonly IConfiguration _configuration;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<PindahWebsite3User> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(
+            SignInManager<PindahWebsite3User> signInManager,
+            UserManager<PindahWebsite3User> userManager,
+            RoleManager<IdentityRole> roleManager,
+            PindahWebsite3Context context,
+            IConfiguration configuration,
+            ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _context = context;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -87,6 +103,8 @@ namespace PindahWebsite3.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            await EnsureAdminSeededAsync();
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -106,13 +124,20 @@ namespace PindahWebsite3.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
+            await EnsureAdminSeededAsync();
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -136,6 +161,18 @@ namespace PindahWebsite3.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private async Task EnsureAdminSeededAsync()
+        {
+            try
+            {
+                await DbSeeder.SeedAdminUserAsync(_context, _userManager, _roleManager, _configuration);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Admin seeding failed while loading login page.");
+            }
         }
     }
 }

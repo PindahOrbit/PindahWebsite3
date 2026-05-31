@@ -32,13 +32,24 @@
             <i class="bi bi-calendar"></i> Published on @Model.DateCreated.ToString("MMMM dd, yyyy")
         </p>
 
-        <div class="article-content" style="line-height: 1.8;">
-            @foreach (var paragraph in Model.Content.Split(new[] { "\r\n\r\n", "\n\n" }, StringSplitOptions.RemoveEmptyEntries))
+        <div class="article-content">
+            @{
+                var trimmedContent = Model.Content.TrimStart();
+                var isHtml = trimmedContent.StartsWith("<") && Model.Content.Contains('>');
+            }
+            @if (isHtml)
             {
-                var trimmed = paragraph.Trim();
-                if (!string.IsNullOrEmpty(trimmed))
+                @Html.Raw(Model.Content)
+            }
+            else
+            {
+                @foreach (var paragraph in Model.Content.Split(new[] { "\r\n\r\n", "\n\n" }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    <p>@trimmed</p>
+                    var trimmed = paragraph.Trim();
+                    if (!string.IsNullOrEmpty(trimmed))
+                    {
+                        <p>@trimmed</p>
+                    }
                 }
             }
         </div>

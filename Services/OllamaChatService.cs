@@ -1,5 +1,7 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace PindahWebsite3.Services;
@@ -10,6 +12,11 @@ public class OllamaChatService
     private readonly IConfiguration _configuration;
     private readonly ILogger<OllamaChatService> _logger;
 
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
     public OllamaChatService(HttpClient httpClient, IConfiguration configuration, ILogger<OllamaChatService> logger)
     {
         _httpClient = httpClient;
@@ -19,11 +26,27 @@ public class OllamaChatService
 
     public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken = default)
     {
+        var builder = new System.Text.StringBuilder();
+        await foreach (var chunk in StreamGenerateAsync(prompt, cancellationToken))
+        {
+            if (!string.IsNullOrEmpty(chunk.Content))
+            {
+                builder.Append(chunk.Content);
+            }
+        }
+
+        return builder.ToString().Trim();
+    }
+
+    public async IAsyncEnumerable<OllamaStreamChunk> StreamGenerateAsync(
+        string prompt,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
         var apiKey = _configuration["Ollama:ApiKey"];
         if (string.IsNullOrWhiteSpace(apiKey))
         {
             _logger.LogError("Ollama API key not configured");
-            return string.Empty;
+            yield break;
         }
 
         var endpoint = _configuration["Ollama:Endpoint"] ?? "https://ollama.com/api/chat";
@@ -35,19 +58,60 @@ public class OllamaChatService
         {
             Model = model,
             Messages = [new OllamaChatMessage { Role = "user", Content = prompt }],
-            Stream = false
+            Stream = true
         });
 
-        using var response = await _httpClient.SendAsync(request, cancellationToken);
+        using var response = await _httpClient.SendAsync(
+            request,
+            HttpCompletionOption.ResponseHeadersRead,
+            cancellationToken);
+
         if (!response.IsSuccessStatusCode)
         {
             var body = await response.Content.ReadAsStringAsync(cancellationToken);
             _logger.LogError("Ollama API returned {StatusCode}: {Body}", (int)response.StatusCode, body);
-            return string.Empty;
+            yield break;
         }
 
-        var result = await response.Content.ReadFromJsonAsync<OllamaChatResponse>(cancellationToken);
-        return result?.Message?.Content?.Trim() ?? string.Empty;
+        await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        using var reader = new StreamReader(stream);
+
+        while (!reader.EndOfStream && !cancellationToken.IsCancellationRequested)
+        {
+            var line = await reader.ReadLineAsync(cancellationToken);
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                continue;
+            }
+
+            OllamaChatResponse? parsed;
+            try
+            {
+                parsed = JsonSerializer.Deserialize<OllamaChatResponse>(line, JsonOptions);
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogWarning(ex, "Failed to parse Ollama stream line");
+                continue;
+            }
+
+            if (parsed?.Message == null)
+            {
+                continue;
+            }
+
+            yield return new OllamaStreamChunk
+            {
+                Content = parsed.Message.Content ?? string.Empty,
+                Thinking = parsed.Message.Thinking ?? string.Empty,
+                Done = parsed.Done
+            };
+
+            if (parsed.Done)
+            {
+                yield break;
+            }
+        }
     }
 
     private sealed class OllamaChatRequest
@@ -69,11 +133,24 @@ public class OllamaChatService
 
         [JsonPropertyName("content")]
         public string Content { get; set; } = string.Empty;
+
+        [JsonPropertyName("thinking")]
+        public string? Thinking { get; set; }
     }
 
     private sealed class OllamaChatResponse
     {
         [JsonPropertyName("message")]
         public OllamaChatMessage? Message { get; set; }
+
+        [JsonPropertyName("done")]
+        public bool Done { get; set; }
     }
+}
+
+public class OllamaStreamChunk
+{
+    public string Content { get; set; } = string.Empty;
+    public string Thinking { get; set; } = string.Empty;
+    public bool Done { get; set; }
 }

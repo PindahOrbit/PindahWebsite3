@@ -9,7 +9,7 @@ var connectionString = builder.Configuration.GetConnectionString("PindahWebsite3
 
 builder.Services.AddDbContext<PindahWebsite3Context>(options => options.UseSqlite(connectionString));
 
-builder.Services.AddDefaultIdentity<PindahWebsite3User>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<PindahWebsite3User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PindahWebsite3Context>();
 
@@ -68,8 +68,8 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<PindahWebsite3Context>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<PindahWebsite3User>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
-    PindahWebsite3.Data.DbSeeder.SeedAsync(context, userManager, roleManager, env).Wait();
+    var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+    PindahWebsite3.Data.DbSeeder.SeedAsync(context, userManager, roleManager, configuration).Wait();
 }
 
 // Configure the HTTP request pipeline.
@@ -92,6 +92,7 @@ app.UseRouting();
 // SEO: Status code pages for proper HTTP responses
 app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

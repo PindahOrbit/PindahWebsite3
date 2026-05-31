@@ -73,13 +73,9 @@ public class NewsGenerationJob : IJob
 
     private async Task<string> GenerateHeadingAsync(CancellationToken cancellationToken)
     {
-        const string prompt = """
-            Generate one engaging, SEO-optimized heading for a business software blog. Focus on these enterprise modules: ERP (finance, inventory, procurement), CRM, Manufacturing, Insurance, Accounting, Logistics, HR, Hospital Management, DMS, Construction, SCM. Include real-world case studies, implementation lessons, ROI metrics, or industry trends. Return ONLY the heading text with no quotes, no numbering, and no extra text.
-            """;
-
         try
         {
-            var text = await _ollamaChatService.GenerateAsync(prompt, cancellationToken);
+            var text = await _ollamaChatService.GenerateAsync(NewsPrompts.Heading, cancellationToken);
             if (!string.IsNullOrEmpty(text))
             {
                 return text.Trim('"', '\'', '`');
@@ -95,16 +91,9 @@ public class NewsGenerationJob : IJob
 
     private async Task<string> GenerateContentAsync(string heading, CancellationToken cancellationToken)
     {
-        var prompt = $"""
-            Write a detailed, engaging 400-600 word blog post based on this heading: "{heading}".
-            Include real-world examples, case studies, or implementation insights. Reference enterprise software modules like ERP, CRM, Manufacturing, Insurance, etc.
-            Mention specific ROI metrics, efficiency gains, or business outcomes. Structure with clear paragraphs.
-            Write for business leaders and IT managers. Return ONLY the article content with no meta commentary, no markdown headers, and no extra text.
-            """;
-
         try
         {
-            return await _ollamaChatService.GenerateAsync(prompt, cancellationToken);
+            return await _ollamaChatService.GenerateAsync(NewsPrompts.Content(heading), cancellationToken);
         }
         catch (Exception ex)
         {
@@ -116,13 +105,9 @@ public class NewsGenerationJob : IJob
 
     private async Task<string> GenerateImageKeywordAsync(string heading, CancellationToken cancellationToken)
     {
-        var prompt = $"""
-            Based on this article heading: "{heading}", suggest a single relevant search keyword (one or two words) for finding a cover image. Return ONLY the keyword with no extra text.
-            """;
-
         try
         {
-            var text = await _ollamaChatService.GenerateAsync(prompt, cancellationToken);
+            var text = await _ollamaChatService.GenerateAsync(NewsPrompts.ImageKeyword(heading), cancellationToken);
             if (!string.IsNullOrEmpty(text))
             {
                 text = Regex.Replace(text.Trim().ToLowerInvariant(), "[^a-z0-9-]", "", RegexOptions.IgnoreCase);

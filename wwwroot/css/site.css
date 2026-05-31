@@ -185,3 +185,37 @@
   background-color: #1a46e6;
   border-color: #1539c7;
 }
+
+#content-editor {
+  min-height: 320px;
+}
+
+#content-editor .ql-editor {
+  min-height: 280px;
+  font-family: var(--bs-body-font-family);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.article-content {
+  line-height: 1.8;
+}
+
+.article-content h2,
+.article-content h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-content p,
+.article-content ul,
+.article-content ol,
+.article-content blockquote {
+  margin-bottom: 1rem;
+}
+
+.article-content blockquote {
+  border-left: 4px solid var(--mckinsey-accent, #0d6efd);
+  padding-left: 1rem;
+  color: #495057;
+}

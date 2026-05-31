@@ -1,0 +1,113 @@
+@model NewsSaveModel?
+@{
+    ViewData["Title"] = "Generate News Article | Pindah Blog";
+    ViewData["Robots"] = "noindex, nofollow";
+}
+
+@section Styles {
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+}
+
+<div class="mb-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb small mb-2">
+            <li class="breadcrumb-item"><a asp-action="Index">News</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Generate</li>
+        </ol>
+    </nav>
+    <h1 class="h2 fw-bold mb-2">Generate News Article</h1>
+    <p class="text-muted mb-0">Draft with Ollama streaming, edit in the rich text editor, then publish to the blog.</p>
+</div>
+
+@if (TempData["Error"] is string errorMessage)
+{
+    <div class="alert alert-danger" role="alert">@errorMessage</div>
+}
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <form asp-action="Save" method="post" id="news-save-form">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label for="heading" class="form-label fw-semibold mb-0">Heading</label>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-generate-heading">Generate heading</button>
+                </div>
+                <input type="text" class="form-control" id="heading" name="Heading" maxlength="300" required value="@Model?.Heading" />
+                <div class="mt-3 border rounded-3 p-3 bg-light">
+                    <label for="heading-instruction" class="form-label small fw-semibold">Ask AI to revise the heading</label>
+                    <textarea class="form-control form-control-sm mb-2" id="heading-instruction" rows="2" placeholder="Example: Make it shorter, more executive, or more SEO-focused."></textarea>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm" id="btn-revise-heading">Apply instruction</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm conversation-preset" data-target="heading" data-instruction="Shorten this heading while keeping the main business value.">Shorten</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm conversation-preset" data-target="heading" data-instruction="Make this heading clearer and more professional for executives.">Improve clarity</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label for="content-editor" class="form-label fw-semibold mb-0">Article content</label>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-generate-content">Generate content</button>
+                </div>
+                <div id="content-editor" class="bg-white"></div>
+                <input type="hidden" id="content" name="Content" value="@Model?.Content" />
+                <div class="form-text">Use the editor toolbar to refine headings, lists, and emphasis after generation.</div>
+                <div class="mt-3 border rounded-3 p-3 bg-light">
+                    <label for="content-instruction" class="form-label small fw-semibold">Ask AI to revise the body</label>
+                    <textarea class="form-control form-control-sm mb-2" id="content-instruction" rows="3" placeholder="Example: Shorten this, add stronger examples, make it more formal, or improve the opening."></textarea>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm" id="btn-revise-content">Apply instruction</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm conversation-preset" data-target="content" data-instruction="Shorten this article by about 30 percent while keeping the structure and key points.">Shorten</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm conversation-preset" data-target="content" data-instruction="Improve the structure, flow, and clarity while preserving the article's meaning.">Improve structure</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm conversation-preset" data-target="content" data-instruction="Make this article more concise and executive-friendly.">Executive tone</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="slug" class="form-label fw-semibold">URL slug</label>
+                <input type="text" class="form-control" id="slug" name="Slug" maxlength="400" placeholder="Auto-generated from heading if left blank" value="@Model?.Slug" />
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label for="coverImageUrl" class="form-label fw-semibold mb-0">Cover image URL</label>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-generate-image">Suggest image</button>
+                </div>
+                <input type="url" class="form-control" id="coverImageUrl" name="CoverImageUrl" maxlength="500" required placeholder="https://loremflickr.com/800/600/technology" value="@Model?.CoverImageUrl" />
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+                <button type="button" class="btn btn-primary" id="btn-generate-all">Generate all</button>
+                <button type="submit" class="btn btn-success" id="btn-publish">Publish article</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="border rounded-3 p-3 mb-4">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Generation status</p>
+            <p class="mb-0" id="generation-status">Ready.</p>
+        </div>
+
+        <div class="border rounded-3 p-3 mb-4">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Model reasoning</p>
+            <div id="thinking-panel" class="small text-muted bg-light border rounded p-2 font-monospace" style="min-height: 6rem; max-height: 14rem; overflow-y: auto;">Waiting for generation…</div>
+            <div class="form-text">Internal model thinking stream (not published).</div>
+        </div>
+
+        <div class="border rounded-3 p-3">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Cover preview</p>
+            <img src="" alt="Cover image preview" id="cover-preview" class="img-fluid rounded border w-100 d-none" />
+            <p class="small text-muted mb-0" id="cover-preview-empty">Enter or generate a cover image URL to preview.</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <script src="~/js/news-generate.js" asp-append-version="true"></script>
+}

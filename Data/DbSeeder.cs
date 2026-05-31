@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PindahWebsite3.Areas.Identity.Data;
 using PindahWebsite3.Models;
 using System;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,53 +12,14 @@ namespace PindahWebsite3.Data
 {
     public static class DbSeeder
     {
-        public static async Task SeedAsync(PindahWebsite3Context context, UserManager<PindahWebsite3User> userManager, RoleManager<IdentityRole> roleManager, IWebHostEnvironment env)
+        public static async Task SeedAsync(
+            PindahWebsite3Context context,
+            UserManager<PindahWebsite3User> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration)
         {
             await EnsureDatabaseSchemaAsync(context);
-
-            // Seed Roles
-            if (!await roleManager.RoleExistsAsync("Admin"))
-            {
-                await roleManager.CreateAsync(new IdentityRole("Admin"));
-            }
-            if (!await roleManager.RoleExistsAsync("Contributor"))
-            {
-                await roleManager.CreateAsync(new IdentityRole("Contributor"));
-            }
-
-            try
-            {
-                // Ensure the schema handles our new property for existing Db
-                await context.Database.ExecuteSqlRawAsync("ALTER TABLE ZimsecDocuments ADD COLUMN UploadedByUserId TEXT NULL;");
-            }
-            catch
-            {
-                // Ignored - probably column already exists
-            }
-
-            var adminEmail = "admin@zimsec.pindah.org";
-            var adminPassword = "SuperStrongPassword123!@#_2026_SecureAdmin!";
-
-            if (await userManager.FindByEmailAsync(adminEmail) == null)
-            {
-                var adminUser = new PindahWebsite3User 
-                { 
-                    UserName = adminEmail, 
-                    Email = adminEmail, 
-                    EmailConfirmed = true 
-                };
-                
-                var result = await userManager.CreateAsync(adminUser, adminPassword);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(adminUser, "Admin");
-
-                    // Store credentials securely inside wwwroot/credentials.json
-                    string credPath = Path.Combine(env.WebRootPath, "credentials.json");
-                    string credContent = $"{{\n  \"username\": \"{adminEmail}\",\n  \"password\": \"{adminPassword}\"\n}}";
-                    await File.WriteAllTextAsync(credPath, credContent);
-                }
-            }
+            await SeedAdminUserAsync(context, userManager, roleManager, configuration);
 
             if (!context.ZimsecCategories.Any())
             {
@@ -85,6 +45,120 @@ namespace PindahWebsite3.Data
                 );
 
                 context.SaveChanges();
+            }
+        }
+
+        public static async Task SeedAdminUserAsync(
+            PindahWebsite3Context context,
+            UserManager<PindahWebsite3User> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration)
+        {
+            await EnsureDatabaseSchemaAsync(context);
+
+            if (!await roleManager.RoleExistsAsync("Admin"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            if (!await roleManager.RoleExistsAsync("Contributor"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Contributor"));
+            }
+
+            try
+            {
+                await context.Database.ExecuteSqlRawAsync("ALTER TABLE ZimsecDocuments ADD COLUMN UploadedByUserId TEXT NULL;");
+            }
+            catch
+            {
+                // Column likely already exists.
+            }
+
+            var adminEmail = configuration["Admin:Email"];
+            var adminPassword = configuration["Admin:Password"];
+
+            if (!string.IsNullOrWhiteSpace(adminEmail) && !string.IsNullOrWhiteSpace(adminPassword))
+            {
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                if (adminUser == null)
+                {
+                    adminUser = new PindahWebsite3User
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+
+                    var result = await userManager.CreateAsync(adminUser, adminPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(adminUser, "Admin");
+                    }
+                }
+                else
+                {
+                    var userChanged = false;
+
+                    if (adminUser.UserName != adminEmail)
+                    {
+                        adminUser.UserName = adminEmail;
+                        userChanged = true;
+                    }
+
+                    if (adminUser.Email != adminEmail)
+                    {
+                        adminUser.Email = adminEmail;
+                        userChanged = true;
+                    }
+
+                    if (!adminUser.EmailConfirmed)
+                    {
+                        adminUser.EmailConfirmed = true;
+                        userChanged = true;
+                    }
+
+                    if (userChanged)
+                    {
+                        await userManager.UpdateAsync(adminUser);
+                    }
+
+                    if (!await userManager.CheckPasswordAsync(adminUser, adminPassword))
+                    {
+                        if (await userManager.HasPasswordAsync(adminUser))
+                        {
+                            await userManager.RemovePasswordAsync(adminUser);
+                        }
+
+                        await userManager.AddPasswordAsync(adminUser, adminPassword);
+                    }
+
+                    if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+                    {
+                        await userManager.AddToRoleAsync(adminUser, "Admin");
+                    }
+                }
+            }
+
+            var usersMissingNormalizedFields = await context.Users
+                .Where(u => u.NormalizedUserName == null || u.NormalizedEmail == null)
+                .ToListAsync();
+
+            foreach (var user in usersMissingNormalizedFields)
+            {
+                if (!string.IsNullOrWhiteSpace(user.UserName))
+                {
+                    user.NormalizedUserName = user.UserName.ToUpperInvariant();
+                }
+
+                if (!string.IsNullOrWhiteSpace(user.Email))
+                {
+                    user.NormalizedEmail = user.Email.ToUpperInvariant();
+                }
+            }
+
+            if (usersMissingNormalizedFields.Count > 0)
+            {
+                await context.SaveChangesAsync();
             }
         }
 
