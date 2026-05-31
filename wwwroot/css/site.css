@@ -264,6 +264,21 @@
   color: #212529;
 }
 
+.sales-chat-bubble-assistant p:last-child,
+.sales-chat-bubble-assistant ul:last-child,
+.sales-chat-bubble-assistant table:last-child {
+  margin-bottom: 0;
+}
+
+.sales-chat-bubble-assistant .table {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.sales-chat-bubble-assistant .list-group {
+  font-size: 0.875rem;
+}
+
 .sales-chat-handoff {
   background: #f1f8f4;
 }

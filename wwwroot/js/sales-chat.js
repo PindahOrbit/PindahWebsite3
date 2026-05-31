@@ -15,6 +15,14 @@
     let activeController = null;
     let isStreaming = false;
 
+    const ALLOWED_TAGS = new Set([
+        'P', 'DIV', 'SPAN', 'STRONG', 'EM', 'B', 'I', 'UL', 'OL', 'LI',
+        'H5', 'H6', 'SMALL', 'TABLE', 'THEAD', 'TBODY', 'TR', 'TD', 'TH',
+        'BR', 'A', 'HR', 'DL', 'DT', 'DD', 'BLOCKQUOTE'
+    ]);
+
+    const ALLOWED_CLASSES = /^[\w\s-]+$/;
+
     function escapeHtml(text) {
         return text
             .replace(/&/g, '&amp;')
@@ -23,12 +31,128 @@
             .replace(/"/g, '&quot;');
     }
 
-    function formatAssistantText(text) {
-        const cleaned = text
-            .replace(/```whatsapp-handoff[\s\S]*?```/gi, '')
-            .trim();
+    const VOID_TAGS = new Set(['AREA', 'BASE', 'BR', 'COL', 'EMBED', 'HR', 'IMG', 'INPUT', 'LINK', 'META', 'PARAM', 'SOURCE', 'TRACK', 'WBR']);
 
-        return escapeHtml(cleaned)
+    function cleanVisibleAssistantText(text) {
+        return text
+            .replace(/```whatsapp-handoff[\s\S]*?```/gi, '')
+            .replace(/```whatsapp-handoff[\s\S]*$/i, '')
+            .replace(/```[^\n`]*$/i, '')
+            .trim();
+    }
+
+    function shouldRenderAsHtml(text) {
+        return /</.test(text);
+    }
+
+    /** Drop a trailing tag that has not finished (e.g. "<p class=\"mb"). */
+    function trimIncompleteTrailingTag(html) {
+        const incomplete = html.match(/<[^>]*$/);
+        if (incomplete) {
+            return html.slice(0, -incomplete[0].length);
+        }
+        return html;
+    }
+
+    /** Temporarily close open tags so partial stream HTML still parses. */
+    function balanceOpenTags(html) {
+        const stack = [];
+        const tagRegex = /<\/?([a-zA-Z][a-zA-Z0-9]*)\b[^>]*\/?>/g;
+        let match;
+
+        while ((match = tagRegex.exec(html)) !== null) {
+            const token = match[0];
+            const name = match[1].toUpperCase();
+
+            if (VOID_TAGS.has(name) || token.endsWith('/>')) {
+                continue;
+            }
+
+            if (token.startsWith('</')) {
+                const idx = stack.lastIndexOf(name);
+                if (idx >= 0) {
+                    stack.splice(idx, 1);
+                }
+            } else {
+                stack.push(name);
+            }
+        }
+
+        let balanced = html;
+        for (let i = stack.length - 1; i >= 0; i -= 1) {
+            balanced += `</${stack[i].toLowerCase()}>`;
+        }
+        return balanced;
+    }
+
+    function prepareStreamingHtml(raw) {
+        const cleaned = cleanVisibleAssistantText(raw);
+        if (!cleaned) {
+            return '';
+        }
+
+        if (!shouldRenderAsHtml(cleaned)) {
+            return cleaned;
+        }
+
+        return balanceOpenTags(trimIncompleteTrailingTag(cleaned));
+    }
+
+    function sanitizeAssistantHtml(html) {
+        const template = document.createElement('template');
+        template.innerHTML = html;
+
+        function walk(node) {
+            const children = [...node.childNodes];
+            for (const child of children) {
+                if (child.nodeType === Node.TEXT_NODE) {
+                    continue;
+                }
+
+                if (child.nodeType !== Node.ELEMENT_NODE) {
+                    child.remove();
+                    continue;
+                }
+
+                const tag = child.tagName;
+                if (!ALLOWED_TAGS.has(tag)) {
+                    const text = document.createTextNode(child.textContent);
+                    child.replaceWith(text);
+                    continue;
+                }
+
+                [...child.attributes].forEach(attr => {
+                    const name = attr.name.toLowerCase();
+                    if (name === 'class' && ALLOWED_CLASSES.test(attr.value)) {
+                        return;
+                    }
+                    if (tag === 'A' && name === 'href' && /^(https?:\/\/|mailto:)/i.test(attr.value)) {
+                        child.setAttribute('rel', 'noopener noreferrer');
+                        child.setAttribute('target', '_blank');
+                        return;
+                    }
+                    child.removeAttribute(attr.name);
+                });
+
+                walk(child);
+            }
+        }
+
+        walk(template.content);
+        return template.innerHTML;
+    }
+
+    function renderAssistantContent(text) {
+        const prepared = prepareStreamingHtml(text);
+        if (!prepared) {
+            return '';
+        }
+
+        if (shouldRenderAsHtml(prepared)) {
+            return sanitizeAssistantHtml(prepared);
+        }
+
+        return escapeHtml(prepared)
             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
             .replace(/\n/g, '<br>');
     }
@@ -167,7 +291,7 @@
 
                     if (payload.content) {
                         accumulated += payload.content;
-                        assistantBubble.innerHTML = formatAssistantText(accumulated);
+                        assistantBubble.innerHTML = renderAssistantContent(accumulated);
                         messagesEl.scrollTop = messagesEl.scrollHeight;
                     }
                 }
@@ -176,7 +300,7 @@
             const finalText = accumulated.trim();
             if (finalText) {
                 conversation.push({ role: 'assistant', content: finalText });
-                assistantBubble.innerHTML = formatAssistantText(finalText);
+                assistantBubble.innerHTML = renderAssistantContent(finalText);
 
                 const handoff = parseHandoff(finalText);
                 if (handoff) {
