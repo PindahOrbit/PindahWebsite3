@@ -4,7 +4,7 @@
 @inject SignInManager<PindahWebsite3User> SignInManager
 @inject UserManager<PindahWebsite3User> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav d-flex">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">

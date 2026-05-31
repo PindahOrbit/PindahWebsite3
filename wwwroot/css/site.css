@@ -69,11 +69,15 @@
   background-repeat: no-repeat;
 }
 
-.home-landing-banner .container,
-.module-landing-banner .container {
+.home-landing-banner > .container,
+.module-landing-banner > .container {
   position: relative;
   z-index: 1;
-  max-width: 42rem;
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 1320px;
+  padding-left: max(calc(var(--bs-gutter-x) * 0.5), calc((100vw - 1320px) * 0.5 + var(--bs-gutter-x) * 0.5));
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
   text-shadow: 0 1px 3px rgba(0, 17, 36, 0.45);
 }
 

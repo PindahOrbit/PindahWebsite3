@@ -90,6 +90,9 @@
     <footer class="border-top text-muted py-3 bg-light mt-auto">
         <div class="container text-center">
             <span class="small">&copy; @DateTime.Now.Year - Pindah - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">Privacy</a></span>
+            <span class="small">
+                <partial name="_LoginPartial" />
+            </span>
         </div>
     </footer>
 

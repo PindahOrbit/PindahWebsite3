@@ -44,8 +44,8 @@ if (!builder.Environment.IsDevelopment())
     });
 }
 
-// SEO: Response caching for static assets
-builder.Services.AddResponseCaching();
+builder.Services.AddHttpClient<PindahWebsite3.Services.OllamaChatService>();
+
 
 // Quartz: Scheduled news generation (runs daily at 02:00 UTC)
 builder.Services.AddQuartz(q =>

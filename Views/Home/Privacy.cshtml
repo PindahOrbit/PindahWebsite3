@@ -1,6 +1,787 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Privacy Policy | Pindah Private Limited";
+    ViewData["Description"] = "Privacy policy for Pindah Private Limited enterprise software platforms, including ERP, CRM, healthcare, education, and document management systems. Data protection, security, retention, and your rights.";
+    ViewData["Keywords"] = "privacy policy, data protection, enterprise software privacy, GDPR, Zimbabwe data protection, Pindah, ERP privacy, healthcare data, student data privacy";
+    ViewData["CanonicalUrl"] = "https://pindah.org/home/privacy";
+    ViewData["OgImage"] = "https://storage.pindah.org/IMAGES/pindah-og-default.jpg";
+    var effectiveDate = new DateTime(2026, 5, 31);
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<section class="module-landing-banner mb-4" style="--hero-bg: url('../images/heroes/hero-dms.jpg');" aria-label="Privacy policy">
+    <div class="container">
+        <div class="module-landing-accent" aria-hidden="true"></div>
+        <p class="module-landing-kicker mb-2">Legal &amp; compliance</p>
+        <h1 class="module-landing-headline text-white mb-3">Privacy Policy</h1>
+        <p class="module-landing-dek mb-3 col-lg-10 px-0">
+            This policy describes how Pindah Private Limited collects, uses, stores, and protects personal and operational data
+            across our website, enterprise platforms, and client engagements.
+        </p>
+        <p class="small text-white-50 mb-0">Effective date: @effectiveDate.ToString("MMMM d, yyyy") &middot; Version 2.0</p>
+    </div>
+</section>
+
+<div class="row g-4 mb-5">
+    <div class="col-lg-4 col-xl-3">
+        <nav class="sticky-lg-top border rounded-3 p-3 bg-light" style="top: 1rem;" aria-label="Privacy policy sections">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Contents</p>
+            <ol class="small mb-0 ps-3">
+                <li class="mb-1"><a href="#introduction" class="text-decoration-none">1. Introduction</a></li>
+                <li class="mb-1"><a href="#controller" class="text-decoration-none">2. Data controller</a></li>
+                <li class="mb-1"><a href="#definitions" class="text-decoration-none">3. Definitions</a></li>
+                <li class="mb-1"><a href="#scope" class="text-decoration-none">4. Scope of application</a></li>
+                <li class="mb-1"><a href="#categories" class="text-decoration-none">5. Data categories</a></li>
+                <li class="mb-1"><a href="#collection" class="text-decoration-none">6. Collection methods</a></li>
+                <li class="mb-1"><a href="#legal-bases" class="text-decoration-none">7. Legal bases</a></li>
+                <li class="mb-1"><a href="#purposes" class="text-decoration-none">8. Purposes of processing</a></li>
+                <li class="mb-1"><a href="#platforms" class="text-decoration-none">9. Platform-specific processing</a></li>
+                <li class="mb-1"><a href="#cookies" class="text-decoration-none">10. Cookies &amp; analytics</a></li>
+                <li class="mb-1"><a href="#third-parties" class="text-decoration-none">11. Third-party disclosures</a></li>
+                <li class="mb-1"><a href="#transfers" class="text-decoration-none">12. International transfers</a></li>
+                <li class="mb-1"><a href="#retention" class="text-decoration-none">13. Data retention</a></li>
+                <li class="mb-1"><a href="#security" class="text-decoration-none">14. Security measures</a></li>
+                <li class="mb-1"><a href="#access-controls" class="text-decoration-none">15. Access &amp; authentication</a></li>
+                <li class="mb-1"><a href="#rights" class="text-decoration-none">16. Your rights</a></li>
+                <li class="mb-1"><a href="#education" class="text-decoration-none">17. Education data</a></li>
+                <li class="mb-1"><a href="#healthcare" class="text-decoration-none">18. Healthcare data</a></li>
+                <li class="mb-1"><a href="#automated" class="text-decoration-none">19. Automated processing</a></li>
+                <li class="mb-1"><a href="#incidents" class="text-decoration-none">20. Incident response</a></li>
+                <li class="mb-1"><a href="#subprocessors" class="text-decoration-none">21. Sub-processors</a></li>
+                <li class="mb-1"><a href="#business-changes" class="text-decoration-none">22. Business transfers</a></li>
+                <li class="mb-1"><a href="#regional" class="text-decoration-none">23. Regional provisions</a></li>
+                <li class="mb-1"><a href="#changes" class="text-decoration-none">24. Policy changes</a></li>
+                <li class="mb-1"><a href="#contact" class="text-decoration-none">25. Contact</a></li>
+                <li class="mb-0"><a href="#appendix-a" class="text-decoration-none">Appendix A: Retention schedule</a></li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="col-lg-8 col-xl-9">
+
+        <section id="introduction" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 1</p>
+            <h2 class="h3 fw-bold mb-3">Introduction</h2>
+            <p>
+                Pindah Private Limited ("Pindah," "we," "us," or "our") is an enterprise software engineering and technology
+                consulting firm headquartered in Harare, Zimbabwe. We design, deploy, and operate integrated business platforms
+                for organizations across education, healthcare, manufacturing, logistics, insurance, construction, and commercial
+                operations.
+            </p>
+            <p>
+                We recognize that the data entrusted to us—whether relating to your visit to this website, your correspondence
+                with our team, or the operational records processed within our software platforms—forms part of the critical
+                infrastructure upon which our clients depend. This Privacy Policy explains our practices in clear, substantive
+                terms so that data subjects, client organizations, and authorized representatives can understand how information
+                is handled throughout its lifecycle.
+            </p>
+            <p class="mb-0">
+                This document applies to personal data processed by Pindah as a data controller (for example, when you contact us
+                or browse our website) and describes our standard commitments when Pindah acts as a data processor on behalf of
+                client organizations using our enterprise modules. Where a separate Data Processing Agreement ("DPA") or client
+                contract governs a specific engagement, that agreement prevails for processor activities to the extent of any
+                inconsistency with this policy.
+            </p>
+        </section>
+
+        <section id="controller" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 2</p>
+            <h2 class="h3 fw-bold mb-3">Data Controller Information</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle small">
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="bg-light" style="width: 35%;">Legal entity</th>
+                            <td>Pindah Private Limited</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-light">Registered jurisdiction</th>
+                            <td>Zimbabwe</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-light">Principal office</th>
+                            <td>Harare, Zimbabwe</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-light">General inquiries</th>
+                            <td><a href="mailto:admin@pindah.org">admin@pindah.org</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-light">Telephone</th>
+                            <td>+263 714 856 897</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-light">Website</th>
+                            <td><a href="https://pindah.org">https://pindah.org</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-light">Privacy contact</th>
+                            <td><a href="mailto:admin@pindah.org">admin@pindah.org</a> (subject line: "Privacy Request")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mb-0">
+                Where applicable law requires designation of a representative or contact point for cross-border data transfers,
+                we will publish updated contact details on this page or provide them within contractual documentation supplied
+                to enterprise clients.
+            </p>
+        </section>
+
+        <section id="definitions" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 3</p>
+            <h2 class="h3 fw-bold mb-3">Definitions</h2>
+            <p>For purposes of this policy, the following terms have the meanings set forth below unless context requires otherwise.</p>
+            <dl class="row small">
+                <dt class="col-sm-4">Personal data</dt>
+                <dd class="col-sm-8 mb-3">Any information relating to an identified or identifiable natural person, including identifiers such as name, contact details, online identifiers, location data, or factors specific to physical, physiological, genetic, mental, economic, cultural, or social identity.</dd>
+                <dt class="col-sm-4">Operational data</dt>
+                <dd class="col-sm-8 mb-3">Business records processed within Pindah platforms, which may include personal data embedded in transactions, employee records, patient files, student records, inventory movements, financial entries, or correspondence logs.</dd>
+                <dt class="col-sm-4">Data controller</dt>
+                <dd class="col-sm-8 mb-3">The entity that determines the purposes and means of processing personal data. For platform-hosted records, the client organization is typically the controller; Pindah acts as processor unless otherwise stated.</dd>
+                <dt class="col-sm-4">Data processor</dt>
+                <dd class="col-sm-8 mb-3">The entity that processes personal data on behalf of the controller. Pindah processes client operational data under client instruction and applicable contracts.</dd>
+                <dt class="col-sm-4">Data subject</dt>
+                <dd class="col-sm-8 mb-3">An individual to whom personal data relates, including website visitors, client personnel, students, patients, customers, suppliers, and other end users whose information appears in processed records.</dd>
+                <dt class="col-sm-4">Special category data</dt>
+                <dd class="col-sm-8 mb-3">Sensitive personal data requiring heightened protection under applicable law, including health information, biometric data where used for identification, and data relating to minors in educational contexts.</dd>
+                <dt class="col-sm-4">Processing</dt>
+                <dd class="col-sm-8 mb-0">Any operation performed on data, including collection, recording, organization, storage, adaptation, retrieval, consultation, use, disclosure, alignment, restriction, erasure, or destruction.</dd>
+            </dl>
+        </section>
+
+        <section id="scope" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 4</p>
+            <h2 class="h3 fw-bold mb-3">Scope of Application</h2>
+            <p>This Privacy Policy applies to the following activities and systems, without limitation:</p>
+            <ul>
+                <li>The public website located at <strong>pindah.org</strong> and associated subdomains used for product information, documentation, and inquiry submission;</li>
+                <li>Hosted and deployed instances of Pindah enterprise modules, including but not limited to ERP, CRM, Accounting, Manufacturing, Logistics, Insurance, Construction, HR, Hospital Management, School Management (Frame/SMS), Document Management (DMS), Supply Chain Management (SCM), and related administrative portals;</li>
+                <li>Authentication services, including the Pindah Basa login portal where applicable;</li>
+                <li>Client onboarding, implementation, support communications, and professional services engagements;</li>
+                <li>Educational resource areas of the site, including Zimsec and Cambridge document repositories, where user accounts or upload metadata may be processed;</li>
+                <li>Automated content systems used for publication of general business insights on the News section of this website.</li>
+            </ul>
+            <p>
+                This policy does not apply to third-party websites, applications, or services linked from our platforms unless
+                we explicitly state otherwise. Client organizations may maintain independent privacy policies governing their
+                use of Pindah software to process data relating to their employees, customers, students, or patients.
+            </p>
+            <p class="mb-0">
+                If you interact with Pindah solely as an employee or authorized user of a client organization, requests regarding
+                operational records stored in a client tenant should generally be directed to that organization in the first instance.
+                We will assist controllers in fulfilling valid requests where contractually required.
+            </p>
+        </section>
+
+        <section id="categories" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 5</p>
+            <h2 class="h3 fw-bold mb-3">Categories of Data We Process</h2>
+            <p>The categories of data processed depend on your relationship with Pindah and the services in use. Representative categories include:</p>
+            <div class="table-responsive mb-4">
+                <table class="table table-striped table-bordered small">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Examples</th>
+                            <th scope="col">Typical source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Identity &amp; contact</td>
+                            <td>Name, job title, organization, email, telephone, postal address</td>
+                            <td>Inquiry forms, contracts, account registration</td>
+                        </tr>
+                        <tr>
+                            <td>Account &amp; credentials</td>
+                            <td>Username, role assignments, authentication logs, password hashes</td>
+                            <td>Identity systems, admin provisioning</td>
+                        </tr>
+                        <tr>
+                            <td>Technical &amp; usage</td>
+                            <td>IP address, browser type, device identifiers, session timestamps, pages viewed</td>
+                            <td>Web servers, application logs, cookies</td>
+                        </tr>
+                        <tr>
+                            <td>Financial &amp; commercial</td>
+                            <td>Invoicing details, payment references, procurement records, tax identifiers</td>
+                            <td>ERP, Accounting, client billing</td>
+                        </tr>
+                        <tr>
+                            <td>Workforce</td>
+                            <td>Employee IDs, payroll inputs, leave records, performance documentation</td>
+                            <td>HR modules under client control</td>
+                        </tr>
+                        <tr>
+                            <td>Customer &amp; CRM</td>
+                            <td>Lead history, correspondence, sales pipeline, service tickets</td>
+                            <td>CRM modules under client control</td>
+                        </tr>
+                        <tr>
+                            <td>Education</td>
+                            <td>Student identifiers, enrollment, grades, attendance, fee records, guardian contact details</td>
+                            <td>SMS / Frame deployments</td>
+                        </tr>
+                        <tr>
+                            <td>Healthcare</td>
+                            <td>Patient demographics, clinical notes, billing, laboratory results where configured</td>
+                            <td>Hospital modules under client control</td>
+                        </tr>
+                        <tr>
+                            <td>Documents &amp; files</td>
+                            <td>Uploaded PDFs, metadata, version history, workflow approvals, OCR outputs</td>
+                            <td>DMS, Zimsec repositories</td>
+                        </tr>
+                        <tr>
+                            <td>Communications</td>
+                            <td>Support emails, call records, meeting notes, implementation documentation</td>
+                            <td>Direct correspondence with Pindah</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mb-0">
+                We do not intentionally collect personal data beyond what is necessary for stated purposes. Clients configure
+                their tenant environments and remain responsible for ensuring that data entered into the platform is collected
+                lawfully and with appropriate notices to data subjects.
+            </p>
+        </section>
+
+        <section id="collection" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 6</p>
+            <h2 class="h3 fw-bold mb-3">How We Collect Information</h2>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="card h-100 border">
+                        <div class="card-body">
+                            <h3 class="h6 fw-semibold">Direct provision</h3>
+                            <p class="small mb-0">When you email us, request a demonstration, register an account, submit documents, or enter into a commercial agreement, you may provide personal data directly.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border">
+                        <div class="card-body">
+                            <h3 class="h6 fw-semibold">Automated technologies</h3>
+                            <p class="small mb-0">Server logs, session management, security monitoring, and cookies may automatically capture technical information when you access our website or authenticated portals.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border">
+                        <div class="card-body">
+                            <h3 class="h6 fw-semibold">Client administration</h3>
+                            <p class="small mb-0">Authorized administrators at client organizations may create user accounts and upload operational records that contain personal data relating to their personnel or customers.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border">
+                        <div class="card-body">
+                            <h3 class="h6 fw-semibold">Integrations</h3>
+                            <p class="small mb-0">Where clients connect external systems—payment gateways, SMS providers, biometric devices, or legacy databases—data may flow into Pindah platforms through configured interfaces subject to client authorization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="legal-bases" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 7</p>
+            <h2 class="h3 fw-bold mb-3">Legal Bases for Processing</h2>
+            <p>Where Pindah acts as data controller, we rely on one or more of the following legal bases, as applicable under relevant law:</p>
+            <ol>
+                <li class="mb-2"><strong>Contractual necessity</strong> — Processing required to perform a contract with you or your organization, or to take pre-contractual steps at your request (for example, responding to an enterprise inquiry or provisioning a trial environment).</li>
+                <li class="mb-2"><strong>Legitimate interests</strong> — Processing necessary for our legitimate business interests, such as securing our infrastructure, improving platform reliability, publishing general industry insights, or communicating with prospective clients, balanced against data subject rights.</li>
+                <li class="mb-2"><strong>Legal obligation</strong> — Processing required to comply with applicable laws, regulatory requests, tax obligations, or court orders.</li>
+                <li class="mb-2"><strong>Consent</strong> — Where required, we obtain consent for specific activities such as non-essential cookies or optional marketing communications. Consent may be withdrawn at any time without affecting the lawfulness of processing prior to withdrawal.</li>
+                <li class="mb-0"><strong>Vital or public interest</strong> — In limited circumstances involving healthcare deployments, processing may be necessary to protect vital interests or support delivery of health services under controller direction and applicable regulation.</li>
+            </ol>
+            <p class="mb-0 mt-3">
+                When acting as processor, Pindah processes personal data solely on documented instructions from the client controller,
+                including with respect to legal bases communicated through the client&apos;s own privacy notices to data subjects.
+            </p>
+        </section>
+
+        <section id="purposes" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 8</p>
+            <h2 class="h3 fw-bold mb-3">Purposes of Processing</h2>
+            <p>We process personal and operational data for the following purposes:</p>
+            <ul>
+                <li>Delivering, maintaining, and improving enterprise software modules and hosted environments;</li>
+                <li>Authenticating users and enforcing role-based access controls across multi-tenant and dedicated deployments;</li>
+                <li>Providing implementation, training, technical support, and account management services;</li>
+                <li>Processing inquiries submitted through website contact channels or email;</li>
+                <li>Generating invoices, maintaining commercial records, and fulfilling contractual obligations;</li>
+                <li>Monitoring system performance, diagnosing errors, and conducting capacity planning;</li>
+                <li>Detecting, preventing, and responding to security incidents, fraud, or unauthorized access;</li>
+                <li>Complying with audit, accounting, regulatory, and legal requirements;</li>
+                <li>Publishing anonymized or aggregated analytics that do not identify individuals;</li>
+                <li>Producing general business and technology articles for the public News section using automated generation tools subject to editorial configuration;</li>
+                <li>Exercising or defending legal claims where necessary.</li>
+            </ul>
+            <p class="mb-0">
+                We do not sell personal data. We do not use client tenant operational data for unrelated third-party marketing.
+                Any use of data for product improvement is conducted under contractual terms, with appropriate segregation between client environments.
+            </p>
+        </section>
+
+        <section id="platforms" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 9</p>
+            <h2 class="h3 fw-bold mb-3">Platform-Specific Processing</h2>
+            <p>The following summaries describe data handling characteristics associated with major Pindah modules. Detailed technical schedules may be appended to client DPAs.</p>
+            <div class="accordion" id="platformAccordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#platform-erp" aria-expanded="true" aria-controls="platform-erp">
+                            ERP, Accounting &amp; Financial Modules
+                        </button>
+                    </h3>
+                    <div id="platform-erp" class="accordion-collapse collapse show" data-bs-parent="#platformAccordion">
+                        <div class="accordion-body small">
+                            Financial modules process ledger entries, accounts payable and receivable, inventory valuations, multi-currency transactions, tax calculations, and audit trails. Personal data may appear in employee expense claims, customer master records, supplier contacts, and payment metadata. Retention aligns with statutory accounting periods and client-configured archival policies. Access is restricted through segregation of duties and role definitions configured by the client administrator.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#platform-crm" aria-expanded="false" aria-controls="platform-crm">
+                            CRM &amp; Customer Operations
+                        </button>
+                    </h3>
+                    <div id="platform-crm" class="accordion-collapse collapse" data-bs-parent="#platformAccordion">
+                        <div class="accordion-body small">
+                            CRM modules consolidate interaction history across sales, service, and marketing workflows. Data subjects may include leads, customers, partners, and internal sales personnel. Communication logs, quotation records, and pipeline stages may contain personal identifiers and commercial preferences. Clients determine lawful basis and retention for sales records; Pindah provides export and deletion tooling where configured.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#platform-sms" aria-expanded="false" aria-controls="platform-sms">
+                            School Management (Frame / SMS)
+                        </button>
+                    </h3>
+                    <div id="platform-sms" class="accordion-collapse collapse" data-bs-parent="#platformAccordion">
+                        <div class="accordion-body small">
+                            Education platforms manage student enrollment, academic records, attendance, fee billing, parent portals, and staff administration. Data relating to minors receives heightened protection. Schools act as controllers; Pindah processes records under instruction. Features such as SMS notifications to guardians require clients to maintain appropriate consent or legal authority. See Section 17 for additional detail.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#platform-hospital" aria-expanded="false" aria-controls="platform-hospital">
+                            Hospital &amp; Clinic Management
+                        </button>
+                    </h3>
+                    <div id="platform-hospital" class="accordion-collapse collapse" data-bs-parent="#platformAccordion">
+                        <div class="accordion-body small">
+                            Healthcare modules may process patient registration, clinical encounters, laboratory orders, pharmacy dispensing, billing, and medical record attachments. Such data frequently constitutes special category health information. Deployments implement granular clinical roles, session timeouts, and comprehensive audit logging. See Section 18 for additional detail.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#platform-dms" aria-expanded="false" aria-controls="platform-dms">
+                            Document Management (DMS) &amp; Zimsec Resources
+                        </button>
+                    </h3>
+                    <div id="platform-dms" class="accordion-collapse collapse" data-bs-parent="#platformAccordion">
+                        <div class="accordion-body small">
+                            Document systems store files, metadata, version histories, workflow states, and search indices. Contributor accounts on educational repositories may log upload activity, file names, and associated user identifiers. OCR and classification features process document contents to enable retrieval. Clients and authorized contributors must not upload unlawful or unnecessary personal data within shared documents.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#platform-other" aria-expanded="false" aria-controls="platform-other">
+                            Manufacturing, Logistics, HR, Insurance &amp; Construction
+                        </button>
+                    </h3>
+                    <div id="platform-other" class="accordion-collapse collapse" data-bs-parent="#platformAccordion">
+                        <div class="accordion-body small">
+                            Operational modules process data relating to production orders, fleet movements, driver assignments, employee lifecycle events, policy administration, claims, site safety records, and subcontractor documentation. Personal data typically appears in workforce, customer, and partner records embedded within operational transactions. Processing supports workflow automation, regulatory reporting, and executive dashboards configured by each client.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cookies" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 10</p>
+            <h2 class="h3 fw-bold mb-3">Cookies, Local Storage &amp; Analytics</h2>
+            <p>Our website and authenticated applications may use cookies and similar technologies for the following purposes:</p>
+            <ul>
+                <li><strong>Strictly necessary cookies</strong> — Required for authentication, session continuity, load balancing, and security protections. These cannot be disabled without impairing core functionality.</li>
+                <li><strong>Functional cookies</strong> — Remember preferences such as language selection or interface configuration where supported.</li>
+                <li><strong>Performance cookies</strong> — Collect aggregated information about page load times and navigation patterns to improve reliability.</li>
+            </ul>
+            <p>
+                We minimize use of invasive tracking technologies on the public marketing site. Authenticated enterprise portals
+                may employ additional session mechanisms necessary for secure operation. Browser settings may allow you to refuse
+                cookies; however, certain services may become unavailable if essential cookies are blocked.
+            </p>
+            <p class="mb-0">
+                Where non-essential cookies requiring consent are introduced in specific jurisdictions, we will present appropriate
+                notice and choice mechanisms consistent with applicable law.
+            </p>
+        </section>
+
+        <section id="third-parties" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 11</p>
+            <h2 class="h3 fw-bold mb-3">Disclosures to Third Parties</h2>
+            <p>We may disclose personal data to the following categories of recipients under contractual and confidentiality obligations:</p>
+            <ul>
+                <li>Cloud infrastructure and hosting providers supporting application deployment;</li>
+                <li>Email delivery, SMS gateway, and notification service providers configured by Pindah or the client;</li>
+                <li>Payment processors where commercial transactions are handled electronically;</li>
+                <li>Professional advisers including legal counsel, auditors, and insurers bound by duty of confidentiality;</li>
+                <li>Implementation partners engaged with client authorization for specific projects;</li>
+                <li>Regulatory authorities, courts, or law enforcement when required by valid legal process;</li>
+                <li>Successors in interest in connection with a merger, acquisition, or asset transfer subject to continuity of protection commitments.</li>
+            </ul>
+            <p class="mb-0">
+                Each disclosure is limited to what is reasonably necessary for the stated purpose. Processor relationships are
+                governed by written agreements specifying security requirements, sub-processing restrictions, and breach notification obligations.
+            </p>
+        </section>
+
+        <section id="transfers" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 12</p>
+            <h2 class="h3 fw-bold mb-3">International Data Transfers</h2>
+            <p>
+                Pindah is based in Zimbabwe and serves clients operating across multiple jurisdictions. Personal data may be
+                stored or processed in Zimbabwe and, where necessary for redundancy, support, or infrastructure efficiency,
+                in other countries where our service providers maintain facilities.
+            </p>
+            <p>
+                When transferring personal data internationally, we implement appropriate safeguards such as standard contractual
+                clauses, data processing agreements, encryption in transit, and access minimization. Clients requiring data
+                residency within specific geographic boundaries should specify requirements during contracting so that deployment
+                architecture can be aligned accordingly.
+            </p>
+            <p class="mb-0">
+                Cross-border transfers of special category data, including health or student records, receive additional scrutiny
+                and are configured according to controller instructions and applicable regulatory frameworks.
+            </p>
+        </section>
+
+        <section id="retention" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 13</p>
+            <h2 class="h3 fw-bold mb-3">Data Retention</h2>
+            <p>
+                We retain personal data only for as long as necessary to fulfill the purposes described in this policy, unless
+                a longer retention period is required or permitted by law. Retention criteria include:
+            </p>
+            <ul>
+                <li>Duration of the contractual relationship and applicable limitation periods for legal claims;</li>
+                <li>Statutory retention requirements for financial, tax, and regulatory records;</li>
+                <li>Client-configured archival and purging policies within tenant environments;</li>
+                <li>Security log retention periods necessary for incident investigation and system integrity;</li>
+                <li>Backup rotation cycles, after which deleted production data becomes inaccessible through normal means.</li>
+            </ul>
+            <p class="mb-0">
+                Upon contract termination, client operational data is handled according to the applicable agreement—typically export
+                followed by secure deletion within an agreed timeframe, unless legal hold requirements apply. A summary retention
+                schedule appears in Appendix A below.
+            </p>
+        </section>
+
+        <section id="security" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 14</p>
+            <h2 class="h3 fw-bold mb-3">Security Measures</h2>
+            <p>
+                Security architecture is foundational to Pindah platform design. We implement administrative, technical, and
+                organizational measures aligned with ISO 27001 principles, including:
+            </p>
+            <div class="row g-3 mb-3">
+                <div class="col-sm-6">
+                    <ul class="small mb-0">
+                        <li>Encryption of data in transit using TLS</li>
+                        <li>Encryption at rest where supported by deployment configuration</li>
+                        <li>Network segmentation and firewall controls</li>
+                        <li>Immutable audit trails for sensitive operations</li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="small mb-0">
+                        <li>Role-based access control and least-privilege provisioning</li>
+                        <li>Secure software development and change management practices</li>
+                        <li>Vulnerability monitoring and patch management procedures</li>
+                        <li>Personnel confidentiality obligations and security awareness training</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mb-0">
+                No method of transmission or storage is completely secure. While we strive to protect data using commercially
+                reasonable and enterprise-grade controls, we cannot guarantee absolute security. Clients share responsibility for
+                safeguarding credentials, configuring appropriate internal roles, and maintaining endpoint security for devices
+                accessing the platform.
+            </p>
+        </section>
+
+        <section id="access-controls" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 15</p>
+            <h2 class="h3 fw-bold mb-3">Access Controls &amp; Authentication</h2>
+            <p>
+                Access to Pindah systems is granted on a need-to-know basis. Authentication mechanisms may include username and
+                password credentials, multi-factor authentication where enabled, and integration with client identity providers
+                in enterprise deployments.
+            </p>
+            <p>
+                Administrative privileges are restricted to authorized personnel. Access reviews should be conducted periodically
+                by client administrators to revoke accounts for departed employees or changed roles. Pindah support personnel
+                access client tenant data only when necessary for troubleshooting, under logged and authorized support procedures
+                defined in applicable service agreements.
+            </p>
+            <p class="mb-0">
+                Repeated failed authentication attempts may trigger account lockout or alerting. Users are responsible for
+                maintaining credential confidentiality and notifying their administrator or Pindah support promptly upon
+                suspected compromise.
+            </p>
+        </section>
+
+        <section id="rights" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 16</p>
+            <h2 class="h3 fw-bold mb-3">Your Rights</h2>
+            <p>Depending on applicable law and your relationship with Pindah, you may have the following rights regarding personal data:</p>
+            <ol>
+                <li class="mb-2"><strong>Right of access</strong> — Obtain confirmation of whether we process your personal data and receive a copy of such data where legally required.</li>
+                <li class="mb-2"><strong>Right to rectification</strong> — Request correction of inaccurate or incomplete personal data.</li>
+                <li class="mb-2"><strong>Right to erasure</strong> — Request deletion of personal data where no compelling legal basis for continued retention exists.</li>
+                <li class="mb-2"><strong>Right to restriction</strong> — Request limitation of processing in defined circumstances.</li>
+                <li class="mb-2"><strong>Right to data portability</strong> — Receive personal data you provided in a structured, commonly used format where technically feasible.</li>
+                <li class="mb-2"><strong>Right to object</strong> — Object to processing based on legitimate interests or for direct marketing.</li>
+                <li class="mb-0"><strong>Right to withdraw consent</strong> — Where processing is consent-based, withdraw consent without affecting prior lawful processing.</li>
+            </ol>
+            <p>
+                To submit a request, contact <a href="mailto:admin@pindah.org">admin@pindah.org</a> with the subject line
+                "Privacy Request" and sufficient information to verify identity. We respond within timeframes required by
+                applicable law, typically within thirty (30) days unless extension is permitted.
+            </p>
+            <p class="mb-0">
+                If your data is processed within a client tenant, we may redirect your request to the relevant client organization
+                acting as controller, while providing reasonable assistance to that controller as processor.
+            </p>
+        </section>
+
+        <section id="education" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 17</p>
+            <h2 class="h3 fw-bold mb-3">Education Data</h2>
+            <p>
+                Schools and educational institutions using Frame or SMS modules process substantial information relating to students,
+                many of whom are minors. The institution remains the data controller and is responsible for providing appropriate
+                privacy notices to students, parents, and guardians.
+            </p>
+            <p>
+                Pindah supports controllers through access controls, audit logging, and configurable retention settings. Features
+                such as grade publication, fee statements, and SMS alerts should be deployed in accordance with institutional
+                policy and applicable education regulations.
+            </p>
+            <p class="mb-0">
+                We do not knowingly market directly to minors through client tenant data. General website content directed at
+                educational administrators is distinct from student-facing portal functionality governed by each school.
+            </p>
+        </section>
+
+        <section id="healthcare" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 18</p>
+            <h2 class="h3 fw-bold mb-3">Healthcare Data</h2>
+            <p>
+                Hospital and clinic deployments may involve processing of protected health information and other special category
+                data. Healthcare providers configure clinical workflows, consent capture, and departmental access boundaries within
+                the platform.
+            </p>
+            <p>
+                Pindah implements technical controls appropriate to regulated environments, including authentication requirements,
+                comprehensive audit trails, and segregation between clinical and administrative functions where configured. Business
+                associate or equivalent contractual terms are incorporated into healthcare engagements as required.
+            </p>
+            <p class="mb-0">
+                Personnel without clinical authorization must not access patient records. Emergency break-glass access, if enabled,
+                is logged and subject to post-event review by the client organization.
+            </p>
+        </section>
+
+        <section id="automated" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 19</p>
+            <h2 class="h3 fw-bold mb-3">Automated Processing &amp; Generated Content</h2>
+            <p>
+                Pindah may use automated systems, including large language models accessed through third-party inference providers,
+                to generate general business articles published in the public News section of this website. Such content is intended
+                as informational material for business leaders and is not personalized profiling of individual visitors.
+            </p>
+            <p>
+                Automated processing within client tenant environments—such as workflow routing in DMS, inventory reorder suggestions,
+                or dashboard aggregations—operates on client-controlled data according to rules configured by authorized administrators.
+                These processes do not produce legal or similarly significant effects on data subjects without human oversight unless
+                explicitly configured and disclosed by the client controller.
+            </p>
+            <p class="mb-0">
+                We do not use client tenant operational data to train public third-party artificial intelligence models unless
+                explicitly agreed in writing with the client.
+            </p>
+        </section>
+
+        <section id="incidents" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 20</p>
+            <h2 class="h3 fw-bold mb-3">Incident Response &amp; Breach Notification</h2>
+            <p>
+                Pindah maintains procedures for detecting, investigating, and remediating security incidents. Upon becoming aware
+                of a personal data breach affecting data for which we act as processor, we notify the affected client controller
+                without undue delay and provide information reasonably required to support regulatory notification obligations.
+            </p>
+            <p>
+                Where Pindah acts as controller, we notify affected individuals and relevant authorities when required by law,
+                describing the nature of the breach, likely consequences, and measures taken to address it.
+            </p>
+            <p class="mb-0">
+                Clients should report suspected security incidents involving Pindah platforms promptly to
+                <a href="mailto:admin@pindah.org">admin@pindah.org</a> with the subject line "Security Incident."
+            </p>
+        </section>
+
+        <section id="subprocessors" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 21</p>
+            <h2 class="h3 fw-bold mb-3">Sub-Processors</h2>
+            <p>
+                Pindah may engage sub-processors to support infrastructure, communications, or specialized services. Sub-processors
+                are bound by written agreements imposing data protection obligations substantially similar to those imposed on Pindah.
+            </p>
+            <p>
+                Enterprise clients may request notification of material changes to sub-processor arrangements where provided for
+                in their DPA. Objection mechanisms, if applicable, are defined in contractual documentation rather than this public policy.
+            </p>
+            <p class="mb-0">
+                A current list of sub-processors material to hosted services may be supplied upon written request by authorized
+                client representatives.
+            </p>
+        </section>
+
+        <section id="business-changes" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 22</p>
+            <h2 class="h3 fw-bold mb-3">Business Transfers</h2>
+            <p class="mb-0">
+                If Pindah undergoes a merger, acquisition, reorganization, or sale of assets, personal data may transfer to the
+                successor entity subject to commitments consistent with this policy. We will provide notice through this website
+                or direct communication to affected clients where practicable before personal data becomes subject to a materially
+                different privacy framework.
+            </p>
+        </section>
+
+        <section id="regional" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 23</p>
+            <h2 class="h3 fw-bold mb-3">Regional Provisions</h2>
+            <h3 class="h5 fw-semibold mt-4">Zimbabwe</h3>
+            <p>
+                As a Zimbabwe-incorporated entity, Pindah processes data in accordance with applicable domestic law and regulatory
+                guidance. Clients and data subjects in Zimbabwe may contact us using the details in Section 25 for inquiries relating
+                to local processing activities.
+            </p>
+            <h3 class="h5 fw-semibold mt-4">European Economic Area &amp; United Kingdom</h3>
+            <p>
+                Where GDPR or UK GDPR applies to processing for which Pindah is controller or processor, the legal bases, rights,
+                transfer mechanisms, and breach notification commitments described in this policy are intended to align with those
+                frameworks. Controllers remain responsible for establishing lawful bases for tenant data and providing required notices to data subjects.
+            </p>
+            <h3 class="h5 fw-semibold mt-4">Other jurisdictions</h3>
+            <p class="mb-0">
+                Organizations operating in additional regions should raise specific compliance requirements during contracting.
+                Pindah works with clients to accommodate reasonable data residency, access, and documentation needs consistent
+                with enterprise deployment models.
+            </p>
+        </section>
+
+        <section id="changes" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 24</p>
+            <h2 class="h3 fw-bold mb-3">Changes to This Policy</h2>
+            <p>
+                We may update this Privacy Policy periodically to reflect changes in law, technology, or business practices.
+                Material changes will be indicated by updating the effective date at the top of this page. Continued use of our
+                website or services after publication of changes constitutes acknowledgment of the updated policy where permitted by law.
+            </p>
+            <p class="mb-0">
+                Enterprise clients under active contracts will receive notification of material processor-related changes through
+                account management channels when required by applicable agreements.
+            </p>
+        </section>
+
+        <section id="contact" class="mb-5 pb-4 border-bottom">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Section 25</p>
+            <h2 class="h3 fw-bold mb-3">Contact</h2>
+            <p>For privacy-related inquiries, requests, or complaints, contact:</p>
+            <address class="mb-4">
+                <strong>Pindah Private Limited</strong><br />
+                Harare, Zimbabwe<br />
+                Email: <a href="mailto:admin@pindah.org">admin@pindah.org</a><br />
+                Telephone: +263 714 856 897
+            </address>
+            <p class="mb-0">
+                We aim to resolve concerns promptly and in good faith. If you believe your rights have not been adequately addressed,
+                you may have the right to lodge a complaint with a supervisory authority in your jurisdiction, in addition to
+                contacting us directly.
+            </p>
+        </section>
+
+        <section id="appendix-a" class="mb-4">
+            <p class="text-muted small text-uppercase fw-semibold mb-2">Appendix A</p>
+            <h2 class="h3 fw-bold mb-3">Illustrative Retention Schedule</h2>
+            <p class="small text-muted mb-3">Actual retention may vary by contract, jurisdiction, and client configuration. This schedule is illustrative only.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm small">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Record type</th>
+                            <th scope="col">Typical retention</th>
+                            <th scope="col">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Website server logs</td>
+                            <td>90–365 days</td>
+                            <td>Security and diagnostics</td>
+                        </tr>
+                        <tr>
+                            <td>Marketing inquiry records</td>
+                            <td>3 years from last contact</td>
+                            <td>Unless longer retention required for active negotiations</td>
+                        </tr>
+                        <tr>
+                            <td>Active user account data</td>
+                            <td>Duration of account + 30 days</td>
+                            <td>Subject to client admin deletion</td>
+                        </tr>
+                        <tr>
+                            <td>Financial &amp; tax records (Pindah as controller)</td>
+                            <td>Per statutory requirements</td>
+                            <td>Often 6–10 years depending on jurisdiction</td>
+                        </tr>
+                        <tr>
+                            <td>Client tenant operational data</td>
+                            <td>Per contract &amp; client policy</td>
+                            <td>Export and deletion upon termination</td>
+                        </tr>
+                        <tr>
+                            <td>Backup archives</td>
+                            <td>Rotation cycle (e.g. 30–90 days)</td>
+                            <td>Deleted data may persist until backup expiry</td>
+                        </tr>
+                        <tr>
+                            <td>Support ticket correspondence</td>
+                            <td>2–7 years</td>
+                            <td>Depending on support agreement</td>
+                        </tr>
+                        <tr>
+                            <td>Automated News article metadata</td>
+                            <td>Indefinite while published</td>
+                            <td>Public informational content</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="small text-muted mb-0">
+                Document version @effectiveDate.ToString("yyyy-MM-dd") &middot; &copy; @DateTime.UtcNow.Year Pindah Private Limited. All rights reserved.
+            </p>
+        </section>
+
+    </div>
+</div>
