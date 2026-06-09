@@ -20,6 +20,7 @@ namespace PindahWebsite3.Data
         {
             await EnsureDatabaseSchemaAsync(context);
             await SeedAdminUserAsync(context, userManager, roleManager, configuration);
+            await SeedDownloadsAsync(context);
 
             if (!context.ZimsecCategories.Any())
             {
@@ -186,6 +187,47 @@ namespace PindahWebsite3.Data
                     );
                     """);
             }
+
+            if (!await TableExistsAsync(context, "Downloads"))
+            {
+                await context.Database.ExecuteSqlRawAsync("""
+                    CREATE TABLE IF NOT EXISTS "Downloads" (
+                        "Id" INTEGER NOT NULL CONSTRAINT "PK_Downloads" PRIMARY KEY AUTOINCREMENT,
+                        "Title" TEXT NOT NULL,
+                        "Description" TEXT NOT NULL,
+                        "FileUrl" TEXT NOT NULL,
+                        "FileType" TEXT NOT NULL,
+                        "Platform" TEXT NOT NULL,
+                        "IsPublished" INTEGER NOT NULL,
+                        "SortOrder" INTEGER NOT NULL,
+                        "DateAdded" TEXT NOT NULL
+                    );
+                    """);
+            }
+        }
+
+        private static async Task SeedDownloadsAsync(PindahWebsite3Context context)
+        {
+            const string seedUrl = "https://storage.pindah.org/mobile-apps/app-release.apk";
+
+            if (await context.Downloads.AnyAsync(d => d.FileUrl == seedUrl))
+            {
+                return;
+            }
+
+            context.Downloads.Add(new Download
+            {
+                Title = "Pindah Mobile App (Android)",
+                Description = "Android release build of the Pindah mobile application.",
+                FileUrl = seedUrl,
+                FileType = "APK",
+                Platform = "Android",
+                IsPublished = true,
+                SortOrder = 0,
+                DateAdded = DateTime.UtcNow
+            });
+
+            await context.SaveChangesAsync();
         }
 
         private static async Task<bool> TableExistsAsync(PindahWebsite3Context context, string tableName)

@@ -5,11 +5,13 @@
   --mckinsey-blue-mid: #0c4a72;
   --mckinsey-accent: #2251ff;
   --mckinsey-accent-soft: #3481ff;
+  --bs-font-sans-serif: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --bs-body-font-family: var(--bs-font-sans-serif);
 }
 
-/* Typography — Inter body, Instrument Serif headings (McKinsey-style editorial) */
+/* Typography — Open Sans throughout */
 .site-body {
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-family: var(--bs-body-font-family);
   font-size: 0.9375rem;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
@@ -23,10 +25,8 @@
 .site-body h5,
 .site-body h6,
 .site-body .navbar-brand {
-  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-family: inherit;
+  line-height: 1.25;
 }
 
 .site-body .navbar .nav-link {
@@ -102,14 +102,13 @@
 
 .site-body h1.home-landing-headline,
 .site-body h1.module-landing-headline {
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .home-landing-headline,
 .module-landing-headline {
-  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
   font-size: clamp(1.85rem, 4vw, 2.85rem);
   max-width: 22em;
 }
@@ -126,9 +125,78 @@
   .home-landing-banner,
   .module-landing-banner {
     margin-top: -3rem;
-    padding: 3.25rem 0 3.5rem;
-    min-height: 22rem;
+    padding: 4rem 0 4.5rem;
+    min-height: 26rem;
   }
+}
+
+.home-hero-panel {
+  background: rgba(0, 27, 46, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.home-stat-value {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #f8fafc;
+}
+
+/* Full-bleed bands inside <main class="container"> */
+.home-metrics-strip,
+.home-section-band,
+.home-cta-band {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.home-metrics-strip {
+  background: #fff;
+  padding: 1.75rem 0;
+}
+
+.home-metrics-strip > .container {
+  max-width: 1320px;
+}
+
+.home-metric-cell {
+  padding: 1rem 1.25rem;
+}
+
+@media (min-width: 992px) {
+  .home-metric-cell:not(:last-child) {
+    border-right: 1px solid #dee2e6;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .home-metric-cell:nth-child(odd) {
+    border-right: 1px solid #dee2e6;
+  }
+
+  .home-metric-cell:nth-child(-n + 2) {
+    border-bottom: 1px solid #dee2e6;
+  }
+}
+
+.home-section-band {
+  background: #f8f9fa;
+  padding: 3rem 0;
+}
+
+.home-cta-band {
+  background-color: var(--mckinsey-deep);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem 0;
+}
+
+.home-cta-band > .container {
+  max-width: 1320px;
 }
 
 @media (max-width: 991.98px) {
@@ -154,11 +222,6 @@
 .home-hero-img {
   width: 100%;
   max-height: 420px;
-  object-fit: cover;
-}
-
-.home-sector-card .card-img-top {
-  height: 220px;
   object-fit: cover;
 }
 

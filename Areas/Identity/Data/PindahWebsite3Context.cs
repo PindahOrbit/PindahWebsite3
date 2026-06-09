@@ -23,4 +23,5 @@ public class PindahWebsite3Context : IdentityDbContext<PindahWebsite3User>
     public DbSet<PindahWebsite3.Models.ZimsecCategory> ZimsecCategories { get; set; }
     public DbSet<PindahWebsite3.Models.ZimsecDocument> ZimsecDocuments { get; set; }
     public DbSet<PindahWebsite3.Models.News> News { get; set; }
+    public DbSet<PindahWebsite3.Models.Download> Downloads { get; set; }
 }
