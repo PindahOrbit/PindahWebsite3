@@ -583,3 +583,43 @@
   border-top: 1px solid var(--pindah-border);
   border-bottom: 1px solid var(--pindah-border);
 }
+
+/* === VITRUM 3D GLASS ICONS === */
+.vitrum-container {
+    background: linear-gradient(135deg, rgba(21, 93, 252, 0.02) 0%, rgba(21, 93, 252, 0.08) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(21, 93, 252, 0.1) !important;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.vitrum-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 60%);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.vitrum-img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.15));
+    animation: float-vitrum 6s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes float-vitrum {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
