@@ -1,220 +1,134 @@
 @{
-    ViewData["Title"] = "Document Management System for Enterprise | Pindah";
-    ViewData["Description"] = "Comprehensive document management system with capture, classification, version control, workflow routing, search, security, retention, collaboration, and background processing capabilities.";
-    ViewData["Keywords"] = "document management system, DMS, document capture, version control, document workflow, document security, records management, document collaboration, OCR, digital transformation";
+    ViewData["Title"] = "Document Management System Zimbabwe | Enterprise DMS | Pindah";
+    ViewData["Description"] = "Document management system for Zimbabwe organizations. Document capture, classification, version control, workflow automation, retention management, and enterprise search.";
+    ViewData["Keywords"] = "document management system Zimbabwe, DMS software Harare, document workflow automation, version control, records retention, enterprise search Africa, paperless office, digital transformation";
     ViewData["CanonicalUrl"] = "https://pindah.org/dms";
     ViewData["OgImage"] = "https://storage.pindah.org/IMAGES/pindah-og-default.jpg";
     ViewData["StructuredData"] = @"{
         ""@context"": ""https://schema.org"",
         ""@graph"": [
-            {
-                ""@type"": ""SoftwareApplication"",
-                ""name"": ""Pindah Document Management System"",
-                ""applicationCategory"": ""BusinessApplication"",
-                ""operatingSystem"": ""Web"",
-                ""offers"": {
-                    ""@type"": ""Offer"",
-                    ""price"": ""0"",
-                    ""priceCurrency"": ""USD""
-                },
-                ""description"": ""Comprehensive document management system with capture, classification, version control, workflow routing, search, security, retention, collaboration, and background processing capabilities"",
-                ""publisher"": {
-                    ""@type"": ""Organization"",
-                    ""name"": ""Pindah Private Limited""
-                }
-            },
-            {
-                ""@type"": ""BreadcrumbList"",
-                ""itemListElement"": [
-                    {
-                        ""@type"": ""ListItem"",
-                        ""position"": 1,
-                        ""name"": ""Home"",
-                        ""item"": ""https://pindah.org""
-                    },
-                    {
-                        ""@type"": ""ListItem"",
-                        ""position"": 2,
-                        ""name"": ""DMS"",
-                        ""item"": ""https://pindah.org/dms""
-                    }
-                ]
-            }
+            {""@type"": ""SoftwareApplication"", ""name"": ""Pindah DMS"", ""applicationCategory"": ""BusinessApplication"", ""operatingSystem"": ""Web"", ""offers"": {""@type"": ""Offer"", ""price"": ""0"", ""priceCurrency"": ""USD""}, ""description"": ""Enterprise document management system for Zimbabwe — capture, workflow, search, and retention"", ""publisher"": {""@type"": ""Organization"", ""name"": ""Pindah Private Limited""}},
+            {""@type"": ""BreadcrumbList"", ""itemListElement"": [{""@type"": ""ListItem"", ""position"": 1, ""name"": ""Home"", ""item"": ""https://pindah.org""}, {""@type"": ""ListItem"", ""position"": 2, ""name"": ""Document Management"", ""item"": ""https://pindah.org/dms""}]}
         ]
     }";
 }
 
-<section class="module-landing-banner mb-5" style="--hero-bg: url('../images/heroes/hero-dms.jpg');" aria-label="Introduction">
+<section class="module-landing-banner mb-5" style="--hero-bg: url('https://images.unsplash.com/photo-1568667256549-094345857637?w=1600&q=80');" aria-label="Document Management System Introduction">
     <div class="container">
         <div class="module-landing-accent" aria-hidden="true"></div>
         <p class="module-landing-kicker mb-2">Document Management</p>
-        <h1 class="module-landing-headline text-white mb-3">Document Management System for Enterprise</h1>
+        <h1 class="module-landing-headline text-white mb-3">Enterprise Document Management & Workflow.</h1>
         <p class="module-landing-dek mb-4 col-lg-10 px-0">
-            Organizations drowning in paper and email attachments require structured document management
-            that transforms chaotic information into organized, searchable, and secure digital assets.
+            Eliminate paper-based bottlenecks with a centralized document platform. Capture, classify,
+            route, and retain organizational knowledge with enterprise-grade security and compliance.
         </p>
         <div class="d-flex flex-wrap gap-2">
             <a href="#components" class="btn btn-light btn-sm px-4 fw-semibold">Module components</a>
-            <a href="/#inquiry" class="btn btn-outline-light btn-sm px-4">Start a conversation</a>
+            <a href="/#contact" class="btn btn-outline-light btn-sm px-4">Request a demo</a>
         </div>
     </div>
 </section>
 
-<div class="row mb-5">
-    <div class="col-lg-12">
+<div class="row mb-5 align-items-center g-4">
+    <div class="col-lg-7">
+        <p class="section-kicker">Paperless operations</p>
+        <h2 class="h3 fw-bold mb-3">Intelligent Document Workflows</h2>
         <p>
-            Our document management system replaces physical filing and email-chain-based document handling
-            with a single searchable repository. Version control prevents the confusion of multiple document
-            copies while approval workflows ensure proper authorization before documents become official
-            records.
+            Organizations generate thousands of documents daily — contracts, invoices, correspondence,
+            policies, and reports. Without structured management, critical information becomes
+            inaccessible, compliance falters, and teams waste hours searching for what they need.
         </p>
+        <p class="mb-0">
+            Pindah DMS provides automated classification, intelligent routing, and full-text search
+            across your entire document estate. Every document follows a defined lifecycle from
+            capture through approval to archival or disposal.
+        </p>
+    </div>
+    <div class="col-lg-5">
+        <img src="https://images.unsplash.com/photo-1568667256549-094345857637?w=800&q=80" alt="Document management and organized file system" class="module-feature-img border" loading="lazy" />
     </div>
 </div>
 
-<div class="row mb-5" id="components">
-    <div class="col-lg-12">
+<div class="module-section-band mb-5" id="components">
+    <div class="container">
+        <p class="section-kicker">Capabilities</p>
         <h2 class="h3 fw-bold mb-4">Module Components</h2>
-        <p class="mb-4">
-            The document management system provides integrated capabilities spanning the entire document 
-            lifecycle from capture through collaboration. Each component addresses specific operational 
-            needs while contributing to unified information governance.
-        </p>
-        <div class="row">
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/capture">Capture and Ingestion</a></h3>
-                <p class="small">
-                    Multi-channel document capture converting paper and digital content into searchable 
-                    records. Scanner integration, email ingestion, mobile capture, and OCR processing 
-                    with barcode recognition automate document digitization.
-                </p>
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Document Capture</h3>
+                    <p class="small mb-2">Multi-source ingestion — scan, email, upload, or API. OCR extracts text for searchability.</p>
+                    <a href="/dms/capture" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/classification">Classification and Metadata</a></h3>
-                <p class="small">
-                    Intelligent document organization with folder hierarchy and mandatory metadata 
-                    fields. Automatic classification and sensitivity management ensure appropriate 
-                    handling from document entry through disposal.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Classification & Metadata</h3>
+                    <p class="small mb-2">Automated tagging and hierarchical taxonomies for consistent organization and retrieval.</p>
+                    <a href="/dms/classification" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/versioncontrol">Version Control</a></h3>
-                <p class="small">
-                    Complete document version history with check-out and check-in mechanisms preventing 
-                    simultaneous edit conflicts. Version comparison and rollback capabilities maintain 
-                    document integrity through multiple revision cycles.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Version Control</h3>
+                    <p class="small mb-2">Complete revision history with check-in/check-out, diff comparison, and rollback capabilities.</p>
+                    <a href="/dms/versioncontrol" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/workflow">Approval and Workflow</a></h3>
-                <p class="small">
-                    Configurable document approval workflows with sequential and parallel routing paths. 
-                    Digital signature capture, deadline management, and comprehensive audit trails 
-                    ensure proper authorization before document publication.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Workflow Automation</h3>
+                    <p class="small mb-2">Configurable approval chains, deadline escalation, and automated routing based on document type.</p>
+                    <a href="/dms/workflow" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/search">Search and Retrieval</a></h3>
-                <p class="small">
-                    Powerful full-text search across OCR-indexed document content with metadata filtering. 
-                    Boolean operators, saved searches, and relevance ranking enable instant discovery 
-                    of required documents across the entire repository.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Enterprise Search</h3>
+                    <p class="small mb-2">Full-text search across all documents with filters, saved queries, and relevance ranking.</p>
+                    <a href="/dms/search" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/security">Access Control and Security</a></h3>
-                <p class="small">
-                    Role-based access control with folder and document-level permissions. Watermarking, 
-                    download restrictions, and comprehensive audit logging protect sensitive information 
-                    aligned with ISO 27001 standards.
-                </p>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/retention">Retention and Disposal</a></h3>
-                <p class="small">
-                    Automated records retention with configurable schedules and legal hold workflows. 
-                    Secure disposal processes with destruction certificates ensure compliance with 
-                    ISO 15489 and regulatory retention requirements.
-                </p>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/collaboration">Collaboration and Sharing</a></h3>
-                <p class="small">
-                    Secure document collaboration with internal and external sharing capabilities. 
-                    Annotation tools, co-authoring support, and email integration enable team 
-                    productivity without compromising document security.
-                </p>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/dms/backgroundprocessing">Background Processing</a></h3>
-                <p class="small">
-                    Queue-based document processing using Quartz.NET scheduling for OCR batch operations, 
-                    PDF conversion, and thumbnail generation. Background execution ensures resource-intensive 
-                    tasks do not impact user experience.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Retention & Compliance</h3>
+                    <p class="small mb-2">Policy-driven retention schedules, legal holds, and automated disposal with audit trails.</p>
+                    <a href="/dms/retention" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row mb-5">
-    <div class="col-lg-12">
-        <h2 class="h3 fw-bold mb-4">Digital Transformation Foundation</h2>
+<div class="row mb-5 align-items-center g-4">
+    <div class="col-lg-5 order-lg-1">
+        <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&q=80" alt="Digital workspace and document collaboration" class="module-feature-img border" loading="lazy" />
+    </div>
+    <div class="col-lg-7 order-lg-2">
+        <p class="section-kicker">Compliance</p>
+        <h2 class="h3 fw-bold mb-3">Retention & Regulatory Compliance</h2>
         <p>
-            Document management serves as the foundation for digital transformation initiatives 
-            eliminating paper-based processes that constrain operational efficiency. Digitized documents 
-            become searchable data assets rather than physical files requiring manual retrieval 
-            and handling.
+            Define retention schedules aligned with regulatory requirements and organizational policy.
+            Documents are automatically flagged for review or disposal when retention periods expire.
+            Legal holds override disposal rules when litigation or investigation demands preservation.
         </p>
-        <p>
-            Integration with business processes enables document-driven workflow automation. 
-            Invoices trigger approval workflows automatically while contracts route through 
-            legal review based on document classification without manual routing decisions.
-        </p>
-        <p>
-            Mobile accessibility extends document availability beyond office boundaries enabling 
-            field staff to capture, review, and approve documents from any location. This 
-            flexibility supports modern work patterns while maintaining security and compliance.
+        <p class="mb-0">
+            Complete audit trails record every access, modification, and workflow action — providing
+            the accountability trail that regulators and auditors require.
         </p>
     </div>
 </div>
 
-<div class="row mb-5">
-    <div class="col-lg-12">
-        <h2 class="h3 fw-bold mb-4">Information Governance</h2>
-        <p>
-            Comprehensive information governance ensures documents remain available when needed 
-            but dispose appropriately when retention periods expire. Retention schedules align 
-            with regulatory requirements and business needs preventing premature destruction 
-            or indefinite accumulation.
-        </p>
-        <p>
-            Audit trails document every document interaction supporting compliance demonstration 
-            and forensic investigation. Who viewed which documents when becomes answerable 
-            through comprehensive logging rather than speculation or memory.
-        </p>
+<section class="module-cta-band mb-5" aria-label="Contact">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <h2 class="h3 fw-bold text-white mb-2">Go paperless with confidence</h2>
+                <p class="mb-0" style="color: rgba(255,255,255,0.7);">See how Pindah DMS can bring structure, compliance, and efficiency to your document operations.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="mailto:admin@pindah.org" class="btn btn-light px-4 fw-semibold">Start a conversation</a>
+            </div>
+        </div>
     </div>
-</div>
-
-<div class="row mb-5">
-    <div class="col-lg-12">
-        <h2 class="h3 fw-bold mb-4">Standards and Compliance</h2>
-        <p>
-            The document management system aligns with ISO 9001 for document control, ISO 27001 
-            for information security, and ISO 15489 for records management. These internationally 
-            recognized standards provide framework alignment that auditors and regulators expect.
-        </p>
-        <p>
-            GDPR principles guide personal data handling within documents ensuring privacy 
-            compliance across jurisdictions. Retention limitations, access controls, and secure 
-            disposal support data protection requirements without manual policy enforcement.
-        </p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-12 text-center">
-        <p class="small mb-0">
-            admin@pindah.org | +263 714 856 897
-        </p>
-    </div>
-</div>
+</section>

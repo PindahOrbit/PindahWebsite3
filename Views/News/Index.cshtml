@@ -24,7 +24,7 @@
             @foreach (var article in Model)
             {
                 <div class="col">
-                    <div class="card h-100 shadow-sm">
+                    <div class="card h-100">
                         @if (!string.IsNullOrEmpty(article.CoverImageUrl))
                         {
                             <img src="@article.CoverImageUrl" class="card-img-top" alt="@article.Heading" style="height: 180px; object-fit: cover;" loading="lazy" />

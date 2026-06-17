@@ -1,211 +1,134 @@
 @{
-    ViewData["Title"] = "Logistics & Fleet Management Solutions | Pindah";
-    ViewData["Description"] = "Comprehensive logistics software for route optimization, real-time driver tracking, fleet maintenance, and digital proof of delivery. Streamlining movement across Zimbabwe.";
-    ViewData["Keywords"] = "logistics software Zimbabwe, fleet management, route optimization OSRM, driver tracking GPS, proof of delivery app, vehicle maintenance software, load planning";
+    ViewData["Title"] = "Logistics & Fleet Management Software Zimbabwe | Pindah";
+    ViewData["Description"] = "Logistics and fleet management software for Zimbabwe. Route optimization, GPS driver tracking, vehicle maintenance, digital proof of delivery, and cross-border documentation.";
+    ViewData["Keywords"] = "logistics software Zimbabwe, fleet management Harare, route optimization, GPS driver tracking, proof of delivery app, vehicle maintenance software, load planning, transport management system Africa";
     ViewData["CanonicalUrl"] = "https://pindah.org/logistics";
     ViewData["OgImage"] = "https://storage.pindah.org/IMAGES/pindah-og-default.jpg";
     ViewData["StructuredData"] = @"{
         ""@context"": ""https://schema.org"",
         ""@graph"": [
-            {
-                ""@type"": ""SoftwareApplication"",
-                ""name"": ""Pindah Logistics"",
-                ""applicationCategory"": ""BusinessApplication"",
-                ""operatingSystem"": ""Web/Android/iOS"",
-                ""offers"": {
-                    ""@type"": ""Offer"",
-                    ""price"": ""0"",
-                    ""priceCurrency"": ""USD""
-                },
-                ""description"": ""Delivery order management, route optimisation, and driver tracking software"",
-                ""publisher"": {
-                    ""@type"": ""Organization"",
-                    ""name"": ""Pindah Private Limited""
-                }
-            },
-            {
-                ""@type"": ""BreadcrumbList"",
-                ""itemListElement"": [
-                    {
-                        ""@type"": ""ListItem"",
-                        ""position"": 1,
-                        ""name"": ""Home"",
-                        ""item"": ""https://pindah.org""
-                    },
-                    {
-                        ""@type"": ""ListItem"",
-                        ""position"": 2,
-                        ""name"": ""Logistics"",
-                        ""item"": ""https://pindah.org/logistics""
-                    }
-                ]
-            }
+            {""@type"": ""SoftwareApplication"", ""name"": ""Pindah Logistics"", ""applicationCategory"": ""BusinessApplication"", ""operatingSystem"": ""Web/Android/iOS"", ""offers"": {""@type"": ""Offer"", ""price"": ""0"", ""priceCurrency"": ""USD""}, ""description"": ""Logistics and fleet management software for Zimbabwe — route optimization, tracking, and proof of delivery"", ""publisher"": {""@type"": ""Organization"", ""name"": ""Pindah Private Limited""}},
+            {""@type"": ""BreadcrumbList"", ""itemListElement"": [{""@type"": ""ListItem"", ""position"": 1, ""name"": ""Home"", ""item"": ""https://pindah.org""}, {""@type"": ""ListItem"", ""position"": 2, ""name"": ""Logistics"", ""item"": ""https://pindah.org/logistics""}]}
         ]
     }";
 }
 
-<section class="module-landing-banner mb-5" style="--hero-bg: url('../images/heroes/hero-logistics.jpg');" aria-label="Introduction">
+<section class="module-landing-banner mb-5" style="--hero-bg: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1600&q=80');" aria-label="Logistics Software Introduction">
     <div class="container">
         <div class="module-landing-accent" aria-hidden="true"></div>
-        <p class="module-landing-kicker mb-2">Logistics & Supply Chain</p>
+        <p class="module-landing-kicker mb-2">Logistics & Fleet</p>
         <h1 class="module-landing-headline text-white mb-3">Precision Fleet Management & Delivery Infrastructure.</h1>
         <p class="module-landing-dek mb-4 col-lg-10 px-0">
-            Coordinate the movement of goods from origin to destination with surgical precision. 
-            Automated scheduling, real-time tracking, and mobile integration for the modern supply chain.
+            Coordinate the movement of goods from origin to destination with precision. Automated
+            scheduling, real-time tracking, and mobile integration for the modern supply chain.
         </p>
         <div class="d-flex flex-wrap gap-2">
             <a href="#components" class="btn btn-light btn-sm px-4 fw-semibold">Module components</a>
-            <a href="/#inquiry" class="btn btn-outline-light btn-sm px-4">Start a conversation</a>
+            <a href="/#contact" class="btn btn-outline-light btn-sm px-4">Request a demo</a>
         </div>
     </div>
 </section>
 
-<div class="row mb-5" id="components">
-
-<div class="row mb-5">
-    <div class="col-lg-12">
-        <h2 class="h3 fw-bold mb-4">Module Components</h2>
-        <p class="mb-4">
-            Our logistics platform integrates multiple specialized components into a unified command 
-            and control system. Each tool is designed to address a critical friction point in the 
-            delivery lifecycle.
+<div class="row mb-5 align-items-center g-4">
+    <div class="col-lg-7">
+        <p class="section-kicker">Visibility</p>
+        <h2 class="h3 fw-bold mb-3">Resilient Live Tracking</h2>
+        <p>
+            Visibility is the foundation of logistics. Our system maintains continuous location streams
+            from driver devices using specialized mobile services, even under heavy power management.
+            Your Dispatch Command Center has a truly accurate, real-time view of fleet position
+            and progress toward SLA targets.
         </p>
-        <div class="row">
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/commandcenter">Command Center</a></h3>
-                <p class="small">
-                    High-level live monitoring of all active trips, vehicles, and delivery statuses on 
-                    a dynamic map interface. The primary hub for dispatchers and fleet managers.
-                </p>
-            </div>
+        <p class="mb-0">
+            Geofencing alerts notify the depot when vehicles return for reloading, and notify clients
+            when delivery is minutes away — reducing idle time and communication friction.
+        </p>
+    </div>
+    <div class="col-lg-5">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80" alt="Logistics warehouse and fleet operations" class="module-feature-img border" loading="lazy" />
+    </div>
+</div>
 
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/dashboard">Dashboard</a></h3>
-                <p class="small">
-                    Strategic performance metrics (OTD, utilization, costs) and operational alerts aggregated 
-                    into a single executive view for data-driven decision making.
-                </p>
+<div class="module-section-band mb-5" id="components">
+    <div class="container">
+        <p class="section-kicker">Capabilities</p>
+        <h2 class="h3 fw-bold mb-4">Module Components</h2>
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Command Center</h3>
+                    <p class="small mb-2">Live monitoring of all active trips, vehicles, and delivery statuses on a dynamic map interface.</p>
+                    <a href="/logistics/commandcenter" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/drivers">Driver Management</a></h3>
-                <p class="small">
-                    Comprehensive driver profiles including licensing (PDP), medicals, and performance 
-                    scoring. Integrated with EcoCash for swift driver advance disbursements.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Route Optimization</h3>
+                    <p class="small mb-2">Advanced sequencing algorithms minimizing distance and time across multi-stop deliveries.</p>
+                    <a href="/logistics/routeoptimization" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/vehicles">Fleet Management</a></h3>
-                <p class="small">
-                    Full lifecycle tracking of vehicles including service schedules, fuel consumption, 
-                    inspection checklists, and regulatory renewal alerts.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Fleet Management</h3>
+                    <p class="small mb-2">Full vehicle lifecycle tracking — service schedules, fuel consumption, inspections, and renewals.</p>
+                    <a href="/logistics/vehicles" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/trips">Trip Scheduling</a></h3>
-                <p class="small">
-                    End-to-end management of delivery orders, from geocoded address verification to multi-stop 
-                    consolidated load planning and vehicle capacity assignment.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Driver Management</h3>
+                    <p class="small mb-2">Driver profiles, licensing (PDP), medicals, performance scoring, and EcoCash advance disbursements.</p>
+                    <a href="/logistics/drivers" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/clients">Client Portal</a></h3>
-                <p class="small">
-                    Dedicated visibility for your customers to track their deliveries in real-time, 
-                    access digital proof of delivery (POD), and view historical shipping records.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Proof of Delivery</h3>
+                    <p class="small mb-2">Digital confirmation via photo, signature, and GPS timestamp — integrated with sales and accounts.</p>
+                    <a href="/logistics/proofofdelivery" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/routeoptimization">Route Optimization</a></h3>
-                <p class="small">
-                    Advanced sequencing algorithms that minimize distance and time across multi-stop 
-                    runs, providing drivers with turn-by-turn navigation data.
-                </p>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/proofofdelivery">Proof of Delivery (POD)</a></h3>
-                <p class="small">
-                    Digital confirmation of arrival via photo capture, recipient signature, and 
-                    GPS-timestamping, integrated directly with the sales and accounts modules.
-                </p>
-            </div>
-
-            <div class="col-md-6 col-lg-4 mb-4">
-                <h3 class="h5 fw-semibold mb-2"><a href="/logistics/analytics">Logistics Analytics</a></h3>
-                <p class="small">
-                    Deep dive into delivery efficiency, cost per KM, fuel variance, and delivery 
-                    success rates to identify areas for operational optimization.
-                </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100"><div class="card-body">
+                    <h3 class="h6 fw-bold mb-2">Analytics & Reporting</h3>
+                    <p class="small mb-2">Delivery efficiency, cost per KM, fuel variance, and success rates for operational optimization.</p>
+                    <a href="/logistics/analytics" class="text-decoration-none small fw-semibold">Learn more &rarr;</a>
+                </div></div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row mb-5">
-    <div class="col-lg-12">
-        <h2 class="h3 fw-bold mb-4">Resilient Live Tracking</h2>
+<div class="row mb-5 align-items-center g-4">
+    <div class="col-lg-5 order-lg-1">
+        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80" alt="Delivery truck fleet on the road" class="module-feature-img border" loading="lazy" />
+    </div>
+    <div class="col-lg-7 order-lg-2">
+        <p class="section-kicker">Efficiency</p>
+        <h2 class="h3 fw-bold mb-3">Scientific Route & Load Planning</h2>
         <p>
-            Visibility is the foundation of logistics. Our system utilizes specialized Android 
-            foreground services and iOS background fetch protocols to maintain continuous 
-            location streams from driver devices, even when the app is in the background 
-            or the device is under heavy power management. This ensures that your Dispatch 
-            Command Center has a truly accurate, real-time view of your fleet's position 
-            and progress toward SLA targets.
+            Maximize fleet capacity with intelligent load planning accounting for weight, volume, and
+            vehicle constraints. The route optimization engine calculates the most efficient sequence
+            for multi-stop deliveries, directly lowering fuel expenditure and vehicle wear.
         </p>
-        <p>
-            Geofencing alerts automatically notify the depot when a vehicle is returning for 
-            reloading, and notify clients when their delivery is just minutes away, 
-            significantly reducing idle time and communication friction.
+        <p class="mb-0">
+            Routes are wirelessly transmitted to the driver's mobile terminal with clear delivery
+            manifests and turn-by-turn navigation optimized for heavy vehicles.
         </p>
     </div>
 </div>
 
-<div class="row mb-5">
-    <div class="col-lg-12">
-        <h2 class="h3 fw-bold mb-4">Scientific Route & Load Planning</h2>
-        <p>
-            Maximize your fleet's capacity with intelligent load planning that accounts for 
-            weight, volume, and vehicle constraints. Our route optimization engine 
-            calculates the most efficient sequence for multi-stop deliveries, taking into 
-            account local road conditions and turnaround times. By reducing total 
-            kilometers traveled, our system directly lowers fuel expenditure and vehicle 
-            wear-and-tear.
-        </p>
-        <p>
-            Routes are wirelessly transmitted to the driver's mobile terminal, providing 
-            them with a clear delivery manifest and turn-by-turn navigation instructions 
-            optimized for heavy vehicles.
-        </p>
+<section class="module-cta-band mb-5" aria-label="Contact">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <h2 class="h3 fw-bold text-white mb-2">Streamline your delivery operations</h2>
+                <p class="mb-0" style="color: rgba(255,255,255,0.7);">See how Pindah Logistics can reduce costs and improve delivery reliability across your fleet.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="mailto:admin@pindah.org" class="btn btn-light px-4 fw-semibold">Start a conversation</a>
+            </div>
+        </div>
     </div>
-</div>
-
-<div class="row mb-5">
-    <div class="col-lg-12">
-        <h2 class="h3 fw-bold mb-4">Frictionless Proof of Delivery</h2>
-        <p>
-            Eliminate paper-based delivery logs and reconciliation delays. Digital Proof of 
-            Delivery (POD) captures recipient signatures, photographic evidence of goods 
-            condition, and a precision GPS timestamp at the point of handover. Failed 
-            deliveries are documented with specific reason codes (refused, not home, 
-            wrong address), allowing for immediate rescheduling or investigation.
-        </p>
-        <p>
-            Completed PODs are instantly attached to the corresponding sales order in the ERP, 
-            triggering the next step in the accounting or invoicing workflow without manual 
-            intervention.
-        </p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-12 text-center">
-        <p class="small mb-0">
-            admin@pindah.org | +263 774 454 447
-        </p>
-    </div>
-</div>
+</section>

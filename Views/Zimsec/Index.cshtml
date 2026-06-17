@@ -29,11 +29,11 @@
                 <div class="mt-4">
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <a href="/Identity/Account/Manage/Uploads" class="btn btn-outline-light fw-bold rounded-pill px-4 shadow-sm" style="border-width: 2px;">My Contributions</a>
+                        <a href="/Identity/Account/Manage/Uploads" class="btn btn-outline-light fw-bold px-4">My Contributions</a>
                     }
                     else
                     {
-                        <a href="/Identity/Account/Login" class="btn btn-outline-light fw-bold rounded-pill px-4 shadow-sm" style="border-width: 2px;"><i class="fas fa-user-plus me-1"></i> Register as Contributor</a>
+                        <a href="/Identity/Account/Login" class="btn btn-outline-light fw-bold px-4">Register as Contributor</a>
                     }
                 </div>
             </div>
@@ -180,7 +180,7 @@
     else
     {
         <div class="text-end mb-3">
-            <a href="/Identity/Account/Login" class="btn btn-outline-secondary btn-sm shadow-sm fw-bold">Admin Login</a>
+            <a href="/Identity/Account/Login" class="btn btn-outline-secondary btn-sm fw-bold">Admin Login</a>
         </div>
     }
 
@@ -204,7 +204,7 @@
                                         <small class="text-muted">Added: @doc.UploadDate.ToString("MMM dd, yyyy")</small>
                                     </div>
                                     <div class="d-flex flex-nowrap gap-2 mt-2 mt-sm-0">
-                                        <a href="/Zimsec/ViewDocument/@doc.Id" class="btn btn-sm btn-primary shadow-sm fw-bold px-3 text-nowrap">View</a>
+                                        <a href="/Zimsec/ViewDocument/@doc.Id" class="btn btn-sm btn-primary fw-bold px-3 text-nowrap">View</a>
                                         <a href="@doc.FilePath" class="btn btn-sm btn-outline-secondary text-nowrap" download>Download</a>
                                     </div>
                                 </li>
