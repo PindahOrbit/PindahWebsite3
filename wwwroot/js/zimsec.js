@@ -3,14 +3,61 @@
     if (!root) return;
 
     const offcanvasEl = document.getElementById('zimsecNav');
-    if (offcanvasEl) {
-        root.querySelectorAll('.zimsec-nav-item[href]').forEach(function (link) {
+
+    function initSidebarNav(nav) {
+        nav.querySelectorAll('.zimsec-nav-group-toggle').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const group = btn.closest('.zimsec-nav-group');
+                if (!group) return;
+                const open = group.classList.toggle('is-open');
+                group.classList.remove('is-filter-open');
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        });
+
+        const filterInput = nav.querySelector('.zimsec-nav-filter');
+        const noMatch = nav.querySelector('.zimsec-nav-no-match');
+        if (!filterInput) return;
+
+        filterInput.addEventListener('input', function () {
+            const query = filterInput.value.trim().toLowerCase();
+            const groups = nav.querySelectorAll('.zimsec-nav-group');
+            let visibleSubjects = 0;
+
+            groups.forEach(function (group) {
+                let groupVisible = 0;
+                group.querySelectorAll('.zimsec-nav-item[data-subject-name]').forEach(function (link) {
+                    const name = (link.getAttribute('data-subject-name') || link.textContent || '').toLowerCase();
+                    const match = !query || name.indexOf(query) !== -1;
+                    link.classList.toggle('is-filter-hidden', !match);
+                    if (match) groupVisible += 1;
+                });
+
+                if (!query) {
+                    group.classList.remove('is-filter-hidden', 'is-filter-open');
+                } else {
+                    group.classList.toggle('is-filter-hidden', groupVisible === 0);
+                    group.classList.toggle('is-filter-open', groupVisible > 0);
+                }
+
+                visibleSubjects += groupVisible;
+            });
+
+            if (noMatch) {
+                noMatch.classList.toggle('d-none', !query || visibleSubjects > 0);
+            }
+        });
+
+        nav.querySelectorAll('.zimsec-nav-item[href]').forEach(function (link) {
             link.addEventListener('click', function () {
+                if (!offcanvasEl) return;
                 const instance = bootstrap.Offcanvas.getInstance(offcanvasEl);
                 if (instance) instance.hide();
             });
         });
     }
+
+    root.querySelectorAll('.zimsec-nav').forEach(initSidebarNav);
 
     const input = document.getElementById('zimsecSearchInput');
     const suggestions = document.getElementById('zimsecSearchSuggestions');

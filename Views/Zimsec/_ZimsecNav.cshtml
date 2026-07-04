@@ -1,24 +1,48 @@
 @model PindahWebsite3.ViewModels.ZimsecLibraryViewModel
 
 <nav class="zimsec-nav" aria-label="Subject browser">
-    <a asp-action="Library" asp-route-q="@Model.SearchQuery"
-       class="zimsec-nav-item @(string.IsNullOrEmpty(Model.SelectedLevel) && string.IsNullOrEmpty(Model.SelectedSubject) ? "active" : "")">
+    <div class="zimsec-nav-filter-wrap">
+        <input type="search"
+               class="form-control form-control-sm zimsec-nav-filter"
+               placeholder="Find subject…"
+               autocomplete="off"
+               aria-label="Filter subjects in sidebar" />
+    </div>
+
+    <a asp-action="Library"
+       asp-route-q="@Model.SearchQuery"
+       class="zimsec-nav-item zimsec-nav-item-all @(string.IsNullOrEmpty(Model.SelectedLevel) && string.IsNullOrEmpty(Model.SelectedSubject) ? "active" : "")">
         All subjects
     </a>
+
     @foreach (var level in Model.Tree)
     {
-        <div class="zimsec-nav-level">@level.DisplayName</div>
-        @foreach (var subject in level.Subjects)
-        {
-            var active = Model.SelectedLevel == level.Slug && Model.SelectedSubject == subject.Slug;
-            <a asp-action="Library"
-               asp-route-level="@level.Slug"
-               asp-route-subject="@subject.Slug"
-               asp-route-q="@Model.SearchQuery"
-               class="zimsec-nav-item @(active ? "active" : "")">
-                <span>@subject.DisplayName</span>
-                <span class="zimsec-nav-count">@subject.DocumentCount</span>
-            </a>
-        }
+        var levelOpen = Model.SelectedLevel == level.Slug;
+        <div class="zimsec-nav-group @(levelOpen ? "is-open" : "")" data-level="@level.Slug">
+            <button type="button"
+                    class="zimsec-nav-group-toggle"
+                    aria-expanded="@(levelOpen ? "true" : "false")">
+                <span class="zimsec-nav-group-title">@level.DisplayName</span>
+                <span class="zimsec-nav-group-meta">@level.Subjects.Count</span>
+                <svg class="zimsec-nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="zimsec-nav-group-items">
+                @foreach (var subject in level.Subjects)
+                {
+                    var active = Model.SelectedLevel == level.Slug && Model.SelectedSubject == subject.Slug;
+                    <a asp-action="Library"
+                       asp-route-level="@level.Slug"
+                       asp-route-subject="@subject.Slug"
+                       asp-route-q="@Model.SearchQuery"
+                       class="zimsec-nav-item @(active ? "active" : "")"
+                       data-subject-name="@subject.DisplayName">
+                        <span>@subject.DisplayName</span>
+                        <span class="zimsec-nav-count">@subject.DocumentCount</span>
+                    </a>
+                }
+            </div>
+        </div>
     }
+
+    <p class="zimsec-nav-no-match d-none" role="status">No subjects match your search.</p>
 </nav>
