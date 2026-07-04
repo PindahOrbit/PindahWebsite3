@@ -63,7 +63,15 @@ Write-Host '=== Zimsake specimen archive (index 85) ==='
 $added = Expand-ZimsakeSpecimen 85
 Write-Host "  +$added specimen files"
 
-Write-Host '=== Sytbay ZIMSEC past papers ==='
+Write-Host '=== Ernbooks ZIMSEC past papers ==='
+$ernbooks = @(
+    @{ url = 'https://www.ernbook.com/wp-content/uploads/2024/07/566962273-ZIMSEC-N2021.pdf'; file = '4003q2-nov2021.pdf' }
+)
+foreach ($e in $ernbooks) {
+    if (Save-Pdf $e.url $e.file) { Write-Host "  + $($e.file)" }
+}
+
+Write-Host '=== Sytbay ZIMSEC past papers (not specimen) ==='
 $sytbayPages = @(
     @{ page = 'https://sytbay.co.zw/download/zimsec-o-level-combined-science-paper-1-november-2019-pdf/'; file = '4003q1-nov2019.pdf' }
     @{ page = 'https://sytbay.co.zw/download/zimsec-o-level-combined-science-paper-2-november-2019-pdf/'; file = '4003q2-nov2019.pdf' }
@@ -71,7 +79,8 @@ $sytbayPages = @(
     @{ page = 'https://sytbay.co.zw/download/zimsec-o-level-combined-science-paper-2-november-2020-pdf/'; file = '4003q2-nov2020.pdf' }
     @{ page = 'https://sytbay.co.zw/download/zimsec-o-level-combined-science-paper-1-june-2020-pdf/'; file = '4003q1-june2020.pdf' }
     @{ page = 'https://sytbay.co.zw/download/zimsec-o-level-combined-science-paper-2-june-2020-pdf/'; file = '4003q2-june2020.pdf' }
-    @{ page = 'https://sytbay.co.zw/download/zimsec-o-level-combined-science-paper-2-specimen-nov-2020-pdf/'; file = '4003q2-specimen-nov2020.pdf' }
+    @{ page = 'https://sytbay.co.zw/download/zimsec-o-level-combined-science-paper-1-june-2019-pdf/'; file = '4003q1-june2019.pdf' }
+    @{ page = 'https://sytbay.co.zw/download/zimsec-o-level-combined-science-paper-2-june-2019-pdf/'; file = '4003q2-june2019.pdf' }
 )
 foreach ($s in $sytbayPages) {
     $html = curl.exe -sL --max-time 120 $s.page
