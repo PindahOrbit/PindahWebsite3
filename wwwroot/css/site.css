@@ -935,6 +935,119 @@
   line-height: 1.5;
 }
 
+/* === Home page — lighter enterprise landing (text unchanged) === */
+.home-landing-banner {
+  color: var(--pindah-text);
+  background-color: var(--pindah-light);
+  background-image: none;
+  border-bottom: 1px solid var(--pindah-border);
+}
+
+.home-landing-banner::before {
+  background:
+    linear-gradient(105deg, rgba(21, 93, 252, 0.07) 0%, rgba(247, 248, 250, 0.92) 42%, rgba(247, 248, 250, 0) 100%);
+}
+
+.home-landing-banner .home-landing-kicker {
+  color: var(--pindah-accent);
+}
+
+.home-landing-banner .home-landing-headline,
+.home-landing-banner h1.home-landing-headline {
+  color: var(--pindah-primary) !important;
+}
+
+.home-landing-banner .home-landing-dek {
+  color: var(--pindah-muted);
+}
+
+.home-landing-banner .home-hero-panel {
+  background: #fff;
+  border: 1px solid var(--pindah-border);
+  box-shadow: 0 0.125rem 0.5rem rgba(5, 28, 44, 0.06);
+}
+
+.home-landing-banner .home-stat-value {
+  color: var(--pindah-primary);
+}
+
+.home-landing-banner .text-white-50 {
+  color: var(--pindah-muted) !important;
+}
+
+.home-landing-banner .btn-light {
+  background-color: var(--pindah-accent);
+  border-color: var(--pindah-accent);
+  color: #fff;
+}
+
+.home-landing-banner .btn-light:hover,
+.home-landing-banner .btn-light:focus {
+  background-color: var(--pindah-accent-hover);
+  border-color: var(--pindah-accent-hover);
+  color: #fff;
+}
+
+.home-landing-banner .btn-outline-light {
+  color: var(--pindah-accent);
+  border-color: var(--pindah-accent);
+  background: transparent;
+}
+
+.home-landing-banner .btn-outline-light:hover,
+.home-landing-banner .btn-outline-light:focus {
+  background-color: var(--pindah-accent);
+  border-color: var(--pindah-accent);
+  color: #fff;
+}
+
+.home-cta-band {
+  background-color: #fff;
+  border-top: 1px solid var(--pindah-border);
+  border-bottom: 1px solid var(--pindah-border);
+  color: var(--pindah-text);
+}
+
+.home-cta-band .home-landing-kicker {
+  color: var(--pindah-accent);
+}
+
+.home-cta-band h2,
+.home-cta-band .text-white {
+  color: var(--pindah-primary) !important;
+}
+
+.home-cta-band p,
+.home-cta-band .small {
+  color: var(--pindah-muted) !important;
+}
+
+.home-cta-band .btn-light {
+  background-color: var(--pindah-accent);
+  border-color: var(--pindah-accent);
+  color: #fff;
+}
+
+.home-cta-band .btn-light:hover,
+.home-cta-band .btn-light:focus {
+  background-color: var(--pindah-accent-hover);
+  border-color: var(--pindah-accent-hover);
+  color: #fff;
+}
+
+.home-cta-band .btn-outline-light {
+  color: var(--pindah-accent);
+  border-color: var(--pindah-accent);
+  background: transparent;
+}
+
+.home-cta-band .btn-outline-light:hover,
+.home-cta-band .btn-outline-light:focus {
+  background-color: var(--pindah-accent);
+  border-color: var(--pindah-accent);
+  color: #fff;
+}
+
 /* Zimsec / full-bleed app shells inside layout container */
 .site-body:has(.zimsec-library) .container.flex-grow-1,
 .site-body:has(.zimsec-landing) .container.flex-grow-1,
