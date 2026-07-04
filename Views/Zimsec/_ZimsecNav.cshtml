@@ -15,8 +15,7 @@
                asp-route-level="@level.Slug"
                asp-route-subject="@subject.Slug"
                asp-route-q="@Model.SearchQuery"
-               class="zimsec-nav-item @(active ? "active" : "")"
-               data-bs-dismiss="offcanvas">
+               class="zimsec-nav-item @(active ? "active" : "")">
                 <span>@subject.DisplayName</span>
                 <span class="zimsec-nav-count">@subject.DocumentCount</span>
             </a>

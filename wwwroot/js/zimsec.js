@@ -2,6 +2,16 @@
     const root = document.querySelector('.zimsec-library');
     if (!root) return;
 
+    const offcanvasEl = document.getElementById('zimsecNav');
+    if (offcanvasEl) {
+        root.querySelectorAll('.zimsec-nav-item[href]').forEach(function (link) {
+            link.addEventListener('click', function () {
+                const instance = bootstrap.Offcanvas.getInstance(offcanvasEl);
+                if (instance) instance.hide();
+            });
+        });
+    }
+
     const input = document.getElementById('zimsecSearchInput');
     const suggestions = document.getElementById('zimsecSearchSuggestions');
     const searchUrl = root.dataset.searchUrl;
