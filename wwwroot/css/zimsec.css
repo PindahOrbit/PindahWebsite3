@@ -647,20 +647,96 @@
   color: var(--zimsec-navy);
 }
 
-.zimsec-pdf-frame-wrap {
-  background: #32363a;
+.zimsec-pdf-viewer {
+  background: #fff;
+  border: 1px solid var(--zimsec-border);
   border-radius: 0.25rem;
   overflow: hidden;
-  border: 1px solid var(--zimsec-border);
-  min-height: 70vh;
 }
 
-.zimsec-pdf-frame {
-  width: 100%;
-  height: clamp(65vh, 85vh, 75rem);
-  border: none;
-  display: block;
+.zimsec-pdf-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--zimsec-surface);
+  border-bottom: 1px solid var(--zimsec-border);
+  position: sticky;
+  top: var(--zimsec-shell-height, 2.75rem);
+  z-index: 10;
+}
+
+.zimsec-pdf-page-indicator {
+  font-size: var(--sap-font-size-ui, 0.875rem);
+  font-weight: 600;
+  color: var(--zimsec-navy);
+  min-width: 6rem;
+  text-align: center;
+}
+
+.zimsec-pdf-status {
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: var(--sap-font-size-ui, 0.875rem);
+  color: var(--pindah-muted);
+}
+
+.zimsec-pdf-pages {
+  max-height: calc(100vh - 12rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: #525659;
+  padding: 0.75rem 0.5rem 1rem;
+}
+
+.zimsec-pdf-page {
+  max-width: 100%;
+  margin: 0 auto 0.75rem;
+  background: #fff;
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.2);
+}
+
+.zimsec-pdf-page-label {
+  font-size: var(--sap-font-size-small, 0.75rem);
+  font-weight: 600;
+  color: var(--pindah-muted);
+  padding: 0.375rem 0.5rem;
+  background: var(--zimsec-surface);
+  border-bottom: 1px solid var(--zimsec-border);
+}
+
+.zimsec-pdf-page canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.zimsec-pdf-fallback {
+  padding: 1.25rem;
+  background: var(--zimsec-surface);
+  border-top: 1px solid var(--zimsec-border);
+}
+
+@media (max-width: 575.98px) {
+  .zimsec-pdf-pages {
+    max-height: calc(100dvh - 11rem);
+  }
+
+  .zimsec-pdf-toolbar {
+    top: 0;
+  }
+
+  .zimsec-pdf-toolbar .btn {
+    flex: 1 1 auto;
+  }
+
+  .zimsec-pdf-page-indicator {
+    flex: 1 1 100%;
+    order: -1;
+    text-align: left;
+    min-width: 0;
+  }
 }
 
 @media (max-width: 575.98px) {

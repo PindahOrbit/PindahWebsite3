@@ -198,9 +198,8 @@ public class ZimsecController : Controller
         var physicalPath = _catalog.ResolvePhysicalPath(doc.RelativePath);
         if (physicalPath == null) return NotFound();
 
-        var stream = new FileStream(physicalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         Response.Headers["Content-Disposition"] = $"inline; filename=\"{Uri.EscapeDataString(doc.FileName)}\"";
-        return File(stream, "application/pdf");
+        return PhysicalFile(physicalPath, "application/pdf", enableRangeProcessing: true);
     }
 
     [Authorize(AuthenticationSchemes = ZimsecAuthDefaults.Scheme)]

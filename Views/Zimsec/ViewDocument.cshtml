@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = Model.Title;
     Layout = "_Layout";
+    var pdfUrl = Url.Action("StreamPdf", new { id = Model.Id })!;
 }
 
 @section Styles {
@@ -16,7 +17,30 @@
         </div>
         <a href="@Model.ReturnUrl" class="btn btn-sm btn-outline-secondary flex-shrink-0">&larr; Back</a>
     </div>
-    <div class="zimsec-pdf-frame-wrap">
-        <iframe src="@Url.Action("StreamPdf", new { id = Model.Id })#toolbar=1" class="zimsec-pdf-frame" title="@Model.Title"></iframe>
+
+    <div class="zimsec-pdf-viewer"
+         data-pdf-url="@pdfUrl"
+         data-page-count="@Model.PageCount">
+        <div class="zimsec-pdf-toolbar">
+            <button type="button" class="btn btn-sm btn-outline-secondary zimsec-pdf-prev" disabled aria-label="Previous page">&larr;</button>
+            <span class="zimsec-pdf-page-indicator" aria-live="polite">Page 1</span>
+            <button type="button" class="btn btn-sm btn-outline-secondary zimsec-pdf-next" disabled aria-label="Next page">&rarr;</button>
+            <a href="@pdfUrl" class="btn btn-sm btn-outline-secondary zimsec-pdf-open" target="_blank" rel="noopener">Open</a>
+            <a href="@pdfUrl" class="btn btn-sm btn-zimsec-primary zimsec-pdf-download" download>Download</a>
+        </div>
+        <div class="zimsec-pdf-status" role="status">Loading document…</div>
+        <div class="zimsec-pdf-pages"></div>
+        <div class="zimsec-pdf-fallback d-none">
+            <p class="small text-muted mb-2">In-browser preview is unavailable on this device. Open or download the PDF instead.</p>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="@pdfUrl" class="btn btn-sm btn-zimsec-primary" target="_blank" rel="noopener">Open PDF</a>
+                <a href="@pdfUrl" class="btn btn-sm btn-outline-secondary" download>Download PDF</a>
+            </div>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/lib/pdfjs/pdf.min.js" asp-append-version="true"></script>
+    <script src="~/js/zimsec-pdf-viewer.js" asp-append-version="true"></script>
+}
