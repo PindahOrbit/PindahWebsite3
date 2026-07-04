@@ -17,11 +17,72 @@
 }
 
 .zimsec-landing-hero {
-  background:
-    linear-gradient(90deg, rgba(0, 40, 120, 0.08) 0%, rgba(0, 169, 224, 0.06) 48%, rgba(244, 246, 248, 0) 100%),
-    var(--zimsec-surface);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   color: var(--pindah-text);
   border-bottom: 1px solid var(--zimsec-border);
+  background: var(--zimsec-surface);
+}
+
+.zimsec-landing-hero::before {
+  content: "";
+  position: absolute;
+  inset: -8% -5%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 50% 45% at 88% 12%, rgba(0, 169, 224, 0.2) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 40% at 10% 88%, rgba(0, 40, 120, 0.14) 0%, transparent 55%),
+    linear-gradient(118deg, #fff 0%, var(--zimsec-surface) 45%, rgba(230, 246, 252, 0.95) 100%);
+  animation: zimsec-gradient-drift 22s ease-in-out infinite;
+}
+
+.zimsec-landing-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(105deg, transparent 0%, rgba(0, 169, 224, 0.07) 48%, transparent 100%);
+  background-size: 220% 100%;
+  animation: zimsec-shimmer 15s linear infinite;
+}
+
+.zimsec-landing-hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes zimsec-gradient-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(1%, -0.75%, 0); }
+}
+
+@keyframes zimsec-shimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+.zimsec-auth-card {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, rgba(0, 169, 224, 0.35), rgba(0, 40, 120, 0.15), rgba(0, 169, 224, 0.22)) border-box;
+  color: var(--pindah-text);
+  border-radius: 0.25rem;
+  padding: 1.25rem;
+  border: 1px solid transparent;
+  box-shadow: 0 0.5rem 1.75rem rgba(0, 40, 120, 0.1);
+}
+
+.zimsec-preview-level {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(0, 169, 224, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #fff 0%, var(--zimsec-surface) 100%);
+  border: 1px solid rgba(0, 40, 120, 0.12);
+  border-radius: 0.25rem;
+  padding: 1rem;
+  height: 100%;
 }
 
 .zimsec-logo {
@@ -53,22 +114,16 @@
   align-items: center;
   padding: 0.1875rem 0.625rem;
   border-radius: 0.125rem;
-  background: #fff;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, rgba(0, 169, 224, 0.35), rgba(0, 40, 120, 0.12)) border-box;
   font-size: var(--sap-font-size-small, 0.75rem);
   font-weight: 600;
-  border: 1px solid var(--zimsec-border);
+  border: 1px solid transparent;
   color: var(--zimsec-navy);
   line-height: 1.33333;
 }
 
-.zimsec-auth-card {
-  background: #fff;
-  color: var(--pindah-text);
-  border-radius: 0.25rem;
-  padding: 1.25rem;
-  border: 1px solid var(--zimsec-border);
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08);
-}
 
 .zimsec-auth-tabs {
   gap: 0.25rem;
@@ -148,14 +203,6 @@
   font-size: var(--sap-font-size-large, 1rem);
   font-weight: 700;
   color: var(--zimsec-navy);
-}
-
-.zimsec-preview-level {
-  background: #fff;
-  border: 1px solid var(--zimsec-border);
-  border-radius: 0.25rem;
-  padding: 1rem;
-  height: 100%;
 }
 
 .zimsec-preview-level h3 {
@@ -765,5 +812,126 @@
   .zimsec-library {
     border-left: 1px solid var(--zimsec-border);
     border-right: 1px solid var(--zimsec-border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zimsec-landing-hero::before,
+  .zimsec-landing-hero::after {
+    animation: none;
+  }
+}
+
+/* === Rounded World Cup-inspired Zimsec polish === */
+@keyframes zimsec-orbit-sweep {
+  0% {
+    transform: translate3d(-2%, 1%, 0) rotate(-7deg);
+  }
+  50% {
+    transform: translate3d(2%, -1%, 0) rotate(7deg);
+  }
+  100% {
+    transform: translate3d(-2%, 1%, 0) rotate(-7deg);
+  }
+}
+
+.zimsec-landing-hero::before {
+  background:
+    radial-gradient(circle at 86% 12%, rgba(0, 169, 224, 0.25) 0 3.75rem, transparent 8rem),
+    radial-gradient(ellipse 50% 36% at 82% 12%, rgba(0, 169, 224, 0.22) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 40% at 10% 88%, rgba(0, 40, 120, 0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 34% 28% at 60% 48%, rgba(0, 169, 224, 0.11) 0%, transparent 62%),
+    linear-gradient(118deg, #fff 0%, var(--zimsec-surface) 45%, rgba(230, 246, 252, 0.96) 100%);
+}
+
+.zimsec-landing-hero::after {
+  inset: -15% -10%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 0 53%, rgba(0, 169, 224, 0.15) 54%, transparent 56%),
+    radial-gradient(ellipse at 50% 50%, transparent 0 63%, rgba(0, 40, 120, 0.08) 64%, transparent 65%),
+    linear-gradient(105deg, transparent 0%, rgba(0, 169, 224, 0.07) 48%, rgba(255, 255, 255, 0.34) 52%, transparent 100%);
+  background-size: 100% 100%, 100% 100%, 220% 100%;
+  animation: zimsec-orbit-sweep 19s ease-in-out infinite, zimsec-shimmer 15s linear infinite;
+}
+
+.zimsec-landing-hero > .container::after {
+  content: "";
+  position: absolute;
+  width: min(44vw, 25rem);
+  aspect-ratio: 1;
+  right: 1rem;
+  bottom: -12rem;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(0, 169, 224, 0.18) 0%, rgba(0, 169, 224, 0.06) 34%, transparent 68%),
+    repeating-conic-gradient(from 22deg, rgba(0, 40, 120, 0.07) 0deg 7deg, transparent 7deg 18deg);
+}
+
+.zimsec-auth-card,
+.zimsec-preview-level,
+.zimsec-sidebar,
+.zimsec-empty,
+.zimsec-document-list,
+.zimsec-document-row,
+.zimsec-pdf-page,
+.zimsec-pdf-fallback {
+  border-radius: var(--pindah-radius-card, 1.25rem);
+}
+
+.zimsec-logo,
+.zimsec-auth-tabs,
+.btn-zimsec-primary,
+.btn-outline-zimsec,
+.btn-zimsec-icon,
+.zimsec-lib-topbar .btn-outline-light,
+.zimsec-chip,
+.zimsec-stat-pill,
+.zimsec-nav-group-meta,
+.zimsec-doc-badge,
+.zimsec-pdf-page-indicator {
+  border-radius: var(--pindah-radius-pill, 999px);
+}
+
+.zimsec-auth-tabs {
+  padding: 0.25rem;
+}
+
+.zimsec-auth-tabs .nav-link,
+.zimsec-nav-filter,
+.zimsec-search-form .form-control,
+.zimsec-search-form .btn {
+  border-radius: var(--pindah-radius-pill, 999px);
+}
+
+.zimsec-auth-card,
+.zimsec-preview-level {
+  box-shadow: 0 0.875rem 2.25rem rgba(0, 40, 120, 0.08);
+}
+
+.zimsec-preview-level {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(0, 169, 224, 0.08) 0%, transparent 52%),
+    radial-gradient(circle at 0% 100%, rgba(0, 40, 120, 0.05) 0%, transparent 48%),
+    linear-gradient(180deg, #fff 0%, var(--zimsec-surface) 100%);
+}
+
+.zimsec-document-row {
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--zimsec-border);
+  background: #fff;
+}
+
+.zimsec-document-row:hover {
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 40, 120, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zimsec-landing-hero::before,
+  .zimsec-landing-hero::after,
+  .zimsec-landing-hero > .container::after {
+    animation: none;
   }
 }

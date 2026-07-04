@@ -9,12 +9,13 @@
   --pindah-text: #1A1A2E;
   --pindah-muted: #5C6672;
   --sap-font-family: "72", "72full", Arial, Helvetica, sans-serif;
-  --sap-font-size-ui: 0.875rem;       /* 14px — controls, inputs, lists, tables */
-  --sap-font-size-large: 1rem;        /* 16px — item titles, page headers */
-  --sap-font-size-small: 0.75rem;   /* 12px — timestamps, units, exceptional small */
-  --sap-line-height-ui: 1.42857;      /* 20px at 14px */
-  --sap-line-height-large: 1.25;      /* 20px at 16px */
-  --sap-font-size: var(--sap-font-size-ui);
+  --sap-font-size-body: 1rem;         /* 16px — paragraphs, lists, card copy */
+  --sap-font-size-ui: 1rem;           /* 16px — default reading size + controls */
+  --sap-font-size-large: 1.125rem;    /* 18px — item titles, page headers */
+  --sap-font-size-small: 0.875rem;    /* 14px — meta, labels, timestamps */
+  --sap-line-height-ui: 1.5;          /* comfortable body line height */
+  --sap-line-height-large: 1.33333;   /* ~24px at 18px */
+  --sap-font-size: var(--sap-font-size-body);
   --sap-title-size: var(--sap-font-size-large);
   --sap-shell-border: 1px solid var(--pindah-border);
   --sap-focus-outline: 0 0 0 0.125rem rgba(21, 93, 252, 0.35);
@@ -23,15 +24,18 @@
   --bs-body-font-size: var(--sap-font-size);
   --bs-primary: var(--pindah-accent);
   --bs-primary-rgb: 21, 93, 252;
-  --bs-border-radius: 0.25rem;
-  --bs-border-radius-sm: 0.125rem;
-  --bs-border-radius-lg: 0.25rem;
+  --bs-border-radius: 1rem;
+  --bs-border-radius-sm: 999px;
+  --bs-border-radius-lg: 1.5rem;
+  --pindah-radius-pill: 999px;
+  --pindah-radius-card: 1.25rem;
+  --pindah-radius-panel: 1.75rem;
 }
 
 /* === BASE === */
 .site-body {
   font-family: var(--bs-body-font-family);
-  font-size: var(--sap-font-size-ui);
+  font-size: var(--sap-font-size-body);
   line-height: var(--sap-line-height-ui);
   color: var(--pindah-text);
   -webkit-font-smoothing: antialiased;
@@ -60,9 +64,19 @@
 }
 
 .site-body .lead {
-  font-size: var(--sap-font-size-ui);
+  font-size: 1.125rem;
   line-height: 1.5;
   color: var(--pindah-muted);
+}
+
+.site-body p,
+.site-body li,
+.site-body .card-body,
+.site-body .list-group-item,
+.site-body .article-content,
+.site-body .article-content p {
+  font-size: var(--sap-font-size-body);
+  line-height: var(--sap-line-height-ui);
 }
 
 /* === BOOTSTRAP OVERRIDES (class names unchanged) === */
@@ -419,13 +433,13 @@
 #content-editor .ql-editor {
   min-height: 280px;
   font-family: var(--bs-body-font-family);
-  font-size: var(--sap-font-size-ui);
+  font-size: var(--sap-font-size-body);
   line-height: 1.5;
 }
 
 .article-content {
-  font-size: var(--sap-font-size-ui);
-  line-height: 1.5;
+  font-size: var(--sap-font-size-body);
+  line-height: var(--sap-line-height-ui);
 }
 
 .article-content h2,
@@ -716,7 +730,7 @@
 }
 
 .site-body .navbar .nav-link {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-ui);
   font-weight: 600;
   letter-spacing: normal;
   text-transform: none;
@@ -741,7 +755,7 @@
 
 /* Buttons — compact, direct */
 .site-body .btn {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-ui);
   font-weight: 600;
   line-height: 1.42857;
   border-radius: var(--bs-border-radius);
@@ -754,7 +768,7 @@
 .site-body .btn-sm {
   min-height: 1.875rem;
   padding: 0.3125rem 0.625rem;
-  font-size: var(--sap-font-size-ui);
+  font-size: var(--sap-font-size-small);
 }
 
 .site-body .btn-lg {
@@ -770,7 +784,7 @@
 /* Form controls */
 .site-body .form-control,
 .site-body .form-select {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-ui);
   line-height: 1.42857;
   min-height: 2.25rem;
   border: 1px solid var(--pindah-border);
@@ -787,7 +801,7 @@
 }
 
 .site-body .form-label {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-ui);
   font-weight: 600;
   color: var(--pindah-text);
   margin-bottom: 0.25rem;
@@ -816,7 +830,7 @@
 
 /* Tables */
 .site-body .table {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-ui);
 }
 
 .site-body .table > :not(caption) > * > * {
@@ -837,7 +851,7 @@
 
 /* List groups */
 .site-body .list-group-item {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-body);
   padding: 0.625rem 0.875rem;
   border-radius: 0 !important;
 }
@@ -850,14 +864,14 @@
 
 /* Nav pills / tabs */
 .site-body .nav-pills .nav-link {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-ui);
   font-weight: 600;
   border-radius: var(--bs-border-radius);
   color: var(--pindah-muted);
 }
 
 .site-body .nav-tabs .nav-link {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-ui);
   font-weight: 600;
   border-radius: 0;
   color: var(--pindah-muted);
@@ -871,14 +885,14 @@
 /* Badges */
 .site-body .badge {
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: var(--sap-font-size-small);
   border-radius: var(--bs-border-radius-sm);
   padding: 0.25em 0.5em;
 }
 
 /* Alerts */
 .site-body .alert {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-body);
   border-radius: var(--bs-border-radius);
   border-width: 1px;
 }
@@ -890,7 +904,7 @@
 }
 
 .site-body .accordion-button {
-  font-size: 0.875rem;
+  font-size: var(--sap-font-size-ui);
   font-weight: 600;
   box-shadow: none;
 }
@@ -1046,6 +1060,363 @@
   background-color: var(--pindah-accent);
   border-color: var(--pindah-accent);
   color: #fff;
+}
+
+/* === Module pages — light gradient mesh (ServiceNow-style, Pindah colors) === */
+@keyframes site-gradient-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5%, -1%, 0) scale(1.015);
+  }
+}
+
+@keyframes site-shimmer-sweep {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+@keyframes site-glow-pulse {
+  0%, 100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.module-landing-banner {
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--pindah-text);
+  background-color: var(--pindah-light);
+  background-image: none;
+  border-bottom: 1px solid var(--pindah-border);
+}
+
+.module-landing-banner::before {
+  inset: -10% -5%;
+  background:
+    radial-gradient(ellipse 55% 45% at 92% 8%, rgba(21, 93, 252, 0.22) 0%, transparent 58%),
+    radial-gradient(ellipse 48% 42% at 8% 92%, rgba(5, 28, 44, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 30% at 62% 48%, rgba(21, 93, 252, 0.1) 0%, transparent 62%),
+    linear-gradient(128deg, #ffffff 0%, var(--pindah-light) 42%, rgba(238, 244, 255, 0.95) 100%);
+  animation: site-gradient-drift 20s ease-in-out infinite;
+}
+
+.module-landing-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(21, 93, 252, 0.06) 45%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(21, 93, 252, 0.05) 55%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  animation: site-shimmer-sweep 14s linear infinite;
+}
+
+.module-landing-banner .module-landing-accent {
+  background: linear-gradient(90deg, var(--pindah-accent), rgba(21, 93, 252, 0.35));
+}
+
+.module-landing-banner .module-landing-kicker {
+  color: var(--pindah-accent);
+}
+
+.module-landing-banner h1.module-landing-headline,
+.module-landing-banner .module-landing-headline,
+.module-landing-banner h1.text-white {
+  color: var(--pindah-primary) !important;
+}
+
+.module-landing-banner .module-landing-dek {
+  color: var(--pindah-muted);
+}
+
+.module-landing-banner .btn-light {
+  background: linear-gradient(180deg, var(--pindah-accent) 0%, var(--pindah-accent-hover) 100%);
+  border-color: var(--pindah-accent);
+  color: #fff;
+  box-shadow: 0 0.375rem 1.25rem rgba(21, 93, 252, 0.28);
+}
+
+.module-landing-banner .btn-light:hover,
+.module-landing-banner .btn-light:focus {
+  background: linear-gradient(180deg, var(--pindah-accent-hover) 0%, #0d3da8 100%);
+  border-color: var(--pindah-accent-hover);
+  color: #fff;
+}
+
+.module-landing-banner .btn-outline-light {
+  color: var(--pindah-accent);
+  border-color: rgba(21, 93, 252, 0.45);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.module-landing-banner .btn-outline-light:hover,
+.module-landing-banner .btn-outline-light:focus {
+  background: rgba(21, 93, 252, 0.08);
+  border-color: var(--pindah-accent);
+  color: var(--pindah-accent-hover);
+}
+
+.module-section-band {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 50% 60% at 8% 15%, rgba(21, 93, 252, 0.08) 0%, transparent 52%),
+    radial-gradient(ellipse 45% 55% at 92% 85%, rgba(5, 28, 44, 0.07) 0%, transparent 48%),
+    linear-gradient(180deg, var(--pindah-light) 0%, #fff 55%, var(--pindah-light) 100%);
+}
+
+.module-section-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(21, 93, 252, 0.04), transparent);
+  background-size: 200% 100%;
+  animation: site-shimmer-sweep 18s linear infinite;
+}
+
+.module-section-band > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.module-cta-band {
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse 60% 90% at 15% 50%, rgba(21, 93, 252, 0.42) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 70% at 95% 10%, rgba(21, 93, 252, 0.25) 0%, transparent 52%),
+    linear-gradient(125deg, var(--pindah-primary) 0%, var(--pindah-navy, #021019) 48%, #021019 100%);
+}
+
+.module-cta-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.07) 50%, transparent 70%);
+  background-size: 220% 100%;
+  animation: site-shimmer-sweep 16s linear infinite;
+}
+
+.module-cta-band::after {
+  content: "";
+  position: absolute;
+  width: 28rem;
+  height: 28rem;
+  right: -8rem;
+  top: -10rem;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(21, 93, 252, 0.35) 0%, transparent 68%);
+  animation: site-glow-pulse 10s ease-in-out infinite;
+}
+
+.module-cta-band > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.module-cta-band .btn-light {
+  background: linear-gradient(180deg, #fff 0%, var(--pindah-light) 100%);
+  border-color: #fff;
+  color: var(--pindah-primary);
+  box-shadow: 0 0.375rem 1.25rem rgba(0, 0, 0, 0.18);
+}
+
+.module-cta-band .btn-light:hover,
+.module-cta-band .btn-light:focus {
+  background: #fff;
+  border-color: #fff;
+  color: var(--pindah-primary);
+}
+
+.module-cta-band .btn-outline-light {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(4px);
+}
+
+.module-cta-band .btn-outline-light:hover,
+.module-cta-band .btn-outline-light:focus {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: #fff;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .module-landing-banner::before,
+  .module-landing-banner::after,
+  .module-section-band::before,
+  .module-cta-band::before,
+  .module-cta-band::after {
+    animation: none;
+  }
+}
+
+/* === Rounded World Cup-inspired polish === */
+@keyframes site-orbit-sweep {
+  0% {
+    transform: translate3d(-2%, 1%, 0) rotate(-8deg);
+  }
+  50% {
+    transform: translate3d(2%, -1%, 0) rotate(8deg);
+  }
+  100% {
+    transform: translate3d(-2%, 1%, 0) rotate(-8deg);
+  }
+}
+
+@keyframes site-stadium-glow {
+  0%, 100% {
+    opacity: 0.42;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.72;
+    transform: scale(1.04);
+  }
+}
+
+.site-body .btn,
+.site-body .badge,
+.site-body .form-control,
+.site-body .form-select {
+  border-radius: var(--pindah-radius-pill);
+}
+
+.site-body .card {
+  border-radius: var(--pindah-radius-card);
+  overflow: hidden;
+  box-shadow: 0 0.75rem 2rem rgba(5, 28, 44, 0.05);
+}
+
+.site-body .list-group,
+.site-body .list-group-item:first-child {
+  border-top-left-radius: var(--pindah-radius-card) !important;
+  border-top-right-radius: var(--pindah-radius-card) !important;
+}
+
+.site-body .list-group,
+.site-body .list-group-item:last-child {
+  border-bottom-left-radius: var(--pindah-radius-card) !important;
+  border-bottom-right-radius: var(--pindah-radius-card) !important;
+}
+
+.module-feature-img,
+.module-inline-img,
+.vitrum-container,
+.home-hero-panel {
+  border-radius: var(--pindah-radius-panel);
+}
+
+.module-landing-banner::before {
+  background:
+    radial-gradient(circle at 84% 14%, rgba(21, 93, 252, 0.24) 0 4rem, transparent 8.5rem),
+    radial-gradient(ellipse 50% 34% at 76% 8%, rgba(21, 93, 252, 0.18) 0%, transparent 62%),
+    radial-gradient(ellipse 50% 38% at 8% 88%, rgba(5, 28, 44, 0.14) 0%, transparent 58%),
+    radial-gradient(ellipse 36% 28% at 58% 48%, rgba(21, 93, 252, 0.1) 0%, transparent 64%),
+    linear-gradient(128deg, #fff 0%, var(--pindah-light) 42%, rgba(238, 244, 255, 0.95) 100%);
+}
+
+.module-landing-banner::after {
+  inset: -16% -10%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 0 53%, rgba(21, 93, 252, 0.13) 54%, transparent 56%),
+    radial-gradient(ellipse at 50% 50%, transparent 0 63%, rgba(5, 28, 44, 0.08) 64%, transparent 65%),
+    linear-gradient(105deg, transparent 0%, rgba(21, 93, 252, 0.06) 45%, rgba(255, 255, 255, 0.35) 50%, rgba(21, 93, 252, 0.05) 55%, transparent 100%);
+  background-size: 100% 100%, 100% 100%, 220% 100%;
+  animation: site-orbit-sweep 18s ease-in-out infinite, site-shimmer-sweep 14s linear infinite;
+}
+
+.module-landing-banner > .container::after {
+  content: "";
+  position: absolute;
+  width: min(46vw, 27rem);
+  aspect-ratio: 1;
+  right: 1rem;
+  bottom: -13rem;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(21, 93, 252, 0.18) 0%, rgba(21, 93, 252, 0.06) 34%, transparent 67%),
+    repeating-conic-gradient(from 22deg, rgba(21, 93, 252, 0.08) 0deg 7deg, transparent 7deg 18deg);
+  animation: site-stadium-glow 9s ease-in-out infinite;
+}
+
+.module-landing-banner .module-landing-accent,
+.home-landing-accent,
+.module-landing-accent {
+  border-radius: var(--pindah-radius-pill);
+}
+
+.module-section-band {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(21, 93, 252, 0.1) 0 5rem, transparent 11rem),
+    radial-gradient(ellipse 50% 60% at 8% 15%, rgba(21, 93, 252, 0.08) 0%, transparent 52%),
+    radial-gradient(ellipse 45% 55% at 92% 85%, rgba(5, 28, 44, 0.07) 0%, transparent 48%),
+    linear-gradient(180deg, var(--pindah-light) 0%, #fff 55%, var(--pindah-light) 100%);
+}
+
+.module-section-band::before {
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 0 58%, rgba(21, 93, 252, 0.08) 59%, transparent 60%),
+    linear-gradient(90deg, transparent, rgba(21, 93, 252, 0.04), transparent);
+  background-size: 100% 100%, 200% 100%;
+  animation: site-orbit-sweep 24s ease-in-out infinite, site-shimmer-sweep 18s linear infinite;
+}
+
+.module-cta-band {
+  background:
+    radial-gradient(circle at 78% 24%, rgba(255, 255, 255, 0.16) 0 3.75rem, transparent 8rem),
+    radial-gradient(ellipse 60% 90% at 15% 50%, rgba(21, 93, 252, 0.46) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 70% at 95% 10%, rgba(21, 93, 252, 0.28) 0%, transparent 52%),
+    linear-gradient(125deg, var(--pindah-primary) 0%, var(--pindah-navy, #021019) 48%, #021019 100%);
+}
+
+.module-cta-band::before {
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 0 56%, rgba(255, 255, 255, 0.12) 57%, transparent 59%),
+    radial-gradient(ellipse at 50% 50%, transparent 0 66%, rgba(21, 93, 252, 0.2) 67%, transparent 68%),
+    linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.07) 50%, transparent 70%);
+  background-size: 100% 100%, 100% 100%, 220% 100%;
+  animation: site-orbit-sweep 20s ease-in-out infinite, site-shimmer-sweep 16s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .module-landing-banner::before,
+  .module-landing-banner::after,
+  .module-landing-banner > .container::after {
+    animation: none;
+  }
+
+  .module-section-band::before,
+  .module-cta-band::before,
+  .module-cta-band::after {
+    animation: none;
+  }
 }
 
 /* Zimsec / full-bleed app shells inside layout container */
