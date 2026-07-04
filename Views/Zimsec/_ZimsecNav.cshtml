@@ -17,11 +17,10 @@
 
     @foreach (var level in Model.Tree)
     {
-        var levelOpen = Model.SelectedLevel == level.Slug;
-        <div class="zimsec-nav-group @(levelOpen ? "is-open" : "")" data-level="@level.Slug">
+        <div class="zimsec-nav-group" data-level="@level.Slug">
             <button type="button"
                     class="zimsec-nav-group-toggle"
-                    aria-expanded="@(levelOpen ? "true" : "false")">
+                    aria-expanded="false">
                 <span class="zimsec-nav-group-title">@level.DisplayName</span>
                 <span class="zimsec-nav-group-meta">@level.Subjects.Count</span>
                 <svg class="zimsec-nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
