@@ -95,23 +95,23 @@ using (var scope = app.Services.CreateScope())
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
- 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseResponseCompression();
+}
 app.UseResponseCaching();
 app.UseRouting();
 
-// SEO: Status code pages for proper HTTP responses
-app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
-
 app.Use(async (context, next) =>
 {
-    if (context.Request.Path.StartsWithSegments("/zimsec", StringComparison.OrdinalIgnoreCase))
+    // Block direct PDF folder access only (o-level/a-level paths), not /zimsec controller routes.
+    if (context.Request.Path.StartsWithSegments("/zimsec", out var remainder) &&
+        (remainder.StartsWithSegments("/o-level") || remainder.StartsWithSegments("/a-level")))
     {
         context.Response.StatusCode = StatusCodes.Status404NotFound;
         return;

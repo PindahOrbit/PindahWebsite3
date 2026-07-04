@@ -14,7 +14,7 @@ public class ZimsecIndexViewModel
 
 public class ZimsecLibraryViewModel
 {
-    public string StudentNumber { get; set; } = string.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
     public IReadOnlyList<ZimsecLevelNode> Tree { get; set; } = Array.Empty<ZimsecLevelNode>();
     public string? SelectedLevel { get; set; }
     public string? SelectedSubject { get; set; }

@@ -1,6 +1,4 @@
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,34 +14,36 @@ public class ZimsecAuthService
 
     public ZimsecAuthService(ZimsecContext context) => _context = context;
 
-    public async Task<(bool Success, string? Error)> RegisterAsync(string studentNumber, string password)
+    public async Task<(bool Success, string? Error)> RegisterAsync(string phoneNumber, string password)
     {
-        studentNumber = NormalizeStudentNumber(studentNumber);
-        if (string.IsNullOrWhiteSpace(studentNumber))
-            return (false, "Enter your student number.");
+        if (!ZimsecPhoneNumber.TryNormalize(phoneNumber, out var normalized, out var phoneError))
+            return (false, phoneError);
+
         if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
             return (false, "Password must be at least 6 characters.");
 
-        if (await _context.Students.AnyAsync(s => s.StudentNumber == studentNumber))
-            return (false, "This student number is already registered.");
+        if (await _context.Students.AnyAsync(s => s.PhoneNumber == normalized))
+            return (false, "This phone number is already registered.");
 
-        var student = new ZimsecStudent { StudentNumber = studentNumber };
+        var student = new ZimsecStudent { PhoneNumber = normalized };
         student.PasswordHash = _hasher.HashPassword(student, password);
         _context.Students.Add(student);
         await _context.SaveChangesAsync();
         return (true, null);
     }
 
-    public async Task<(bool Success, ZimsecStudent? Student, string? Error)> ValidateAsync(string studentNumber, string password)
+    public async Task<(bool Success, ZimsecStudent? Student, string? Error)> ValidateAsync(string phoneNumber, string password)
     {
-        studentNumber = NormalizeStudentNumber(studentNumber);
-        var student = await _context.Students.FirstOrDefaultAsync(s => s.StudentNumber == studentNumber);
+        if (!ZimsecPhoneNumber.TryNormalize(phoneNumber, out var normalized, out var phoneError))
+            return (false, null, phoneError);
+
+        var student = await _context.Students.FirstOrDefaultAsync(s => s.PhoneNumber == normalized);
         if (student == null)
-            return (false, null, "Invalid student number or password.");
+            return (false, null, "Invalid phone number or password.");
 
         var result = _hasher.VerifyHashedPassword(student, student.PasswordHash, password);
         if (result == PasswordVerificationResult.Failed)
-            return (false, null, "Invalid student number or password.");
+            return (false, null, "Invalid phone number or password.");
 
         student.LastLoginAtUtc = DateTime.UtcNow;
         await _context.SaveChangesAsync();
@@ -55,8 +55,8 @@ public class ZimsecAuthService
         var claims = new List<Claim>
         {
             new(ZimsecClaimTypes.StudentId, student.Id.ToString()),
-            new(ZimsecClaimTypes.StudentNumber, student.StudentNumber),
-            new(ClaimTypes.Name, student.StudentNumber)
+            new(ZimsecClaimTypes.PhoneNumber, student.PhoneNumber),
+            new(ClaimTypes.Name, student.PhoneNumber)
         };
 
         var identity = new ClaimsIdentity(claims, ZimsecAuthDefaults.Scheme);
@@ -70,9 +70,6 @@ public class ZimsecAuthService
 
     public Task SignOutAsync(HttpContext httpContext) =>
         httpContext.SignOutAsync(ZimsecAuthDefaults.Scheme);
-
-    public static string NormalizeStudentNumber(string value) =>
-        value.Trim().ToUpperInvariant();
 
     public static int? GetStudentId(ClaimsPrincipal user)
     {

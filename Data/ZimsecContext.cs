@@ -14,7 +14,7 @@ public class ZimsecContext : DbContext
     {
         modelBuilder.Entity<ZimsecStudent>(e =>
         {
-            e.HasIndex(x => x.StudentNumber).IsUnique();
+            e.HasIndex(x => x.PhoneNumber).IsUnique();
         });
 
         modelBuilder.Entity<ZimsecLibraryDocument>(e =>

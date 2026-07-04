@@ -9,5 +9,5 @@ public static class ZimsecAuthDefaults
 public static class ZimsecClaimTypes
 {
     public const string StudentId = "zimsec:student_id";
-    public const string StudentNumber = "zimsec:student_number";
+    public const string PhoneNumber = "zimsec:phone_number";
 }

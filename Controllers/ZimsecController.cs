@@ -52,9 +52,9 @@ public class ZimsecController : Controller
     [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(string studentNumber, string password)
+    public async Task<IActionResult> Login(string phoneNumber, string password)
     {
-        var (ok, student, error) = await _auth.ValidateAsync(studentNumber, password);
+        var (ok, student, error) = await _auth.ValidateAsync(phoneNumber, password);
         if (!ok || student == null)
         {
             var tree = _catalog.GetTreeFromDisk();
@@ -74,7 +74,7 @@ public class ZimsecController : Controller
     [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Register(string studentNumber, string password, string confirmPassword)
+    public async Task<IActionResult> Register(string phoneNumber, string password, string confirmPassword)
     {
         if (password != confirmPassword)
         {
@@ -88,7 +88,7 @@ public class ZimsecController : Controller
             });
         }
 
-        var (ok, error) = await _auth.RegisterAsync(studentNumber, password);
+        var (ok, error) = await _auth.RegisterAsync(phoneNumber, password);
         if (!ok)
         {
             var tree = _catalog.GetTreeFromDisk();
@@ -101,7 +101,7 @@ public class ZimsecController : Controller
             });
         }
 
-        TempData["RegisterSuccess"] = "Account created. Sign in with your student number.";
+        TempData["RegisterSuccess"] = "Account created. Sign in with your phone number.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -146,7 +146,7 @@ public class ZimsecController : Controller
 
         var model = new ZimsecLibraryViewModel
         {
-            StudentNumber = User.Identity?.Name ?? string.Empty,
+            PhoneNumber = User.Identity?.Name ?? string.Empty,
             Tree = tree,
             SelectedLevel = level,
             SelectedSubject = subject,

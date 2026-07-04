@@ -18,7 +18,7 @@
                         <img src="~/images/modules/zimsec_logo.jpg" alt="Zimsec" class="zimsec-logo" />
                     </div>
                     <h1 class="zimsec-title mb-2">Past Papers Library</h1>
-                    <p class="zimsec-lead mb-3">Zimsec &amp; Cambridge resources for O Level and A Level students. Sign in with your student number to browse and search @Model.TotalDocuments.ToString("N0") papers across @Model.TotalSubjects subjects.</p>
+                    <p class="zimsec-lead mb-3">Zimsec &amp; Cambridge resources for O Level and A Level students. Sign in with your +263 phone number to browse and search @Model.TotalDocuments.ToString("N0") papers across @Model.TotalSubjects subjects.</p>
                     <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-lg-start">
                         <span class="zimsec-stat-pill">O Level</span>
                         <span class="zimsec-stat-pill">A Level</span>
@@ -50,8 +50,8 @@
                                 <form asp-action="Login" method="post">
                                     @Html.AntiForgeryToken()
                                     <div class="mb-3">
-                                        <label class="form-label small fw-semibold">Student number</label>
-                                        <input type="text" name="studentNumber" class="form-control" placeholder="e.g. ZIM12345" required autocomplete="username" />
+                                        <label class="form-label small fw-semibold">Phone number</label>
+                                        <input type="tel" name="phoneNumber" class="form-control" placeholder="+263771234567" required autocomplete="tel" inputmode="tel" pattern="\+263[0-9]{8,10}" title="Must start with +263" />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label small fw-semibold">Password</label>
@@ -68,8 +68,8 @@
                                 <form asp-action="Register" method="post">
                                     @Html.AntiForgeryToken()
                                     <div class="mb-3">
-                                        <label class="form-label small fw-semibold">Student number</label>
-                                        <input type="text" name="studentNumber" class="form-control" placeholder="Your school student number" required autocomplete="username" />
+                                        <label class="form-label small fw-semibold">Phone number</label>
+                                        <input type="tel" name="phoneNumber" class="form-control" placeholder="+263771234567" required autocomplete="tel" inputmode="tel" pattern="\+263[0-9]{8,10}" title="Must start with +263" />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label small fw-semibold">Password</label>
