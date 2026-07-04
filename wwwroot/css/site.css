@@ -9,8 +9,13 @@
   --pindah-text: #1A1A2E;
   --pindah-muted: #5C6672;
   --sap-font-family: "72", "72full", Arial, Helvetica, sans-serif;
-  --sap-font-size: 0.875rem;
-  --sap-title-size: 1.375rem;
+  --sap-font-size-ui: 0.875rem;       /* 14px — controls, inputs, lists, tables */
+  --sap-font-size-large: 1rem;        /* 16px — item titles, page headers */
+  --sap-font-size-small: 0.75rem;   /* 12px — timestamps, units, exceptional small */
+  --sap-line-height-ui: 1.42857;      /* 20px at 14px */
+  --sap-line-height-large: 1.25;      /* 20px at 16px */
+  --sap-font-size: var(--sap-font-size-ui);
+  --sap-title-size: var(--sap-font-size-large);
   --sap-shell-border: 1px solid var(--pindah-border);
   --sap-focus-outline: 0 0 0 0.125rem rgba(21, 93, 252, 0.35);
   --bs-font-sans-serif: var(--sap-font-family);
@@ -26,8 +31,8 @@
 /* === BASE === */
 .site-body {
   font-family: var(--bs-body-font-family);
-  font-size: var(--sap-font-size);
-  line-height: 1.42857;
+  font-size: var(--sap-font-size-ui);
+  line-height: var(--sap-line-height-ui);
   color: var(--pindah-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,15 +48,20 @@
 .site-body h6,
 .site-body .navbar-brand {
   font-family: inherit;
+  font-size: var(--sap-font-size-large);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: var(--sap-line-height-large);
   color: var(--pindah-primary);
-  letter-spacing: -0.01em;
+  letter-spacing: normal;
+}
+
+.site-body h1 {
+  font-weight: 900;
 }
 
 .site-body .lead {
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: var(--sap-font-size-ui);
+  line-height: 1.5;
   color: var(--pindah-muted);
 }
 
@@ -294,8 +304,8 @@
 
 .home-landing-dek,
 .module-landing-dek {
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-size: var(--sap-font-size-ui);
+  line-height: 1.5;
   color: rgba(255,255,255,0.75);
   font-weight: 400;
   max-width: 38em;
@@ -409,12 +419,13 @@
 #content-editor .ql-editor {
   min-height: 280px;
   font-family: var(--bs-body-font-family);
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: var(--sap-font-size-ui);
+  line-height: 1.5;
 }
 
 .article-content {
-  line-height: 1.8;
+  font-size: var(--sap-font-size-ui);
+  line-height: 1.5;
 }
 
 .article-content h2,
@@ -636,26 +647,58 @@
 }
 
 /* === SAP Fiori / Horizon — Bootstrap overrides (classes unchanged) === */
+/* Type scale: 14px UI controls · 16px page headers & item titles */
 
-.site-body h1 { font-size: 1.75rem; font-weight: 900; }
-.site-body h2 { font-size: 1.375rem; font-weight: 700; }
-.site-body h3 { font-size: 1.125rem; font-weight: 700; }
+.site-body h1,
+.site-body h2,
+.site-body h3,
 .site-body h4,
 .site-body h5,
-.site-body h6 { font-size: 1rem; font-weight: 700; }
-
-.site-body .fw-semibold { font-weight: 600; }
-.site-body .fw-bold { font-weight: 700; }
-.site-body h1.fw-bold,
+.site-body h6,
+.site-body .h1,
+.site-body .h2,
+.site-body .h3,
+.site-body .h4,
+.site-body .h5,
+.site-body .h6,
 .site-body .display-1,
 .site-body .display-2,
 .site-body .display-3,
 .site-body .display-4,
 .site-body .display-5,
-.site-body .display-6 { font-weight: 900; }
+.site-body .display-6 {
+  font-size: var(--sap-font-size-large);
+  line-height: var(--sap-line-height-large);
+  font-weight: 700;
+}
+
+.site-body h1,
+.site-body .h1,
+.site-body .display-1,
+.site-body .display-2,
+.site-body .display-3,
+.site-body .display-4,
+.site-body .display-5,
+.site-body .display-6 {
+  font-weight: 900;
+}
+
+/* Marketing hero bands keep larger display type */
+.site-body h1.home-landing-headline,
+.site-body h1.module-landing-headline {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.site-body .fw-semibold { font-weight: 600; }
+.site-body .fw-bold { font-weight: 700; }
 
 .site-body .small,
-.site-body small { font-size: 0.75rem; line-height: 1.33333; }
+.site-body small {
+  font-size: var(--sap-font-size-small);
+  line-height: 1.33333;
+}
 
 .site-body p,
 .site-body .article-content,
@@ -711,7 +754,7 @@
 .site-body .btn-sm {
   min-height: 1.875rem;
   padding: 0.3125rem 0.625rem;
-  font-size: 0.8125rem;
+  font-size: var(--sap-font-size-ui);
 }
 
 .site-body .btn-lg {
@@ -873,7 +916,7 @@
 }
 
 .site-header-top .navbar-brand {
-  font-size: 1rem;
+  font-size: var(--sap-font-size-large);
   font-weight: 700;
   color: var(--pindah-primary) !important;
 }
