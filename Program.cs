@@ -3,15 +3,34 @@ using Microsoft.EntityFrameworkCore;
 using PindahWebsite3.Data;
 using PindahWebsite3.Areas.Identity.Data;
 using PindahWebsite3.Jobs;
+using PindahWebsite3.Services.Zimsec;
 using Quartz;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("PindahWebsite3ContextConnection") ?? throw new InvalidOperationException("Connection string 'PindahWebsite3ContextConnection' not found.");;
 
 builder.Services.AddDbContext<PindahWebsite3Context>(options => options.UseSqlite(connectionString));
 
+var zimsecConnection = builder.Configuration.GetConnectionString("ZimsecContextConnection") ?? "Data Source=zimsec.db";
+builder.Services.AddDbContext<ZimsecContext>(options => options.UseSqlite(zimsecConnection));
+
+builder.Services.AddScoped<IZimsecCatalogService, ZimsecCatalogService>();
+builder.Services.AddScoped<IZimsecSearchService, ZimsecSearchService>();
+builder.Services.AddScoped<IZimsecLibraryIndexer, ZimsecLibraryIndexer>();
+builder.Services.AddScoped<ZimsecAuthService>();
+
 builder.Services.AddDefaultIdentity<PindahWebsite3User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PindahWebsite3Context>();
+
+builder.Services.AddAuthentication()
+    .AddCookie(ZimsecAuthDefaults.Scheme, options =>
+    {
+        options.Cookie.Name = ZimsecAuthDefaults.CookieName;
+        options.LoginPath = "/Zimsec";
+        options.AccessDeniedPath = "/Zimsec";
+        options.SlidingExpiration = true;
+        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+    });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -61,6 +80,7 @@ builder.Services.AddQuartz(q =>
     );
 });
 builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+builder.Services.AddHostedService<ZimsecLibrarySyncHostedService>();
 
 var app = builder.Build();
 
@@ -73,7 +93,6 @@ using (var scope = app.Services.CreateScope())
     PindahWebsite3.Data.DbSeeder.SeedAsync(context, userManager, roleManager, configuration).Wait();
 }
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -83,15 +102,22 @@ if (!app.Environment.IsDevelopment())
 
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
-if (!app.Environment.IsDevelopment())
-{
-    app.UseResponseCompression();
-}
+ 
 app.UseResponseCaching();
 app.UseRouting();
 
 // SEO: Status code pages for proper HTTP responses
 app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/zimsec", StringComparison.OrdinalIgnoreCase))
+    {
+        context.Response.StatusCode = StatusCodes.Status404NotFound;
+        return;
+    }
+    await next();
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

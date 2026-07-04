@@ -1,0 +1,176 @@
+@model PindahWebsite3.ViewModels.ZimsecLibraryViewModel
+@{
+    ViewData["Title"] = "Library";
+    Layout = "_Layout";
+    var hasSearch = !string.IsNullOrWhiteSpace(Model.SearchQuery);
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/zimsec.css" asp-append-version="true" />
+}
+
+<div class="zimsec-library" data-search-url="@Url.Action("SearchApi")">
+    <header class="zimsec-lib-topbar">
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-zimsec-icon d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#zimsecNav" aria-label="Open subjects menu">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <div>
+                <div class="zimsec-lib-brand">Past Papers Library</div>
+                <div class="zimsec-lib-user small">@Model.StudentNumber</div>
+            </div>
+        </div>
+        <form asp-action="Logout" method="post" class="m-0">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-sm btn-outline-light">Sign out</button>
+        </form>
+    </header>
+
+    <div class="zimsec-lib-body">
+        <aside class="zimsec-sidebar d-none d-lg-flex">
+            @await Html.PartialAsync("_ZimsecNav", Model)
+        </aside>
+
+        <div class="offcanvas offcanvas-start zimsec-offcanvas" tabindex="-1" id="zimsecNav" aria-labelledby="zimsecNavLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="zimsecNavLabel">Subjects</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-0">
+                @await Html.PartialAsync("_ZimsecNav", Model)
+            </div>
+        </div>
+
+        <main class="zimsec-main">
+            <div class="zimsec-search-panel">
+                <form method="get" asp-action="Library" class="zimsec-search-form" id="zimsecSearchForm">
+                    @if (!string.IsNullOrEmpty(Model.SelectedLevel))
+                    {
+                        <input type="hidden" name="level" value="@Model.SelectedLevel" />
+                    }
+                    @if (!string.IsNullOrEmpty(Model.SelectedSubject))
+                    {
+                        <input type="hidden" name="subject" value="@Model.SelectedSubject" />
+                    }
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+                        </span>
+                        <input type="search" name="q" id="zimsecSearchInput" value="@Model.SearchQuery"
+                               class="form-control border-start-0"
+                               placeholder="Search papers and full document text… try &quot;quadratic equations&quot; or vectors"
+                               autocomplete="off" />
+                        <button class="btn btn-zimsec-primary" type="submit">Search</button>
+                    </div>
+                    <p class="zimsec-search-hint small text-muted mb-0 mt-2">
+                        Use quotes for exact phrases. Results rank by relevance across titles and PDF content.
+                        @if (!string.IsNullOrEmpty(Model.SelectedLevelDisplay) || !string.IsNullOrEmpty(Model.SelectedSubjectDisplay))
+                        {
+                            <span>Filtering:
+                                @if (!string.IsNullOrEmpty(Model.SelectedLevelDisplay))
+                                {
+                                    <strong>@Model.SelectedLevelDisplay</strong>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.SelectedSubjectDisplay))
+                                {
+                                    @:› <strong>@Model.SelectedSubjectDisplay</strong>
+                                }
+                                <a asp-action="Library" asp-route-q="@Model.SearchQuery" class="ms-1">Clear filters</a>
+                            </span>
+                        }
+                    </p>
+                </form>
+                <div id="zimsecSearchSuggestions" class="zimsec-suggestions d-none"></div>
+            </div>
+
+            <div class="zimsec-results">
+                @if (hasSearch && Model.SearchResult != null)
+                {
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                        <h2 class="h6 fw-bold mb-0">@Model.SearchResult.TotalCount result@(Model.SearchResult.TotalCount == 1 ? "" : "s") for &ldquo;@Model.SearchQuery&rdquo;</h2>
+                        <a asp-action="Library" asp-route-level="@Model.SelectedLevel" asp-route-subject="@Model.SelectedSubject" class="small">Clear search</a>
+                    </div>
+
+                    @if (Model.SearchResult.LevelFacets.Any() || Model.SearchResult.SubjectFacets.Any())
+                    {
+                        <div class="zimsec-facets mb-3">
+                            @foreach (var f in Model.SearchResult.LevelFacets.Take(4))
+                            {
+                                <a asp-action="Library" asp-route-q="@Model.SearchQuery" asp-route-level="@f.Key" asp-route-subject="@Model.SelectedSubject" class="zimsec-facet">@f.Key (@f.Value)</a>
+                            }
+                        </div>
+                    }
+
+                    @if (!Model.SearchResult.Hits.Any())
+                    {
+                        <div class="zimsec-empty">No matches. Try different keywords or clear subject filters.</div>
+                    }
+                    else
+                    {
+                        <ul class="zimsec-doc-list">
+                            @foreach (var hit in Model.SearchResult.Hits)
+                            {
+                                <li class="zimsec-doc-item">
+                                    <div class="zimsec-doc-meta">@hit.LevelDisplay › @hit.SubjectDisplay</div>
+                                    <a asp-action="ViewDocument" asp-route-id="@hit.DocumentId" asp-route-level="@Model.SelectedLevel" asp-route-subject="@Model.SelectedSubject" asp-route-q="@Model.SearchQuery" class="zimsec-doc-title">@hit.Title</a>
+                                    @if (!string.IsNullOrWhiteSpace(hit.Snippet))
+                                    {
+                                        <div class="zimsec-doc-snippet small">@Html.Raw(hit.Snippet)</div>
+                                    }
+                                    <div class="zimsec-doc-actions">
+                                        <a asp-action="ViewDocument" asp-route-id="@hit.DocumentId" asp-route-level="@Model.SelectedLevel" asp-route-subject="@Model.SelectedSubject" asp-route-q="@Model.SearchQuery" class="btn btn-sm btn-zimsec-primary">Open</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                        <h2 class="h6 fw-bold mb-0">
+                            @if (!string.IsNullOrEmpty(Model.SelectedSubjectDisplay))
+                            {
+                                @:@Model.SelectedLevelDisplay › @Model.SelectedSubjectDisplay
+                            }
+                            else if (!string.IsNullOrEmpty(Model.SelectedLevelDisplay))
+                            {
+                                @Model.SelectedLevelDisplay
+                            }
+                            else
+                            {
+                                @:All papers
+                            }
+                        </h2>
+                        <span class="small text-muted">@Model.BrowseDocuments.Count shown</span>
+                    </div>
+
+                    @if (!Model.BrowseDocuments.Any())
+                    {
+                        <div class="zimsec-empty">Select a subject from the menu or search across all papers.</div>
+                    }
+                    else
+                    {
+                        <ul class="zimsec-doc-list">
+                            @foreach (var doc in Model.BrowseDocuments)
+                            {
+                                <li class="zimsec-doc-item">
+                                    <div class="zimsec-doc-meta">@doc.SubjectDisplay</div>
+                                    <a asp-action="ViewDocument" asp-route-id="@doc.Id" asp-route-level="@Model.SelectedLevel" asp-route-subject="@Model.SelectedSubject" class="zimsec-doc-title">@doc.Title</a>
+                                    <div class="zimsec-doc-meta small">@((doc.FileSizeBytes / 1024.0 / 1024.0).ToString("0.##")) MB · @doc.PageCount pg</div>
+                                    <div class="zimsec-doc-actions">
+                                        <a asp-action="ViewDocument" asp-route-id="@doc.Id" asp-route-level="@Model.SelectedLevel" asp-route-subject="@Model.SelectedSubject" class="btn btn-sm btn-zimsec-primary">Open</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                }
+            </div>
+        </main>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/zimsec.js" asp-append-version="true"></script>
+}

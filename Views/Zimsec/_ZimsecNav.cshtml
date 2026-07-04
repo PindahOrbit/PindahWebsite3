@@ -1,0 +1,25 @@
+@model PindahWebsite3.ViewModels.ZimsecLibraryViewModel
+
+<nav class="zimsec-nav" aria-label="Subject browser">
+    <a asp-action="Library" asp-route-q="@Model.SearchQuery"
+       class="zimsec-nav-item @(string.IsNullOrEmpty(Model.SelectedLevel) && string.IsNullOrEmpty(Model.SelectedSubject) ? "active" : "")">
+        All subjects
+    </a>
+    @foreach (var level in Model.Tree)
+    {
+        <div class="zimsec-nav-level">@level.DisplayName</div>
+        @foreach (var subject in level.Subjects)
+        {
+            var active = Model.SelectedLevel == level.Slug && Model.SelectedSubject == subject.Slug;
+            <a asp-action="Library"
+               asp-route-level="@level.Slug"
+               asp-route-subject="@subject.Slug"
+               asp-route-q="@Model.SearchQuery"
+               class="zimsec-nav-item @(active ? "active" : "")"
+               data-bs-dismiss="offcanvas">
+                <span>@subject.DisplayName</span>
+                <span class="zimsec-nav-count">@subject.DocumentCount</span>
+            </a>
+        }
+    }
+</nav>

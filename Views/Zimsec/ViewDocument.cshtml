@@ -1,34 +1,22 @@
-@model PindahWebsite3.Models.ZimsecDocument
+@model PindahWebsite3.ViewModels.ZimsecDocumentViewModel
 @{
-    ViewData["Title"] = "View: " + Model.Title;
+    ViewData["Title"] = Model.Title;
+    Layout = "_Layout";
 }
 
-<div class="row mb-3 mt-4">
-    <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-bold" style="color: var(--mckinsey-deep);">@Model.Title</h4>
-            <a href="/Zimsec" class="btn btn-sm btn-outline-secondary fw-bold">&larr; Back to Repository</a>
-        </div>
-        <p class="text-muted small mt-1">
-            Category: <strong>@(Model.Category?.Name ?? "Uncategorized")</strong> 
-            &bull; Uploaded: @Model.UploadDate.ToString("MMM dd, yyyy HH:mm")
-        </p>
-    </div>
-</div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/zimsec.css" asp-append-version="true" />
+}
 
-<div class="row">
-    <div class="col-12 mb-4">
-        <div class="card border rounded-0">
-            <div class="card-header bg-light border-bottom">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold small text-uppercase" style="letter-spacing: 0.05em;">Document Viewer</span>
-                    <a href="@Model.FilePath" class="btn btn-sm btn-primary fw-bold py-0" download>Download File</a>
-                </div>
-            </div>
-            <div class="card-body p-0">
-                <!-- Standard iFrame embedding for modern browsers to load PDF inline, vertically responsive -->
-                <iframe src="/Zimsec/StreamPdf/@Model.Id#toolbar=0" style="width: 100%; height: clamp(60vh, 85vh, 1200px); border: none; display: block;" title="PDF Viewer"></iframe>
-            </div>
+<div class="zimsec-viewer-page container-fluid px-0 px-md-3 py-3">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start gap-2 mb-3 px-2 px-md-0">
+        <div>
+            <h1 class="h5 fw-bold mb-1">@Model.Title</h1>
+            <p class="text-muted small mb-0">@Model.LevelDisplay › @Model.SubjectDisplay · @((Model.FileSizeBytes / 1024.0 / 1024.0).ToString("0.##")) MB · @Model.PageCount pages</p>
         </div>
+        <a href="@Model.ReturnUrl" class="btn btn-sm btn-outline-secondary flex-shrink-0">&larr; Back</a>
+    </div>
+    <div class="zimsec-pdf-frame-wrap">
+        <iframe src="@Url.Action("StreamPdf", new { id = Model.Id })#toolbar=1" class="zimsec-pdf-frame" title="@Model.Title"></iframe>
     </div>
 </div>

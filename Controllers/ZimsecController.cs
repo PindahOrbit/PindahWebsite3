@@ -1,240 +1,238 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PindahWebsite3.Data;
-using PindahWebsite3.Models;
+using PindahWebsite3.Services.Zimsec;
 using PindahWebsite3.ViewModels;
-using System.IO;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using UglyToad.PdfPig;
 
-namespace PindahWebsite3.Controllers
+namespace PindahWebsite3.Controllers;
+
+public class ZimsecController : Controller
 {
-    public class ZimsecController : Controller
+    private readonly ZimsecContext _zimsecDb;
+    private readonly IZimsecCatalogService _catalog;
+    private readonly IZimsecSearchService _search;
+    private readonly ZimsecAuthService _auth;
+    private readonly IZimsecLibraryIndexer _indexer;
+
+    public ZimsecController(
+        ZimsecContext zimsecDb,
+        IZimsecCatalogService catalog,
+        IZimsecSearchService search,
+        ZimsecAuthService auth,
+        IZimsecLibraryIndexer indexer)
     {
-        private readonly PindahWebsite3Context _context;
-        private readonly IWebHostEnvironment _env;
+        _zimsecDb = zimsecDb;
+        _catalog = catalog;
+        _search = search;
+        _auth = auth;
+        _indexer = indexer;
+    }
 
-        public ZimsecController(PindahWebsite3Context context, IWebHostEnvironment env)
+    [AllowAnonymous]
+    public IActionResult Index()
+    {
+        if (ZimsecAuthService.GetStudentId(User).HasValue)
+            return RedirectToAction(nameof(Library));
+
+        var tree = _catalog.GetTreeFromDisk();
+        var model = new ZimsecIndexViewModel
         {
-            _context = context;
-            _env = env;
+            PreviewTree = tree,
+            TotalDocuments = tree.Sum(l => l.Subjects.Sum(s => s.DocumentCount)),
+            TotalSubjects = tree.Sum(l => l.Subjects.Count)
+        };
+
+        if (TempData["RegisterSuccess"] is string regOk)
+            model.RegisterSuccess = regOk;
+
+        return View(model);
+    }
+
+    [AllowAnonymous]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Login(string studentNumber, string password)
+    {
+        var (ok, student, error) = await _auth.ValidateAsync(studentNumber, password);
+        if (!ok || student == null)
+        {
+            var tree = _catalog.GetTreeFromDisk();
+            return View("Index", new ZimsecIndexViewModel
+            {
+                LoginError = error,
+                PreviewTree = tree,
+                TotalDocuments = tree.Sum(l => l.Subjects.Sum(s => s.DocumentCount)),
+                TotalSubjects = tree.Sum(l => l.Subjects.Count)
+            });
         }
 
-        public async Task<IActionResult> Index(string q = null)
+        await _auth.SignInAsync(HttpContext, student);
+        return RedirectToAction(nameof(Library));
+    }
+
+    [AllowAnonymous]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Register(string studentNumber, string password, string confirmPassword)
+    {
+        if (password != confirmPassword)
         {
-            var flatCategories = await _context.ZimsecCategories.ToListAsync();
-
-            var viewModel = new ZimsecIndexViewModel
+            var tree = _catalog.GetTreeFromDisk();
+            return View("Index", new ZimsecIndexViewModel
             {
-                FlatCategories = flatCategories,
-                SearchQuery = q ?? string.Empty
-            };
+                RegisterError = "Passwords do not match.",
+                PreviewTree = tree,
+                TotalDocuments = tree.Sum(l => l.Subjects.Sum(s => s.DocumentCount)),
+                TotalSubjects = tree.Sum(l => l.Subjects.Count)
+            });
+        }
 
-            if (!string.IsNullOrWhiteSpace(q))
+        var (ok, error) = await _auth.RegisterAsync(studentNumber, password);
+        if (!ok)
+        {
+            var tree = _catalog.GetTreeFromDisk();
+            return View("Index", new ZimsecIndexViewModel
             {
-                viewModel.IsSearch = true;
-                string queryStr = q.Trim().ToLower();
+                RegisterError = error,
+                PreviewTree = tree,
+                TotalDocuments = tree.Sum(l => l.Subjects.Sum(s => s.DocumentCount)),
+                TotalSubjects = tree.Sum(l => l.Subjects.Count)
+            });
+        }
 
-                // Advanced network search parser (e.g. "Maths > Vectors")
-                var queryParts = queryStr.Split('>').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p)).ToList();
-                
-                string mainQuery = queryParts.LastOrDefault() ?? queryStr;
-                string parentQuery = queryParts.Count > 1 ? queryParts.First() : null;
+        TempData["RegisterSuccess"] = "Account created. Sign in with your student number.";
+        return RedirectToAction(nameof(Index));
+    }
 
-                // Categories query
-                var catsQuery = _context.ZimsecCategories.Include(c => c.ParentCategory).AsQueryable();
-                if (parentQuery != null)
-                {
-                    catsQuery = catsQuery.Where(c => c.Name.ToLower().Contains(mainQuery) && c.ParentCategory != null && c.ParentCategory.Name.ToLower().Contains(parentQuery));
-                }
-                else
-                {
-                    catsQuery = catsQuery.Where(c => c.Name.ToLower().Contains(mainQuery));
-                }
-                viewModel.SearchCategoryResults = await catsQuery.ToListAsync();
+    [Authorize(AuthenticationSchemes = ZimsecAuthDefaults.Scheme)]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        await _auth.SignOutAsync(HttpContext);
+        return RedirectToAction(nameof(Index));
+    }
 
-                // Documents query
-                var docsQuery = _context.ZimsecDocuments.Include(d => d.Category).ThenInclude(c => c.ParentCategory).AsQueryable();
-                if (parentQuery != null)
-                {
-                    docsQuery = docsQuery.Where(d => 
-                        (d.Title.ToLower().Contains(mainQuery) || d.ExtractedText.ToLower().Contains(mainQuery) || (d.Category != null && d.Category.Name.ToLower().Contains(mainQuery))) && 
-                        (d.Category != null && d.Category.ParentCategory != null && d.Category.ParentCategory.Name.ToLower().Contains(parentQuery)));
-                }
-                else
-                {
-                    docsQuery = docsQuery.Where(d => 
-                        d.Title.ToLower().Contains(mainQuery) || 
-                        (d.Category != null && d.Category.Name.ToLower().Contains(mainQuery)) ||
-                        d.ExtractedText.ToLower().Contains(mainQuery));
-                }
-                viewModel.SearchDocumentResults = await docsQuery.OrderByDescending(d => d.UploadDate).Take(100).ToListAsync();
+    [Authorize(AuthenticationSchemes = ZimsecAuthDefaults.Scheme)]
+    public async Task<IActionResult> Library(string? level, string? subject, string? q, CancellationToken cancellationToken)
+    {
+        level = NormalizeSlug(level);
+        subject = NormalizeSlug(subject);
+        q = q?.Trim();
+
+        var tree = _catalog.GetTreeFromDisk();
+        var searchResult = await _search.SearchAsync(q, level, subject, 50, cancellationToken);
+
+        var browse = searchResult.Hits.Select(h => new ZimsecDocumentListItem(
+            h.DocumentId, h.Title, h.FileName, h.Level, h.SubjectSlug, h.SubjectDisplay, 0, 0)).ToList();
+
+        if (string.IsNullOrWhiteSpace(q))
+        {
+            var docQuery = _zimsecDb.Documents.AsNoTracking().AsQueryable();
+            if (!string.IsNullOrEmpty(level))
+                docQuery = docQuery.Where(d => d.Level == level);
+            if (!string.IsNullOrEmpty(subject))
+                docQuery = docQuery.Where(d => d.SubjectSlug == subject);
+
+            browse = await docQuery
+                .OrderBy(d => d.Title)
+                .Select(d => new ZimsecDocumentListItem(
+                    d.Id, d.Title, d.FileName, d.Level, d.SubjectSlug, d.SubjectDisplay,
+                    d.FileSizeBytes, d.PageCount))
+                .Take(100)
+                .ToListAsync(cancellationToken);
+        }
+
+        var model = new ZimsecLibraryViewModel
+        {
+            StudentNumber = User.Identity?.Name ?? string.Empty,
+            Tree = tree,
+            SelectedLevel = level,
+            SelectedSubject = subject,
+            SelectedLevelDisplay = level != null ? _catalog.FormatLevelDisplay(level) : null,
+            SelectedSubjectDisplay = subject != null ? _catalog.FormatSubjectDisplay(subject) : null,
+            SearchQuery = q ?? string.Empty,
+            SearchResult = searchResult,
+            BrowseDocuments = browse
+        };
+
+        return View(model);
+    }
+
+    [Authorize(AuthenticationSchemes = ZimsecAuthDefaults.Scheme)]
+    public async Task<IActionResult> ViewDocument(int id, string? level, string? subject, string? q)
+    {
+        var doc = await _zimsecDb.Documents.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+        if (doc == null) return NotFound();
+
+        var returnUrl = "/Zimsec/Library";
+        var qs = new List<string>();
+        if (!string.IsNullOrEmpty(level)) qs.Add($"level={Uri.EscapeDataString(level)}");
+        if (!string.IsNullOrEmpty(subject)) qs.Add($"subject={Uri.EscapeDataString(subject)}");
+        if (!string.IsNullOrEmpty(q)) qs.Add($"q={Uri.EscapeDataString(q)}");
+        if (qs.Count > 0) returnUrl += "?" + string.Join("&", qs);
+
+        return View(new ZimsecDocumentViewModel
+        {
+            Id = doc.Id,
+            Title = doc.Title,
+            Level = doc.Level,
+            LevelDisplay = _catalog.FormatLevelDisplay(doc.Level),
+            SubjectDisplay = doc.SubjectDisplay,
+            SubjectSlug = doc.SubjectSlug,
+            FileSizeBytes = doc.FileSizeBytes,
+            PageCount = doc.PageCount,
+            ReturnUrl = returnUrl
+        });
+    }
+
+    [Authorize(AuthenticationSchemes = ZimsecAuthDefaults.Scheme)]
+    [HttpGet]
+    [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Client, VaryByQueryKeys = new[] { "id" })]
+    public async Task<IActionResult> StreamPdf(int id)
+    {
+        var doc = await _zimsecDb.Documents.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
+        if (doc == null) return NotFound();
+
+        var physicalPath = _catalog.ResolvePhysicalPath(doc.RelativePath);
+        if (physicalPath == null) return NotFound();
+
+        var stream = new FileStream(physicalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+        Response.Headers["Content-Disposition"] = $"inline; filename=\"{Uri.EscapeDataString(doc.FileName)}\"";
+        return File(stream, "application/pdf");
+    }
+
+    [Authorize(AuthenticationSchemes = ZimsecAuthDefaults.Scheme)]
+    [HttpGet]
+    public async Task<IActionResult> SearchApi(string? q, string? level, string? subject, CancellationToken cancellationToken)
+    {
+        var result = await _search.SearchAsync(q, NormalizeSlug(level), NormalizeSlug(subject), 20, cancellationToken);
+        return Json(new
+        {
+            query = result.Query,
+            total = result.TotalCount,
+            hits = result.Hits.Select(h => new
+            {
+                id = h.DocumentId,
+                title = h.Title,
+                level = h.LevelDisplay,
+                subject = h.SubjectDisplay,
+                snippet = h.Snippet,
+                score = h.Score,
+                url = Url.Action(nameof(ViewDocument), new { id = h.DocumentId, level, subject, q })
+            }),
+            facets = new
+            {
+                levels = result.LevelFacets,
+                subjects = result.SubjectFacets
             }
-            else
-            {
-                viewModel.Categories = await _context.ZimsecCategories
-                    .Include(c => c.SubCategories)
-                    .Where(c => c.ParentCategoryId == null)
-                    .ToListAsync();
+        });
+    }
 
-                viewModel.RecentDocuments = await _context.ZimsecDocuments
-                    .Include(d => d.Category)
-                    .OrderByDescending(d => d.UploadDate)
-                    .Take(20)
-                    .ToListAsync();
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateCategory(string name, int? parentCategoryId)
-        {
-            if (!string.IsNullOrWhiteSpace(name))
-            {
-                var category = new ZimsecCategory
-                {
-                    Name = name.Trim(),
-                    ParentCategoryId = (parentCategoryId > 0) ? parentCategoryId : null
-                };
-                _context.ZimsecCategories.Add(category);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UploadDocuments(int categoryId, List<IFormFile> files)
-        {
-            if (files != null && files.Any() && categoryId > 0)
-            {
-                var category = await _context.ZimsecCategories.FindAsync(categoryId);
-                if (category == null) return RedirectToAction(nameof(Index));
-
-                // Create folder based on category structure or just a general one appropriately inside wwwroot
-                string safeCategoryName = string.Join("_", category.Name.Split(Path.GetInvalidFileNameChars()));
-                string uploadFolder = Path.Combine(_env.WebRootPath, "zimsec_documents", safeCategoryName);
-                if (!Directory.Exists(uploadFolder))
-                {
-                    Directory.CreateDirectory(uploadFolder);
-                }
-
-                foreach (var file in files)
-                {
-                    if (file.Length == 0) continue;
-
-                    string title = Path.GetFileNameWithoutExtension(file.FileName);
-
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string filePath = Path.Combine(uploadFolder, fileName);
-                    string dbPath = $"/zimsec_documents/{safeCategoryName}/{fileName}";
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-
-                    // Extract text if PDF and save next to the document
-                    string extractedText = string.Empty;
-                    if (Path.GetExtension(file.FileName).Equals(".pdf", StringComparison.OrdinalIgnoreCase))
-                    {
-                        try
-                        {
-                            using (var document = PdfDocument.Open(filePath))
-                            {
-                                StringBuilder textBuilder = new StringBuilder();
-                                foreach (var page in document.GetPages())
-                                {
-                                    textBuilder.AppendLine(page.Text);
-                                }
-                                extractedText = textBuilder.ToString();
-                            }
-
-                            // Save text to log file next to PDF
-                            string textFilePath = Path.ChangeExtension(filePath, ".txt");
-                            await System.IO.File.WriteAllTextAsync(textFilePath, extractedText);
-                        }
-                        catch
-                        {
-                            // Safely handle if doc is malformed and still add to system but skip text.
-                        }
-                    }
-
-                    var documentRecord = new ZimsecDocument
-                    {
-                        Title = title,
-                        CategoryId = categoryId,
-                        FilePath = dbPath,
-                        ExtractedText = extractedText,
-                        UploadDate = DateTime.UtcNow,
-                        UploadedByUserId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier)
-                    };
-
-                    _context.ZimsecDocuments.Add(documentRecord);
-                }
-                
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteCategory(int id)
-        {
-            var category = await _context.ZimsecCategories.FindAsync(id);
-            if (category != null)
-            {
-                var documents = await _context.ZimsecDocuments.Where(d => d.CategoryId == id).ToListAsync();
-                foreach (var doc in documents)
-                {
-                    doc.CategoryId = null;
-                }
-
-                var subCategories = await _context.ZimsecCategories.Where(c => c.ParentCategoryId == id).ToListAsync();
-                foreach (var sub in subCategories)
-                {
-                    sub.ParentCategoryId = null;
-                }
-
-                _context.ZimsecCategories.Remove(category);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        public async Task<IActionResult> ViewDocument(int id)
-        {
-            var doc = await _context.ZimsecDocuments.Include(d => d.Category).FirstOrDefaultAsync(d => d.Id == id);
-            if (doc == null)
-            {
-                return NotFound();
-            }
-            return View(doc);
-        }
-        [HttpGet]
-        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Client)]
-        public async Task<IActionResult> StreamPdf(int id)
-        {
-            var doc = await _context.ZimsecDocuments.FindAsync(id);
-            if (doc == null) return NotFound();
-
-            var physicalPath = Path.Combine(_env.WebRootPath, doc.FilePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
-            if (!System.IO.File.Exists(physicalPath)) return NotFound();
-
-            var stream = new FileStream(physicalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            Response.Headers["Content-Disposition"] = "inline; filename=\"" + Uri.EscapeDataString(doc.Title) + ".pdf\"";
-            return File(stream, "application/pdf");
-        }
+    private static string? NormalizeSlug(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return null;
+        return value.Trim().ToLowerInvariant();
     }
 }
