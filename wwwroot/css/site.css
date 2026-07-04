@@ -8,21 +8,31 @@
   --pindah-border: #E2E5E9;
   --pindah-text: #1A1A2E;
   --pindah-muted: #5C6672;
-  --bs-font-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-  --bs-body-font-family: var(--bs-font-sans-serif);
+  --sap-font-family: "72", "72full", Arial, Helvetica, sans-serif;
+  --sap-font-size: 0.875rem;
+  --sap-title-size: 1.375rem;
+  --sap-shell-border: 1px solid var(--pindah-border);
+  --sap-focus-outline: 0 0 0 0.125rem rgba(21, 93, 252, 0.35);
+  --bs-font-sans-serif: var(--sap-font-family);
+  --bs-body-font-family: var(--sap-font-family);
+  --bs-body-font-size: var(--sap-font-size);
   --bs-primary: var(--pindah-accent);
   --bs-primary-rgb: 21, 93, 252;
+  --bs-border-radius: 0.25rem;
+  --bs-border-radius-sm: 0.125rem;
+  --bs-border-radius-lg: 0.25rem;
 }
 
 /* === BASE === */
 .site-body {
   font-family: var(--bs-body-font-family);
-  font-size: 0.9375rem;
-  line-height: 1.6;
+  font-size: var(--sap-font-size);
+  line-height: 1.42857;
   color: var(--pindah-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "kern" 1, "liga" 1;
+  background-color: #fff;
 }
 
 .site-body h1,
@@ -34,8 +44,9 @@
 .site-body .navbar-brand {
   font-family: inherit;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--pindah-primary);
+  letter-spacing: -0.01em;
 }
 
 .site-body .lead {
@@ -623,3 +634,295 @@
     50% { transform: translateY(-12px) rotate(2deg); }
     100% { transform: translateY(0px) rotate(0deg); }
 }
+
+/* === SAP Fiori / Horizon — Bootstrap overrides (classes unchanged) === */
+
+.site-body h1 { font-size: 1.75rem; font-weight: 900; }
+.site-body h2 { font-size: 1.375rem; font-weight: 700; }
+.site-body h3 { font-size: 1.125rem; font-weight: 700; }
+.site-body h4,
+.site-body h5,
+.site-body h6 { font-size: 1rem; font-weight: 700; }
+
+.site-body .fw-semibold { font-weight: 600; }
+.site-body .fw-bold { font-weight: 700; }
+.site-body h1.fw-bold,
+.site-body .display-1,
+.site-body .display-2,
+.site-body .display-3,
+.site-body .display-4,
+.site-body .display-5,
+.site-body .display-6 { font-weight: 900; }
+
+.site-body .small,
+.site-body small { font-size: 0.75rem; line-height: 1.33333; }
+
+.site-body p,
+.site-body .article-content,
+.site-body .lead { letter-spacing: normal; }
+
+.site-body .article-content,
+.site-body .article-content p {
+  line-height: 1.5;
+}
+
+/* Shell-style navigation */
+.site-body .navbar.bg-mckinsey-nav {
+  border-bottom: var(--sap-shell-border) !important;
+  box-shadow: none;
+}
+
+.site-body .navbar .nav-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.85);
+  padding-top: 0.875rem !important;
+  padding-bottom: 0.875rem !important;
+  border-bottom: 0.1875rem solid transparent;
+  border-radius: 0;
+  transition: color 0.1s ease, border-color 0.1s ease, background-color 0.1s ease;
+}
+
+.site-body .navbar .nav-link:hover,
+.site-body .navbar .nav-link:focus {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.site-body .navbar .nav-link.active {
+  color: #fff;
+  border-bottom-color: var(--pindah-accent);
+}
+
+/* Buttons — compact, direct */
+.site-body .btn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.42857;
+  border-radius: var(--bs-border-radius);
+  min-height: 2.25rem;
+  padding: 0.4375rem 0.75rem;
+  box-shadow: none !important;
+  transition: background-color 0.1s ease, border-color 0.1s ease, color 0.1s ease;
+}
+
+.site-body .btn-sm {
+  min-height: 1.875rem;
+  padding: 0.3125rem 0.625rem;
+  font-size: 0.8125rem;
+}
+
+.site-body .btn-lg {
+  min-height: 2.5rem;
+  padding: 0.5625rem 1rem;
+}
+
+.site-body .btn:focus-visible,
+.site-body .btn:focus {
+  box-shadow: var(--sap-focus-outline) !important;
+}
+
+/* Form controls */
+.site-body .form-control,
+.site-body .form-select {
+  font-size: 0.875rem;
+  line-height: 1.42857;
+  min-height: 2.25rem;
+  border: 1px solid var(--pindah-border);
+  border-radius: var(--bs-border-radius);
+  color: var(--pindah-text);
+  background-color: #fff;
+  box-shadow: none;
+}
+
+.site-body .form-control:focus,
+.site-body .form-select:focus {
+  border-color: var(--pindah-accent);
+  box-shadow: var(--sap-focus-outline);
+}
+
+.site-body .form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--pindah-text);
+  margin-bottom: 0.25rem;
+}
+
+.site-body textarea.form-control {
+  line-height: 1.5;
+  min-height: 4.5rem;
+}
+
+/* Cards — flat object pages */
+.site-body .card {
+  border-radius: var(--bs-border-radius);
+  box-shadow: none;
+}
+
+.site-body .card:hover {
+  border-color: var(--pindah-border);
+}
+
+.site-body .card-header,
+.site-body .card-footer {
+  padding: 0.75rem 1rem;
+  background-color: var(--pindah-light);
+}
+
+/* Tables */
+.site-body .table {
+  font-size: 0.875rem;
+}
+
+.site-body .table > :not(caption) > * > * {
+  padding: 0.625rem 0.75rem;
+  vertical-align: middle;
+}
+
+.site-body .table thead th {
+  font-weight: 600;
+  color: var(--pindah-primary);
+  border-bottom-width: 1px;
+  background-color: var(--pindah-light);
+}
+
+.site-body .table-hover > tbody > tr:hover > * {
+  background-color: rgba(21, 93, 252, 0.04);
+}
+
+/* List groups */
+.site-body .list-group-item {
+  font-size: 0.875rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 !important;
+}
+
+.site-body .list-group-item-action:hover,
+.site-body .list-group-item-action:focus {
+  background-color: var(--pindah-light);
+  color: var(--pindah-primary);
+}
+
+/* Nav pills / tabs */
+.site-body .nav-pills .nav-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--bs-border-radius);
+  color: var(--pindah-muted);
+}
+
+.site-body .nav-tabs .nav-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0;
+  color: var(--pindah-muted);
+}
+
+.site-body .nav-tabs .nav-link.active {
+  color: var(--pindah-primary);
+  border-bottom-color: var(--pindah-accent);
+}
+
+/* Badges */
+.site-body .badge {
+  font-weight: 600;
+  font-size: 0.75rem;
+  border-radius: var(--bs-border-radius-sm);
+  padding: 0.25em 0.5em;
+}
+
+/* Alerts */
+.site-body .alert {
+  font-size: 0.875rem;
+  border-radius: var(--bs-border-radius);
+  border-width: 1px;
+}
+
+/* Accordion */
+.site-body .accordion-item {
+  border-radius: 0 !important;
+  border-color: var(--pindah-border);
+}
+
+.site-body .accordion-button {
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+/* Offcanvas */
+.site-body .offcanvas {
+  border-right: var(--sap-shell-border);
+}
+
+.site-body .offcanvas-header {
+  border-bottom: var(--sap-shell-border);
+  padding: 0.75rem 1rem;
+}
+
+.site-body .offcanvas-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Header shell bar */
+.site-header-top {
+  min-height: 2.75rem;
+}
+
+.site-header-top .navbar-brand {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--pindah-primary) !important;
+}
+
+.site-header-top .small {
+  font-size: 0.8125rem;
+}
+
+/* Landing panels — structured, not decorative */
+.home-hero-panel {
+  border-radius: var(--bs-border-radius);
+}
+
+.home-landing-dek,
+.module-landing-dek {
+  line-height: 1.5;
+}
+
+/* Zimsec / full-bleed app shells inside layout container */
+.site-body:has(.zimsec-library) .container.flex-grow-1,
+.site-body:has(.zimsec-landing) .container.flex-grow-1,
+.site-body:has(.zimsec-viewer-page) .container.flex-grow-1 {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.site-body:has(.zimsec-library) main,
+.site-body:has(.zimsec-landing) main,
+.site-body:has(.zimsec-viewer-page) main {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.site-body:has(.zimsec-library) .site-footer,
+.site-body:has(.zimsec-viewer-page) .site-footer {
+  margin-top: 0;
+}
+
+/* Tone down playful module animation */
+.vitrum-img {
+  animation: none;
+}
+
+.vitrum-container {
+  border-radius: var(--bs-border-radius);
+}
+
+.vitrum-container::before {
+  display: none;
+}
+
