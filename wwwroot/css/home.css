@@ -143,40 +143,26 @@
 
 .home-page .home-hero-illustration-wrap {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 16rem;
-  padding: 1.25rem;
+  display: block;
+  padding: 0;
   border-radius: var(--bs-border-radius);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 30% 25%, rgba(21, 93, 252, 0.14) 0%, transparent 45%),
-    radial-gradient(circle at 75% 75%, rgba(5, 28, 44, 0.1) 0%, transparent 42%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.96) 0%, rgba(247, 248, 250, 0.88) 100%);
-  border: 1px solid rgba(21, 93, 252, 0.14);
-  box-shadow:
-    0 1rem 2.5rem rgba(5, 28, 44, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  background: #fff;
+  border: 1px solid rgba(21, 93, 252, 0.12);
+  box-shadow: 0 1rem 2.5rem rgba(5, 28, 44, 0.08);
 }
 
 .home-page .home-hero-illustration-wrap::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(21, 93, 252, 0.08) 50%, transparent 60%);
-  background-size: 250% 250%;
-  animation: home-shimmer-sweep 16s linear infinite;
-  pointer-events: none;
+  display: none;
 }
 
 .home-page .home-hero-illustration {
   position: relative;
   z-index: 1;
-  width: min(100%, 22rem);
+  display: block;
+  width: 100%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0.75rem 1.5rem rgba(21, 93, 252, 0.12));
 }
 
 .home-page .home-hero-panel {
