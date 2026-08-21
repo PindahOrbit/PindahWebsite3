@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PindahWebsite3.Data;
+using PindahWebsite3.Services;
 using System.Xml.Linq;
 
 namespace PindahWebsite3.Controllers;
@@ -6,17 +9,25 @@ namespace PindahWebsite3.Controllers;
 public class SitemapController : Controller
 {
     private static readonly XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+    private readonly PindahWebsite3Context _context;
+
+    public SitemapController(PindahWebsite3Context context)
+    {
+        _context = context;
+    }
 
     [Route("sitemap.xml")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         var baseUrl = "https://pindah.org";
         var now = DateTime.UtcNow;
 
-        var urls = new[]
+        var urls = new List<XElement>
         {
             CreateUrlEntry($"{baseUrl}", now, "daily", "1.0"),
             CreateUrlEntry($"{baseUrl}/privacy", now.AddDays(-7), "monthly", "0.3"),
+            CreateUrlEntry($"{baseUrl}/sop", now, "weekly", "0.6"),
+            CreateUrlEntry($"{baseUrl}/news", now.AddDays(-1), "daily", "0.8"),
             CreateUrlEntry($"{baseUrl}/crm", now.AddDays(-1), "weekly", "0.9"),
             CreateUrlEntry($"{baseUrl}/crm/dashboard", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/crm/leads", now.AddDays(-1), "weekly", "0.7"),
@@ -144,6 +155,17 @@ public class SitemapController : Controller
             CreateUrlEntry($"{baseUrl}/sms/boarding", now.AddDays(-1), "weekly", "0.7")
         };
 
+        urls.AddRange(SeoLandingCatalog.All.Select(page =>
+            CreateUrlEntry($"{baseUrl}/{page.Slug}", now.AddDays(-1), "weekly", "0.85")));
+
+        var articles = await _context.News
+            .AsNoTracking()
+            .Select(n => new { n.Slug, n.DateCreated })
+            .ToListAsync();
+
+        urls.AddRange(articles.Select(a =>
+            CreateUrlEntry($"{baseUrl}/news/details/{a.Slug}", a.DateCreated, "monthly", "0.7")));
+
         var sitemap = new XElement(ns + "urlset",
             new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
             urls
@@ -152,7 +174,7 @@ public class SitemapController : Controller
         return Content(sitemap.ToString(), "application/xml");
     }
 
-    private XElement CreateUrlEntry(string loc, DateTime lastmod, string changefreq, string priority)
+    private static XElement CreateUrlEntry(string loc, DateTime lastmod, string changefreq, string priority)
     {
         return new XElement(ns + "url",
             new XElement(ns + "loc", loc),

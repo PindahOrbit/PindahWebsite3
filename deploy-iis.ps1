@@ -2,17 +2,52 @@ $ErrorActionPreference = 'Stop'
 
 Import-Module WebAdministration
 
-$pool = 'DefaultAppPool'
-$target = 'C:\Applications\pindah'
-$staging = 'C:\Applications\pindah-publish-staging'
+$pool = 'pindah-website'
+$target = 'F:\Applications\pindah-website'
+$staging = 'C:\Applications\pindah-publish-staging-clean'
+if (-not (Test-Path $staging)) {
+    $staging = 'C:\Applications\pindah-publish-staging'
+}
+
+# Fallback if site uses a differently named pool
+$site = Get-Item 'IIS:\Sites\pindah-website' -ErrorAction SilentlyContinue
+if ($site -and $site.applicationPool) {
+    $pool = $site.applicationPool
+    if ($site.physicalPath) {
+        $target = $site.physicalPath
+    }
+}
 
 if (-not (Test-Path $staging)) {
     throw "Staging folder not found: $staging"
 }
 
+Write-Host "Target: $target"
+Write-Host "App pool: $pool"
 Write-Host 'Stopping app pool...'
-Stop-WebAppPool -Name $pool
-Start-Sleep -Seconds 3
+$state = (Get-WebAppPoolState -Name $pool).Value
+if ($state -ne 'Stopped') {
+    Stop-WebAppPool -Name $pool
+    $deadline = (Get-Date).AddSeconds(45)
+    do {
+        Start-Sleep -Seconds 1
+        $state = (Get-WebAppPoolState -Name $pool).Value
+    } while ($state -ne 'Stopped' -and (Get-Date) -lt $deadline)
+
+    if ($state -ne 'Stopped') {
+        throw "App pool did not stop in time. State: $state"
+    }
+} else {
+    Write-Host 'App pool already stopped.'
+}
+
+Write-Host 'Removing stale design-time assemblies if present...'
+Get-ChildItem (Join-Path $target '*.dll') -ErrorAction SilentlyContinue |
+    Where-Object { $_.Name -match 'CodeGeneration|VisualStudio\.SolutionPersistence|dotnet-aspnet-codegenerator' } |
+    ForEach-Object {
+        Write-Host "  Removing $($_.Name)"
+        Remove-Item $_.FullName -Force
+    }
 
 Write-Host 'Copying published files...'
 robocopy $staging $target /E /XD logs /XF PindahWebsite3.db PindahWebsite3.db-shm PindahWebsite3.db-wal /R:2 /W:2 | Out-Host

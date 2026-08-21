@@ -1,0 +1,91 @@
+@model PindahWebsite3.Models.SeoLandingPage
+@{
+    Layout = "_Layout";
+}
+
+<section class="module-landing-banner mb-5" style="--hero-bg: url('https://images.unsplash.com/photo-1454165804603-c027d4347bbd?w=1600&q=80');" aria-label="@Model.H1">
+    <div class="container">
+        <div class="module-landing-accent" aria-hidden="true"></div>
+        <p class="module-landing-kicker mb-2">@Model.Kicker</p>
+        <h1 class="module-landing-headline text-white mb-3">@Model.H1</h1>
+        <p class="module-landing-dek mb-4 col-lg-10 px-0">@Model.Lead</p>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="@Model.ModuleUrl" class="btn btn-light btn-sm px-4 fw-semibold">@Model.ModuleLabel</a>
+            <a href="/#contact" class="btn btn-outline-light btn-sm px-4">Request a demo</a>
+        </div>
+    </div>
+</section>
+
+<div class="row mb-5 g-4">
+    <div class="col-lg-7">
+        <p class="section-kicker">Why Pindah</p>
+        <h2 class="h3 fw-bold mb-3">Built for Zimbabwe's operating reality</h2>
+        <p class="mb-4">
+            Organizations across Harare and Zimbabwe choose Pindah when spreadsheets, disconnected systems,
+            and manual processes become a liability. We deliver integrated software with local compliance,
+            multi-currency support, and implementation teams who understand your market.
+        </p>
+        <ul class="list-group list-group-flush border">
+            @foreach (var benefit in Model.Benefits)
+            {
+                <li class="list-group-item d-flex align-items-start gap-2">
+                    <span class="text-pindah-accent fw-bold" aria-hidden="true">—</span>
+                    <span>@benefit</span>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-lg-5">
+        <div class="border rounded p-4 bg-white h-100">
+            <p class="small fw-bold text-uppercase text-muted mb-3">Get started</p>
+            <p class="small mb-3">Speak with Pindah about @Model.H1.ToLowerInvariant() for your organization. No obligation — we start by understanding your requirements.</p>
+            <a href="mailto:admin@pindah.org" class="btn btn-primary btn-sm w-100 mb-2">Email admin@pindah.org</a>
+            <a href="https://wa.me/263714856897" class="btn btn-success btn-sm w-100 mb-2" target="_blank" rel="noopener noreferrer">WhatsApp +263 714 856 897</a>
+            <a href="@Model.ModuleUrl" class="btn btn-outline-primary btn-sm w-100">@Model.ModuleLabel</a>
+        </div>
+    </div>
+</div>
+
+@if (Model.Faqs.Count > 0)
+{
+    <section class="mb-5" aria-labelledby="seo-faq-heading">
+        <p class="section-kicker">FAQ</p>
+        <h2 class="h3 fw-bold mb-4" id="seo-faq-heading">Common questions about @Model.H1</h2>
+        <div class="accordion" id="seoFaqAccordion">
+            @for (var i = 0; i < Model.Faqs.Count; i++)
+            {
+                var faq = Model.Faqs[i];
+                var collapseId = $"seo-faq-{i}";
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="heading-@collapseId">
+                        <button class="accordion-button @(i > 0 ? "collapsed" : "")" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="@(i == 0 ? "true" : "false")" aria-controls="@collapseId">
+                            @faq.Question
+                        </button>
+                    </h3>
+                    <div id="@collapseId" class="accordion-collapse collapse @(i == 0 ? "show" : "")" aria-labelledby="heading-@collapseId" data-bs-parent="#seoFaqAccordion">
+                        <div class="accordion-body small">@faq.Answer</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<section class="mb-5">
+    <p class="section-kicker">Related solutions</p>
+    <h2 class="h5 fw-bold mb-3">Explore more Pindah software for Zimbabwe</h2>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-primary btn-sm" href="/erp-software-zimbabwe">ERP Zimbabwe</a>
+        <a class="btn btn-outline-primary btn-sm" href="/accounting-software-zimbabwe">Accounting</a>
+        <a class="btn btn-outline-primary btn-sm" href="/school-management-software-zimbabwe">Schools</a>
+        <a class="btn btn-outline-primary btn-sm" href="/pindah-course">Pindah Course</a>
+        <a class="btn btn-outline-primary btn-sm" href="/heritage-based-curriculum-lessons-zimbabwe">HBC lessons</a>
+        <a class="btn btn-outline-primary btn-sm" href="https://courses.edtech.co.zw" rel="noopener">courses.edtech.co.zw</a>
+        <a class="btn btn-outline-primary btn-sm" href="/hospital-management-system-zimbabwe">Healthcare</a>
+        <a class="btn btn-outline-primary btn-sm" href="/wholesale-erp-zimbabwe">Wholesale</a>
+        <a class="btn btn-outline-primary btn-sm" href="/hotel-management-software-zimbabwe">Hotels</a>
+        <a class="btn btn-outline-primary btn-sm" href="/church-management-software-zimbabwe">Churches</a>
+        <a class="btn btn-outline-primary btn-sm" href="/sap-alternative-zimbabwe">SAP alternative</a>
+        <a class="btn btn-outline-primary btn-sm" href="/enterprise-software-harare">Enterprise software Harare</a>
+    </div>
+</section>

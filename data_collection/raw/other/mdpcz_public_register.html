@@ -1,0 +1,793 @@
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Nunito';
+    }
+</style>
+
+<!-- Livewire Styles -->
+<style >
+    [wire\:loading], [wire\:loading\.delay], [wire\:loading\.inline-block], [wire\:loading\.inline], [wire\:loading\.block], [wire\:loading\.flex], [wire\:loading\.table], [wire\:loading\.grid], [wire\:loading\.inline-flex] {
+        display: none;
+    }
+
+    [wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short], [wire\:loading\.delay\.long], [wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest] {
+        display:none;
+    }
+
+    [wire\:offline] {
+        display: none;
+    }
+
+    [wire\:dirty]:not(textarea):not(input):not(select) {
+        display: none;
+    }
+
+    input:-webkit-autofill, select:-webkit-autofill, textarea:-webkit-autofill {
+        animation-duration: 50000s;
+        animation-name: livewireautofill;
+    }
+
+    @keyframes livewireautofill { from {} }
+</style>
+<!-- Livewire Scripts -->
+
+<script src="/vendor/livewire/livewire.js?id=90730a3b0e7144480175" data-turbo-eval="false" data-turbolinks-eval="false" ></script>
+<script data-turbo-eval="false" data-turbolinks-eval="false" >
+    if (window.livewire) {
+	    console.warn('Livewire: It looks like Livewire\'s @livewireScripts JavaScript assets have already been loaded. Make sure you aren\'t loading them twice.')
+	}
+
+    window.livewire = new Livewire();
+    window.livewire.devTools(true);
+    window.Livewire = window.livewire;
+    window.livewire_app_url = '';
+    window.livewire_token = '8wnRV6GNMvyWQNXDoL9sZBK6GOBPO95tUNShde92';
+
+	/* Make sure Livewire loads first. */
+	if (window.Alpine) {
+	    /* Defer showing the warning so it doesn't get buried under downstream errors. */
+	    document.addEventListener("DOMContentLoaded", function () {
+	        setTimeout(function() {
+	            console.warn("Livewire: It looks like AlpineJS has already been loaded. Make sure Livewire\'s scripts are loaded before Alpine.\\n\\n Reference docs for more info: http://laravel-livewire.com/docs/alpine-js")
+	        })
+	    });
+	}
+
+	/* Make Alpine wait until Livewire is finished rendering to do its thing. */
+    window.deferLoadingAlpine = function (callback) {
+        window.addEventListener('livewire:load', function () {
+            callback();
+        });
+    };
+
+    let started = false;
+
+    window.addEventListener('alpine:initializing', function () {
+        if (! started) {
+            window.livewire.start();
+
+            started = true;
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        if (! started) {
+            window.livewire.start();
+
+            started = true;
+        }
+    });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>
+                        Public register
+ | Medical and Dental Practitioners Council of Zimbabwe
+            </title>
+
+    
+    <meta name="description" content="Medical and Dental Practitioners Council of Zimbabwe official website – licensing, registers, accreditation and practitioner services.">
+    <meta property="og:title" content="    Public register
+" />
+    <meta property="og:description" content="MDPCZ official website." />
+    <meta property="og:url" content="https://www.mdpcz.co.zw/public_register" />
+    <meta property="og:type" content="website" />
+    <meta name="keywords" content="MDPCZ, Medical Council Zimbabwe, Dental Council Zimbabwe, practitioner register, licensing, accreditation, CPD, health regulation Zimbabwe">
+
+    <!-- responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- For IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="https://www.mdpcz.co.zw/css/style.css">
+    <!-- Responsive stylesheet -->
+    <link rel="stylesheet" href="https://www.mdpcz.co.zw/css/responsive.css">
+    <!-- Favicon -->
+    <link rel="icon" href="https://www.mdpcz.co.zw/favicon.png" type="image/png">
+    <link rel="manifest" href="https://www.mdpcz.co.zw/site.webmanifest">
+    <link rel="mask-icon" href="https://www.mdpcz.co.zw/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="https://www.mdpcz.co.zw/public_register" />
+
+    <!-- Fixing Internet Explorer-->
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/html5shiv.js"></script>
+    <![endif]-->
+    <!-- Bootstrap 4 CSS -->
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css"
+        integrity="sha384-+YQ4FZq5T3ZQ2blx5B/jOeRxB8FfIxG9C3M5M8k3HqK6k5d4A0xZsRF1knrBFGsK"
+        crossorigin="anonymous"
+    />
+
+    <style>
+    ul.pagination {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul.pagination li.page-item {
+        margin: 0 3px;
+    }
+
+    ul.pagination li .page-link {
+        display: block;
+        padding: 6px 12px;
+        color: #007bff;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    ul.pagination li .page-link:hover {
+        background-color: #e9ecef;
+        color: #0056b3;
+    }
+
+    ul.pagination li.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+
+    ul.pagination li.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #fff;
+        border-color: #dee2e6;
+    }
+
+    .pagination {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  gap: 6px;
+  padding-left: 0;
+}
+
+.pagination li {
+  display: inline-block;
+}
+
+.pagination li a,
+.pagination li span {
+  display: block;
+  padding: 6px 12px;
+  color: #007bff;
+  text-decoration: none;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination li a:hover {
+  background-color: #e9ecef;
+  color: #0056b3;
+}
+
+.pagination .active span {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.pagination .disabled span {
+  color: #6c757d;
+  border-color: #dee2e6;
+  background-color: #fff;
+  pointer-events: none;
+}
+
+</style>
+
+</head>
+
+
+<body>
+<!-- PRELOADER -->
+
+<!-- /PRELOADER -->
+<div class="boxed_wrapper cleaning_demo">
+
+<!--Start Top bar area -->
+<div style="background-color: #eff8fd;" class="top-bar-area">
+    <div class="container">
+        <div class="clearfix">
+            <div class="pull-left"><p style="color: #3A25AC;font-weight: bold;">Promoting the health of the population
+                    of Zimbabwe through guiding the Medical and Dental Professions...</p></div>
+            <div class="pull-right">
+                <p style="color: #3A25AC;font-weight: bold;">
+                    <i class="fa fa-clock-o"></i>
+                    Mon - Fri 8.00 - 16.30; Weekends and Public holidays CLOSED
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--End Top bar area -->
+
+<!--Start header area-->
+<header class="header-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+                <div style="padding-top:40px;" class="logo">
+                    <a href="https://www.mdpcz.co.zw">
+                        <img src="https://www.mdpcz.co.zw/images/mdpcz.png" alt="Logo" width="800">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="header-contact-info">
+                    <ul>
+                                                     <li>
+                                <div class="text-holder">
+                                    <h6>BULAWAYO OFFICE</h6>
+                                    <p>No 2 Robertson Street
+
+Parkview, Bulawayo, Zimbabwe</p><br/>
+                                    <p>Telephone: 263 9 72237/38</p>
+                                </div>
+                            </li>
+                                                    <li>
+                                <div class="text-holder">
+                                    <h6>HARARE OFFICE</h6>
+                                    <p>8 Harvey Brown
+
+Milton Park, Harare, Zimbabwe</p><br/>
+                                    <p>Telephone: 263-242-790144, 263-242-793707</p>
+                                </div>
+                            </li>
+                        
+                                                    <li>
+                                <div class="text-holder mail-holder">
+                                    <h6>Contact Us</h6>
+                                                                                                            <p style="margin-top:4px;">
+                                                                                    <a href="https://www.facebook.com/mdpcz2019" target="_blank">
+                                                Facebook <i class="fa fa-facebook"></i>
+                                            </a>
+                                            &nbsp;&nbsp;&nbsp;
+                                                                                                                            <a href="https://twitter.com/MDPCZ2" target="_blank">
+                                                Twitter <i class="fa fa-twitter"></i>
+                                            </a>
+                                            &nbsp;&nbsp;&nbsp;
+                                                                                                                                                            </p>
+                                </div>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--End header area-->
+
+ <!-- mobile-menu -->
+                    <div class="services-mobile-menu visible-xs" style="margin-right: 15px;">
+                        <nav id="mobile-nav">
+                            <ul>
+                                <li class="active"><a href="https://www.mdpcz.co.zw">
+                                        Home</a></li>
+                                <li><a href="#">About us</a>
+                                    <ul>
+                                        <li><a href="https://www.mdpcz.co.zw/registrar">Registrar</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/who_we_are">Who We Are</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/what_we_do">What We Do</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/our_history">Our History</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/council_structure">Council Structure</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/council_member">Council Members</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/committees">Committees</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Registration</a>
+                                    <ul>
+                                        <li><a href="https://www.mdpcz.co.zw/registration_pathways/1681837505REGISTRATION-PATHWAY.pdf" target="_blank">Registration Pathway</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/registration_forms">Application forms for registration</a></li>
+                                        <li class=""><a href="https://www.mdpcz.co.zw/designated_institution">DHI</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="https://www.mdpcz.co.zw/public_register">Public Register</a></li>
+                                <li><a href="#">Education</a>
+                                    <ul>
+                                        
+                                        <li><a href="https://www.mdpcz.co.zw/council_examination">Council Registration Assessment</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/training_institution">Medical / Dental Training Institutions </a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/internship_institution">Intern / Specialist Teaching Units</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/cpd_form_.pdf" target="_blank">CPD Application Form</a></li>
+
+
+                                    </ul>
+                                </li>
+
+                                <li><a href="#">The Public</a>
+                                    <ul>
+                                        <li><a href="https://www.mdpcz.co.zw/complaint">Complaints</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/our_resource">Resources</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a href="#">Policies & Guidelines</a>
+                                    <ul>
+                                        
+                                        <li><a href="https://www.mdpcz.co.zw/policy_guideline">Internal</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/external_policy">External</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/act">MDPCZ Governing Legislation</a></li>
+
+                                    </ul>
+                                </li>
+                                <li><a href="https://www.mdpcz.co.zw/faqs">FAQ's</a></li>
+                                <li><a href="https://www.mdpcz.co.zw/contact_us">Contact Us</a></li>
+
+                            </ul>
+                        </nav>
+                    </div>
+
+<!--Start mainmenu area-->
+<div class="mainmenu-area stricky">
+    <div style="margin-left:10%;margin-right:2%;" class="container-fluid">
+        <div class="mainmenu-bg">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <!--Start mainmenu-->
+                    <nav class="main-menu">
+                        <div class="navbar-collapse collapse clearfix">
+                            <ul class="navigation clearfix">
+                                <li class=""><a href="https://www.mdpcz.co.zw">
+                                        Home</a></li>
+                                <li><a href="#">About us</a>
+                                    <ul>
+                                        <li><a href="https://www.mdpcz.co.zw/registrar">Registrar</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/who_we_are">Who We Are</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/what_we_do">What We Do</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/our_history">Our History</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/council_structure">Council Structure</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/council_member">Council Members</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/committees">Committees</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Registration</a>
+                                    <ul>
+                                        <li><a href="https://www.mdpcz.co.zw/registration_pathways/1681837505REGISTRATION-PATHWAY.pdf" target="_blank">Registration Pathway</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/registration_forms">Application forms for registration</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/public_register">Public Register</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/designated_institution">DHI</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a href="https://www.mdpcz.co.zw/public_register">Public Register</a></li>
+
+                                <li><a href="#">Education</a>
+                                    <ul>
+
+                                        
+                                        <li><a href="https://www.mdpcz.co.zw/council_examination">Council Registration Assessment</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/training_institution">Medical / Dental Training Institutions </a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/internship_institution">Intern / Specialist Teaching Units</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/cpd_form_.pdf" target="_blank">CPD Application Form</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li><a href="#">The Public</a>
+                                    <ul>
+                                        <li><a href="https://www.mdpcz.co.zw/complaint">Complaints</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/our_resource">Resources</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Policies & Guidelines</a>
+                                    <ul>
+                                        
+                                        <li><a href="https://www.mdpcz.co.zw/policy_guideline">Internal</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/external_policy">External</a></li>
+                                        <li><a href="https://www.mdpcz.co.zw/act">MDPCZ Governing Legislation</a></li>
+
+                                    </ul>
+                                </li>
+                                <li><a href="https://www.mdpcz.co.zw/faqs">FAQ's</a></li>
+                                <li><a href="https://www.mdpcz.co.zw/contact_us">Contact Us</a></li>
+
+                            </ul>
+                        </div>
+                    </nav>
+                    <!--End mainmenu-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!--Start breadcrumb area-->
+    <div >
+        <div class="container text-center">
+            <h1 style="padding-top:30px;">Public Register</h1>
+            <div style="display:none" class="breadcrumbs_path">
+                <a href="#">Home</a>&nbsp;&nbsp;-&nbsp;&nbsp; Public Register
+            </div>
+        </div>
+    </div>
+    <!--End breadcrumb area-->
+    <div style="padding:5%;" class="about-us sec-padd-top">
+        <div class="container-fluid">
+            <div wire:id="H64UBT1AXXFlSfzFr54x" wire:initial-data="{&quot;fingerprint&quot;:{&quot;id&quot;:&quot;H64UBT1AXXFlSfzFr54x&quot;,&quot;name&quot;:&quot;public-register&quot;,&quot;locale&quot;:&quot;en&quot;,&quot;path&quot;:&quot;public_register&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;v&quot;:&quot;acj&quot;},&quot;effects&quot;:{&quot;listeners&quot;:[],&quot;path&quot;:&quot;https:\/\/www.mdpcz.co.zw\/public_register&quot;},&quot;serverMemo&quot;:{&quot;children&quot;:[],&quot;errors&quot;:[],&quot;htmlHash&quot;:&quot;09af7e94&quot;,&quot;data&quot;:{&quot;perPage&quot;:10,&quot;search&quot;:null,&quot;orderBy&quot;:&quot;Fullname&quot;,&quot;orderAsc&quot;:true,&quot;specialty&quot;:null,&quot;exporting&quot;:false,&quot;page&quot;:1,&quot;paginators&quot;:{&quot;page&quot;:1}},&quot;dataMeta&quot;:[],&quot;checksum&quot;:&quot;478d8547b6b5a82d8dc507104bdcc0ae9dedd150bc049886a2e16f9e592e2487&quot;}}">
+    <style type="text/css">
+        input,
+        input::placeholder {
+            font: 20px/3 sans-serif;
+        }
+    </style>
+    <div class="text-center center" style="margin-bottom: 10px;">
+        <button class="btn btn-primary" wire:click="exportToExcel()">Export to Excel</button>
+    </div>
+
+    <div class="w-full flex pb-10">
+        <div class="w-3/6 mx-1">
+            <input wire:model.debounce.300ms="search" type="text"
+                   class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                   placeholder="Search Practitioners By Name">
+        </div>
+        <div style="display: none;" class="w-1/6 relative mx-1">
+            <select wire:model="orderBy"
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state">
+                <option value="id">Sort By</option>
+                <option value="specialty">Specialty</option>
+                <option value="primary_qualifications">Qualification</option>
+                <option value="registration_number">Registration number</option>
+            </select>
+
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="w-1/3 relative mx-1">
+            <select wire:model="specialty"
+                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                     id="grid-state">
+                 <option value="">Filter By Profession</option>
+                                      <option value="Dental Technician">Dental Technician</option>
+                                      <option value="Dental Therapist">Dental Therapist</option>
+                                      <option value="Dental Hygienist">Dental Hygienist</option>
+                                      <option value="Dental Practitioner">Dental Practitioner</option>
+                                      <option value="Intern">Intern</option>
+                                      <option value="Medical Practitioner">Medical Practitioner</option>
+                                      <option value="Specialist Anaesthetist">Specialist Anaesthetist</option>
+                                      <option value="Specialist Cardio Vascular And Thoracic Surgeon">Specialist Cardio Vascular And Thoracic Surgeon</option>
+                                      <option value="Specialist Clinical Immunologist">Specialist Clinical Immunologist</option>
+                                      <option value="Specialist Community Physician">Specialist Community Physician</option>
+                                      <option value="Specialist Dermatologist">Specialist Dermatologist</option>
+                                      <option value="Specialist Family Practitioner">Specialist Family Practitioner</option>
+                                      <option value="Specialist Forensic Pathologist">Specialist Forensic Pathologist</option>
+                                      <option value="Specialist Haematologist">Specialist Haematologist</option>
+                                      <option value="Specialist Maxillo- Facial and Oral Surgeon">Specialist Maxillo- Facial and Oral Surgeon</option>
+                                      <option value="Specialist Neuro Surgeon">Specialist Neuro Surgeon</option>
+                                      <option value="Specialist Obstetrician and Gynaecologist">Specialist Obstetrician and Gynaecologist</option>
+                                      <option value="Specialist Ophthalmologist">Specialist Ophthalmologist</option>
+                                      <option value="Specialist Oral and Maxillofacial Pathologist">Specialist Oral and Maxillofacial Pathologist</option>
+                                      <option value="Specialist Orthodontist">Specialist Orthodontist</option>
+                                      <option value="Specialist Orthopaedic Surgeon">Specialist Orthopaedic Surgeon</option>
+                                      <option value="Specialist Otorhinolaryngologist">Specialist Otorhinolaryngologist</option>
+                                      <option value="Specialist Paediatrician">Specialist Paediatrician</option>
+                                      <option value="Specialist Pathologist">Specialist Pathologist</option>
+                                      <option value="Specialist Periodontist">Specialist Periodontist</option>
+                                      <option value="Specialist Physician">Specialist Physician</option>
+                                      <option value="Specialist Plastic And Reconstructive Surgeon">Specialist Plastic And Reconstructive Surgeon</option>
+                                      <option value="Specialist Prosthodontist">Specialist Prosthodontist</option>
+                                      <option value="Specialist Psychiatrist">Specialist Psychiatrist</option>
+                                      <option value="Specialist Radiologist (Diagnostic)">Specialist Radiologist (Diagnostic)</option>
+                                      <option value="Specialist Radiotherapist and Oncologist">Specialist Radiotherapist and Oncologist</option>
+                                      <option value="Specialist Surgeon">Specialist Surgeon</option>
+                                      <option value="Specialist Urologist">Specialist Urologist</option>
+                                      <option value="Specialist Venereologist">Specialist Venereologist</option>
+                                      <option value="Specialist Physical Medicine">Specialist Physical Medicine</option>
+                                      <option value=" Specialist Occupational Medicine "> Specialist Occupational Medicine </option>
+                                      <option value="Specialist Occupational Physician">Specialist Occupational Physician</option>
+                              </select>
+
+             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                 </svg>
+             </div>
+         </div>
+
+
+        <div class="w-1/6 relative mx-1">
+            <select wire:model="orderAsc"
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state">
+                <option value="1">Ascending</option>
+                <option value="0">Descending</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="w-1/6 relative mx-1">
+            <select wire:model="perPage"
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-state">
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <table class="display table table-hover table-striped table-bordered table-auto w-full mb-6">
+        <thead>
+        <tr>
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Gender</th>
+            <th class="px-4 py-2">Registration Number</th>
+            <th class="px-4 py-2">Qualification</th>
+            <th class="px-4 py-2">Specialty</th>
+            <!-- <th class="px-4 py-2">Business Address</th>-->
+            <!--<th class="px-4 py-2">Business Contact</th>-->
+            
+        </tr>
+        </thead>
+        <tbody>
+                    <tr>
+                <td class="border px-4 py-2">Aaron Rumbidzayi</td>
+                <td class="border px-4 py-2">Female</td>
+                <td class="border px-4 py-2">D Ther 802624</td>
+                <td class="border px-4 py-2">D.Ther (ZIMB) 2018</td>
+                <td class="border px-4 py-2">Dental Therapist</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Abas Melanie Amna</td>
+                <td class="border px-4 py-2">Female</td>
+                <td class="border px-4 py-2">Psy 800042</td>
+                <td class="border px-4 py-2">BMBch (Birm-UK) 1982</td>
+                <td class="border px-4 py-2">Specialist Psychiatrist</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Abdul Sheriffa Nyaradzo</td>
+                <td class="border px-4 py-2">Female</td>
+                <td class="border px-4 py-2">Int 805945</td>
+                <td class="border px-4 py-2">Medical Imaging and Nuclear Medicine (Huazhong-CHINA) 2022</td>
+                <td class="border px-4 py-2">Intern</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Abiyuti Munyaradzi</td>
+                <td class="border px-4 py-2">Male</td>
+                <td class="border px-4 py-2">Dp 803566</td>
+                <td class="border px-4 py-2">BDS (ZIMB) 2023</td>
+                <td class="border px-4 py-2">Dental Practitioner</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Aboobakar Mohamed Bassir</td>
+                <td class="border px-4 py-2">Male</td>
+                <td class="border px-4 py-2">M 056016</td>
+                <td class="border px-4 py-2">Medicine (Eduardo Mondlane-MOZAMBIQUE) 1979</td>
+                <td class="border px-4 py-2">Medical Practitioner</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Abraham Kudzanai Junior</td>
+                <td class="border px-4 py-2">Female</td>
+                <td class="border px-4 py-2">M 800571</td>
+                <td class="border px-4 py-2">MBChB (ZIMB) 2013</td>
+                <td class="border px-4 py-2">Medical Practitioner</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Abraham Stewart </td>
+                <td class="border px-4 py-2">Male</td>
+                <td class="border px-4 py-2">Dp 500531</td>
+                <td class="border px-4 py-2">BDS (ZIMB) 2005</td>
+                <td class="border px-4 py-2">Dental Practitioner</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Achinulo Stella Ovuapoyerin</td>
+                <td class="border px-4 py-2">Female</td>
+                <td class="border px-4 py-2">M 324315</td>
+                <td class="border px-4 py-2">Doctor of Medicine (Havana-CUBA) 1995</td>
+                <td class="border px-4 py-2">Medical Practitioner</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Adam Ebrahim Ahmed</td>
+                <td class="border px-4 py-2">Male</td>
+                <td class="border px-4 py-2">M 056054</td>
+                <td class="border px-4 py-2">BMBch (Birm-UK) 1971</td>
+                <td class="border px-4 py-2">Medical Practitioner</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+                    <tr>
+                <td class="border px-4 py-2">Adam Raheemah Yunus Mahomed</td>
+                <td class="border px-4 py-2">Female</td>
+                <td class="border px-4 py-2">Int 806223</td>
+                <td class="border px-4 py-2">MBBS (Gulf Medical University-UAE) 2022</td>
+                <td class="border px-4 py-2">Intern</td>
+                <!--<td class="border px-4 py-2"></td>-->
+                <!--<td class="border px-4 py-2"></td>-->
+            </tr>
+        
+        </tbody>
+    </table>
+
+            <div>
+                    
+        <nav>
+            <ul class="pagination">
+                
+                                    <li class="page-item disabled" aria-disabled="true" aria-label="pagination.previous">
+                        <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                    </li>
+                
+                
+                                    
+                    
+                    
+                                                                                                        <li class="page-item active" wire:key="paginator-page-1-page-1" aria-current="page"><span class="page-link">1</span></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-2"><button type="button" class="page-link" wire:click="gotoPage(2, 'page')">2</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-3"><button type="button" class="page-link" wire:click="gotoPage(3, 'page')">3</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-4"><button type="button" class="page-link" wire:click="gotoPage(4, 'page')">4</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-5"><button type="button" class="page-link" wire:click="gotoPage(5, 'page')">5</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-6"><button type="button" class="page-link" wire:click="gotoPage(6, 'page')">6</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-7"><button type="button" class="page-link" wire:click="gotoPage(7, 'page')">7</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-8"><button type="button" class="page-link" wire:click="gotoPage(8, 'page')">8</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-9"><button type="button" class="page-link" wire:click="gotoPage(9, 'page')">9</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-10"><button type="button" class="page-link" wire:click="gotoPage(10, 'page')">10</button></li>
+                                                                                                            
+                                            <li class="page-item disabled" aria-disabled="true"><span class="page-link">...</span></li>
+                    
+                    
+                                                        
+                    
+                    
+                                                                                                        <li class="page-item" wire:key="paginator-page-1-page-464"><button type="button" class="page-link" wire:click="gotoPage(464, 'page')">464</button></li>
+                                                                                                                <li class="page-item" wire:key="paginator-page-1-page-465"><button type="button" class="page-link" wire:click="gotoPage(465, 'page')">465</button></li>
+                                                                                        
+                
+                                    <li class="page-item">
+                        <button type="button" dusk="nextPage" class="page-link" wire:click="nextPage('page')" wire:loading.attr="disabled" rel="next" aria-label="pagination.next">&rsaquo;</button>
+                    </li>
+                            </ul>
+        </nav>
+    </div>
+
+    
+
+    <div>
+                Showing 1 of 10 out
+        of 4650
+            </div>
+</div>
+
+<!-- Livewire Component wire-end:H64UBT1AXXFlSfzFr54x -->        </div>
+    </div>
+
+
+    <footer>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="copyright">© 2026 MDPCZ. All rights reserved</p>
+                    </div>
+                   <div class="col-md-6">
+                    </div>
+                    <p class="designby">
+                        Managed and supported by 
+                        <a href="https://omni4africa.com/" target="_blank">OMNI AFRICA</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!--Scroll to top-->
+    <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-up"></span></div>
+    <!-- main jQuery /-->
+    <script src="https://www.mdpcz.co.zw/js/jquery.js"></script>
+
+    <!-- jQuery plugins /-->
+    <script src="https://www.mdpcz.co.zw/js/plugins.js"></script>
+    <!-- jQuery meanmenu /-->
+    <script src="https://www.mdpcz.co.zw/js/jquery.meanmenu.js"></script>
+    <!-- bootstrap /-->
+    <script src="https://www.mdpcz.co.zw/js/bootstrap.min.js"></script>
+    <!-- bx slider /-->
+    <script src="https://www.mdpcz.co.zw/js/jquery.bxslider.min.js"></script>
+    <!-- count to /-->
+    <script src="https://www.mdpcz.co.zw/js/jquery.countTo.js"></script>
+    <!-- owl carousel /-->
+    <script src="https://www.mdpcz.co.zw/js/owl.carousel.min.js"></script>
+    <!-- validate /-->
+    <script src="https://www.mdpcz.co.zw/js/validation.js"></script>
+    <!-- mixit up /-->
+    <script src="https://www.mdpcz.co.zw/js/jquery.mixitup.min.js"></script>
+    <!-- easing /-->
+    <script src="https://www.mdpcz.co.zw/js/jquery.easing.min.js"></script>
+    <!-- gmap helper /-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHzPSV2jshbjI8fqnC_C4L08ffnj5EN3A"></script>
+    <!--gmap script /-->
+    <script src="https://www.mdpcz.co.zw/js/gmaps.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/map-helper.js"></script>
+    <!-- fancy box /-->
+    <script src="https://www.mdpcz.co.zw/js/jquery.fancybox.pack.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/jquery.appear.js"></script>
+    <!-- isotope script /-->
+    <script src="https://www.mdpcz.co.zw/js/isotope.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/jquery.prettyPhoto.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/jquery.magnific-popup.min.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/jquery.bootstrap-touchspin.js"></script>
+
+    <!-- jQuery ui js /-->
+    <script src="https://www.mdpcz.co.zw/js/jquery-ui.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/SmoothScroll.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/validation.js"></script>
+    <script src="https://www.mdpcz.co.zw/js/wow.min.js"></script>
+    <!-- thm custom script /-->
+    <script src="https://www.mdpcz.co.zw/js/custom.js"></script>
+</div>
+</body>
+
+</html>

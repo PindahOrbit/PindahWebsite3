@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="https://www.alliancehealth.co.zw/images/logo.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alliance Health Zimbabwe - Quality Healthcare Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FK1ZLE4NHV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-FK1ZLE4NHV');
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'alliance-blue': '#0054A6',
+                        'alliance-green': '#00A859',
+                        'alliance-light': '#E6F4F1',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Add these to your existing styles in layout */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .cookie-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .cookie-category {
+            margin-bottom: 15px;
+        }
+
+        .cookie-toggle {
+            width: 50px;
+            height: 24px;
+            background-color: #ccc;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cookie-toggle.active {
+            background-color: rgb(2, 60, 90);
+        }
+
+        .cookie-toggle::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .cookie-toggle.active::after {
+            transform: translateX(26px);
+        }
+
+        .cookie-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .cookie-category-content.open {
+            max-height: 500px;
+        }
+
+
+
+
+
+
+        .relative.group .absolute {
+            top: 100%;
+            padding-top: 8px;
+        }
+
+        .relative.group .absolute>div {
+            border-top: 8px solid transparent;
+        }
+    </style>
+    <style>
+        .hero-bg {
+            background:
+                linear-gradient(rgba(0, 84, 166, 0.5),
+                    rgba(0, 168, 89, 0.4)),
+                url('https://www.alliancehealth.co.zw/images/hero.jpeg');
+            background-size: cover;
+            background-position: top;
+            background-repeat: no-repeat;
+            min-height: 80vh;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+
+        .app-download-btn {
+            transition: all 0.3s ease;
+        }
+
+        .app-download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #0054A6, #00A859);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .medical-aid-section {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+    </style>
+        <style>
+        /* Add welcome page specific styles here */
+        .brand-story-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e6f4f1 100%);
+        }
+
+        .story-image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .story-image-main {
+            grid-column: 1 / -1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-image-secondary {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .story-image-main img,
+        .story-image-secondary img {
+            transition: transform 0.3s ease;
+        }
+
+        .story-image-main:hover img,
+        .story-image-secondary:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .story-image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hero-bg {
+            background:
+                linear-gradient(rgba(0, 84, 166, 0.5),
+                    rgba(0, 168, 89, 0.4)),
+                url('https://www.alliancehealth.co.zw/images/hero.jpeg');
+            background-size: cover;
+            background-position: top;
+            background-repeat: no-repeat;
+            min-height: 80vh;
+        }
+
+        @media (min-height: 900px) {
+            .hero-bg {
+                min-height: 83vh;
+            }
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-dot.active {
+            background-color: #0054A6;
+        }
+
+        .brand-story-icon {
+            background: linear-gradient(135deg, #0054A6, #00A859);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-800">
+
+    <!-- Cookie Banner -->
+    <div id="cookieOverlay" class="cookie-overlay"></div>
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Cookie Settings</h2>
+            <p class="text-gray-600 mb-6">
+                This Cookies Policy explains how Alliance Health ("we") uses cookies on https://alliancehealth.co.zw in
+                compliance with data protection laws.
+
+                Cookies are small text files stored on your device. We use different types:
+                Essential: Necessary for the website to function (always active).
+                Non-Essential: For performance, personalization, and advertising (require your consent).
+
+                Your consent for non-essential cookies is managed via our cookie banner or settings, which you can
+                change anytime. You can also manage cookies through your browser, though blocking essential cookies may
+                affect site functionality.
+
+                We use third-party services (e.g., Google Analytics) that operate under their own policies.
+
+                You have rights under data protection law, including access, correction, and deletion of your data. To
+                exercise these rights, contact our Data Protection Officer at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfbbafb09fb7babeb3abb7a5b6b2f1bcb0b2">[email&#160;protected]</a>.
+            </p>
+
+            <div class="space-y-4 mb-6">
+                <!-- Strictly Necessary Cookies -->
+                <div class="cookie-category border-b pb-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Strictly Necessary <span
+                                class="text-gray-500"></span></h3>
+                        <div class="cookie-toggle active" data-category="necessary">
+                            <input type="checkbox" class="hidden" checked disabled>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-2">These cookies are essential for the website to function and
+                        cannot be switched off.</p>
+                </div>
+
+                <!-- Performance Cookies -->
+                <div class="cookie-category border-b pb-4">
+                    <div class="flex justify-between items-center cursor-pointer category-header">
+                        <h3 class="text-lg font-semibold text-gray-800">Performance Cookies <span
+                                class="text-gray-500"></span></h3>
+                        <div class="cookie-toggle" data-category="performance">
+                            <input type="checkbox" class="hidden">
+                        </div>
+                    </div>
+                    <div class="cookie-category-content">
+                        <p class="text-gray-600 text-sm mt-2">These cookies allow us to count visits and traffic sources
+                            so we can measure and improve the performance of our site.</p>
+                    </div>
+                </div>
+
+                <!-- Functional Cookies -->
+                <div class="cookie-category border-b pb-4">
+                    <div class="flex justify-between items-center cursor-pointer category-header">
+                        <h3 class="text-lg font-semibold text-gray-800">Functional Cookies <span
+                                class="text-gray-500"></span></h3>
+                        <div class="cookie-toggle" data-category="functional">
+                            <input type="checkbox" class="hidden">
+                        </div>
+                    </div>
+                    <div class="cookie-category-content">
+                        <p class="text-gray-600 text-sm mt-2">These cookies enable the website to provide enhanced
+                            functionality and personalization.</p>
+                    </div>
+                </div>
+
+                <!-- Targeting Cookies -->
+                <div class="cookie-category border-b pb-4">
+                    <div class="flex justify-between items-center cursor-pointer category-header">
+                        <h3 class="text-lg font-semibold text-gray-800">Targeting Cookies <span
+                                class="text-gray-500"></span></h3>
+                        <div class="cookie-toggle" data-category="targeting">
+                            <input type="checkbox" class="hidden">
+                        </div>
+                    </div>
+                    <div class="cookie-category-content">
+                        <p class="text-gray-600 text-sm mt-2">These cookies may be set through our site by our
+                            advertising partners.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-4 justify-between items-center">
+                <div class="flex gap-4">
+                    <button id="confirmChoices"
+                        class="px-6 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition"
+                        style="background-color: white; color: rgb(2, 60, 90); border-color: rgb(2, 60, 90);">
+                        Confirm my choices
+                    </button>
+                    <button id="acceptAll" class="px-6 py-2 rounded text-white hover:opacity-90 transition"
+                        style="background-color: rgb(2, 60, 90);">
+                        Accept all cookies
+                    </button>
+                </div>
+                <button id="cancelCookies" class="px-6 py-2 text-gray-600 hover:text-gray-800 transition">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/">
+                            <img src="https://www.alliancehealth.co.zw/images/logo.svg" alt="Alliance Health Zimbabwe"
+                                class="h-12 w-auto">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6 relative">
+                    <a href="/"
+                        class="text-alliance-blue font-medium hover:text-alliance-green transition text-sm">Home</a>
+
+                    <a href="/#about-us"
+                        class="text-gray-600 font-medium hover:text-alliance-blue transition text-sm">About Us</a>
+
+                    <!-- Healthcare Schem -->
+                    <div class="relative group">
+                        <button
+                            class="text-gray-600 font-medium hover:text-alliance-blue transition text-sm whitespace-nowrap">
+                            Healthcare Schemes
+                        </button>
+                        <div
+                            class="absolute left-0 top-full pt-2 w-56 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50">
+                            <div class="bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+                                <a href="/healthcare-schemes#alliance-options-select"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-alliance-light transition hover:text-alliance-blue text-sm">Alliance
+                                    Options Select <br>(Medical Aid)</a>
+                                <a href="/healthcare-schemes#northern-alliance"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-alliance-light transition hover:text-alliance-blue text-sm">Northern
+                                    Alliance<br> (Medical Aid)</a>
+                                <a href="/healthcare-schemes#multimed"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-alliance-light transition hover:text-alliance-blue text-sm">Multimed
+                                    <br> (Medical Insurance)</a>
+                                <a href="/healthcare-schemes#alliance-options"
+                                    class="block px-4 py-3 text-gray-700 hover:bg-alliance-light transition hover:text-alliance-blue text-sm">Alliance
+                                    Health Options<br> (Medical Insurance)</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preauthorisations & Claims Dropdown -->
+                    <div class="relative group">
+                        <button
+                            class="text-gray-600 font-medium hover:text-alliance-blue transition text-sm whitespace-nowrap">
+                            Preauthorisations & Claims
+                        </button>
+                        <div
+                            class="absolute left-0 top-full pt-2 w-48 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50">
+                            <div class="bg-white rounded-lg shadow-lg border border-gray-200">
+                                <a href="https://www.alliancehealth.co.zw/how-to-claim"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-alliance-light transition text-sm">How
+                                    To Claim</a>
+                                <a href="https://www.alliancehealth.co.zw/faq"
+                                    class="block px-4 py-2 text-gray-700 hover:bg-alliance-light transition text-sm">FAQs</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://www.alliancehealth.co.zw/claim-forms"
+                        class="text-gray-600 font-medium hover:text-alliance-blue transition text-sm whitespace-nowrap">Downloads</a>
+
+                    <!-- News/Updates with CSR dropdown -->
+                    <div class="relative group">
+                        <a href="/news-updates"
+                            class="text-gray-600 font-medium hover:text-alliance-blue transition text-sm whitespace-nowrap">
+                            News/Updates
+                        </a>
+                    </div>
+
+                    <a href="https://www.alliancehealth.co.zw/contact"
+                        class="text-gray-600 font-medium hover:text-alliance-blue transition text-sm whitespace-nowrap">Contact</a>
+
+                    <a href="https://www.alliancehealth.co.zw/client-login"
+                        class="bg-alliance-blue text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition text-sm whitespace-nowrap">Client
+                        Login</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button">
+                        <svg class="w-6 h-6 text-alliance-blue" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden bg-white border-t">
+            <a href="/" class="block py-3 px-4 text-sm text-alliance-blue hover:bg-alliance-light">Home</a>
+
+            <a href="/#about-us" class="block py-3 px-4 text-sm text-gray-600 hover:bg-alliance-light">About Us</a>
+
+            <!-- Healthcare Schemes with toggle -->
+            <div class="border-t">
+                <button
+                    class="w-full flex justify-between items-center py-3 px-4 text-sm text-gray-600 hover:bg-alliance-light submenu-toggle">
+                    Healthcare Schemes
+                    <svg class="w-4 h-4 ml-2 transition-transform transform" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="hidden flex-col pl-6 submenu">
+                    <a href="/healthcare-schemes#alliance-options-select"
+                        class="block py-2 text-sm text-gray-600 hover:bg-alliance-light">Alliance Options Select</a>
+                    <a href="/healthcare-schemes#northern-alliance"
+                        class="block py-2 text-sm text-gray-600 hover:bg-alliance-light">Northern Alliance</a>
+                    <a href="/healthcare-schemes#multimed"
+                        class="block py-2 text-sm text-gray-600 hover:bg-alliance-light">Multimed Plans</a>
+                    <a href="/healthcare-schemes#alliance-options"
+                        class="block py-2 text-sm text-gray-600 hover:bg-alliance-light">Alliance Health Options</a>
+                </div>
+            </div>
+
+            <!-- Preauthorisations & Claims with toggle -->
+            <div class="border-t">
+                <button
+                    class="w-full flex justify-between items-center py-3 px-4 text-sm text-gray-600 hover:bg-alliance-light submenu-toggle">
+                    Preauthorisations & Claims
+                    <svg class="w-4 h-4 ml-2 transition-transform transform" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div class="hidden flex-col pl-6 submenu">
+                    <a href="https://www.alliancehealth.co.zw/how-to-claim"
+                        class="block py-2 text-sm text-gray-600 hover:bg-alliance-light">How To Claim</a>
+                    <a href="https://www.alliancehealth.co.zw/faq"
+                        class="block py-2 text-sm text-gray-600 hover:bg-alliance-light">FAQs</a>
+                </div>
+            </div>
+
+            <a href="https://www.alliancehealth.co.zw/claim-forms"
+                class="block py-3 px-4 text-sm text-gray-600 hover:bg-alliance-light border-t">Downloads</a>
+
+            <!-- News/Updates (direct link, matching desktop) with CSR sub-link -->
+            <a href="/news-updates"
+                class="block py-3 px-4 text-sm text-gray-600 hover:bg-alliance-light border-t">News/Updates</a>
+            <a href="https://www.alliancehealth.co.zw/csr"
+                class="block py-2 px-4 pl-6 text-sm text-gray-600 hover:bg-alliance-light">CSR</a>
+
+            <a href="https://www.alliancehealth.co.zw/contact"
+                class="block py-3 px-4 text-sm text-gray-600 hover:bg-alliance-light border-t">Contact</a>
+
+            <a href="https://www.alliancehealth.co.zw/client-login"
+                class="block py-3 px-4 text-sm bg-alliance-blue text-white font-medium border-t">Client Login</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Section -->
+    <main>
+            <!-- Hero Section -->
+    <section class="hero-bg pt-32 pb-24 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex items-center justify-between">
+                <div class="md:w-1/2 animate__animated animate__fadeInLeft">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight">Quality Healthcare Solutions for Everyone
+                    </h1>
+                    <p class="mt-4 text-xl">Providing accessible, innovative and comprehensive healthcare solutions to
+                        individuals, families and corporates across the nation.</p>
+
+                    <!-- App Download Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                        <a href="https://apps.apple.com/zw/app/alliance-health-zw/id6745626110"
+                            class="flex items-center justify-center border border-white text-white rounded-lg px-6 py-3 transition duration-300 hover:bg-white hover:text-alliance-blue">
+                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                            </svg>
+                            <div class="text-left">
+                                <div class="text-xs">Download on the</div>
+                                <div class="text-lg font-semibold leading-none">App Store</div>
+                            </div>
+                        </a>
+
+                        <a href="https://play.google.com/store/apps/details?id=dev.softify.alliance_health_flutter"
+                            class="flex items-center justify-center border border-white text-white rounded-lg px-6 py-3 transition duration-300 hover:bg-white hover:text-alliance-blue">
+                            <svg class="w-6 h-6 mr-2" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="currentColor" d="M96 52v408l320-204L96 52z" />
+                            </svg>
+                            <div class="text-left">
+                                <div class="text-xs">Get it on</div>
+                                <div class="text-lg font-semibold leading-none">Google Play</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Healthcare Plans Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-20">
+                <div class="text-center mb-12">
+                    <h3 class="text-2xl font-semibold text-alliance-blue">Health Schemes</h3>
+                    <p class="mt-2 text-gray-600">Flexible options for comprehensive healthcare coverage</p>
+                </div>
+
+                
+                <div class="flex flex-col lg:flex-row gap-10">
+                    <!-- Medical Aid Group -->
+                    <div class="flex-1">
+                        <h4 class="text-lg font-semibold text-alliance-blue border-b-2 border-alliance-green pb-2 mb-6 text-center">Medical Aid</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                                                            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl animate__animated transform hover:-translate-y-1 flex flex-col">
+                                    <div class="bg-alliance-green text-white py-4 px-6">
+                                        <h4 class="text-xl font-bold">Alliance Select</h4>
+                                    </div>
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <ul class="space-y-3 mb-6 flex-grow">
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Regional and international cover
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Access to private health care
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Chronic disease management
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Preventative care management
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Open for group and individual membership
+                                                </li>
+                                                                                    </ul>
+                                        <div class="mt-auto text-center">
+                                            <a href="/healthcare-schemes#alliance-options-select"
+                                                class="bg-alliance-green hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition inline-block w-full">
+                                                Learn More
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                                                                            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl animate__animated  flex flex-col">
+                                    <div class="bg-alliance-blue text-white py-4 px-6">
+                                        <h4 class="text-xl font-bold">Northern Alliance</h4>
+                                    </div>
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <ul class="space-y-3 mb-6 flex-grow">
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Regional cover + Mauritius and India
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Enhanced private health care
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Chronic medication coverage
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Enhanced dental and optical care
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Funeral grant
+                                                </li>
+                                                                                    </ul>
+                                        <div class="mt-auto text-center">
+                                            <a href="/healthcare-schemes#northern-alliance"
+                                                class="bg-alliance-blue hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition inline-block w-full">
+                                                Learn More
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                                    </div>
+                    </div>
+
+                    <!-- Medical Insurance Group -->
+                    <div class="flex-1">
+                        <h4 class="text-lg font-semibold text-alliance-blue border-b-2 border-alliance-green pb-2 mb-6 text-center">Medical Insurance</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                                                            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl animate__animated transform hover:-translate-y-1 flex flex-col">
+                                    <div class="bg-alliance-green text-white py-4 px-6">
+                                        <h4 class="text-xl font-bold">Multimed</h4>
+                                    </div>
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <ul class="space-y-3 mb-6 flex-grow">
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Africa and international cover
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Extensive hospital and specialist coverage
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Cover for major diseases
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>International evacuation
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Free travel cover
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Free cover for children below 18 years
+                                                </li>
+                                                                                    </ul>
+                                        <div class="mt-auto text-center">
+                                            <a href="/healthcare-schemes#multimed"
+                                                class="bg-alliance-green hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition inline-block w-full">
+                                                Learn More
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                                                                            <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl animate__animated  flex flex-col">
+                                    <div class="bg-alliance-blue text-white py-4 px-6">
+                                        <h4 class="text-xl font-bold">Alliance Health Options</h4>
+                                    </div>
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <ul class="space-y-3 mb-6 flex-grow">
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Regional and international cover
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Extensive hospital and specialist coverage
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Higher global limit
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Full cover for major conditions
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>International evacuation
+                                                </li>
+                                                                                            <li class="flex items-start">
+                                                    <i class="fas fa-check-circle text-alliance-green mt-1 mr-3"></i>Free travel cover
+                                                </li>
+                                                                                    </ul>
+                                        <div class="mt-auto text-center">
+                                            <a href="/healthcare-schemes#alliance-options"
+                                                class="bg-alliance-blue hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition inline-block w-full">
+                                                Learn More
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about-us" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-semibold text-alliance-blue">About Us</h3>
+            </div>
+
+            <div class="md:flex md:items-stretch md:space-x-12 gap-8">
+                <!-- Image -->
+                <div class="md:w-1/2 animate__animated animate__fadeInLeft flex">
+                    <img src="https://www.alliancehealth.co.zw/images/smiling.jpeg" alt="Alliance Health Team"
+                        class="rounded-xl shadow-lg w-full h-full object-cover">
+                </div>
+
+                <!-- Text Content -->
+                <div class="md:w-1/2 flex flex-col justify-between animate__animated animate__fadeInRight">
+                    <div class="space-y-6">
+                        <p class="text-gray-700 text-lg">
+                            Alliance Health is a registered administrator of medical aid societies and schemes
+                            governed by the laws of the Republic of Zimbabwe. Alliance Health is a member of
+                            the Nzou Holdings group of companies with vast experience in the insurance sector including
+                            brokerage services and reinsurance.
+                            We strive to establish new levels of excellence in providing effective, innovative
+                            healthcare solutions and customer service to all our clients and members of Multimed,
+                            Alliance Health Options, Northern Alliance, Alliance Options
+                            Select and Northern Medical Aid Society.
+
+                        </p>
+
+                        <p class="text-gray-700 text-lg">
+                            We manage these solutions in conjunction with selected regional health care service partners.
+                        </p>
+                    </div>
+
+                    <!-- Mission, Vision, Values Boxes -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-alliance-light rounded-xl p-6 text-center shadow hover:shadow-lg transition">
+                            <h4 class="text-lg font-semibold text-alliance-blue mb-2">Our Mission</h4>
+                            <p class="text-gray-600 text-sm">To provide professional, efficient and personal healthcare
+                                service to our clients whilst remaining sensitive to the needs of all our stakeholders</p>
+                        </div>
+                        <div class="bg-alliance-light rounded-xl p-6 text-center shadow hover:shadow-lg transition">
+                            <h4 class="text-lg font-semibold text-alliance-blue mb-2">Our Vision</h4>
+                            <p class="text-gray-600 text-sm">To be recognized as the leading regional healthcare
+                                organisation with a reputation for providing personalised world class service, utilizing
+                                expert local knowledge</p>
+                        </div>
+                        <div class="bg-alliance-light rounded-xl p-6 text-center shadow hover:shadow-lg transition">
+                            <h4 class="text-lg font-semibold text-alliance-blue mb-2">Our Values</h4>
+                            <p class="text-gray-600 text-xs">Ethics<br><br>Social Responsibility<br><br>Professionalism<br><br>Integrity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Brand Story Section -->
+    <section id="brand-story" class="brand-section brand-story-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="brand-story-icon">
+                    <i class="fas fa-book-open text-white text-3xl"></i>
+                </div>
+                <h2 class="text-4xl font-bold text-alliance-blue mb-4">THE STORY OF OUR BRAND</h2>
+                <div class="w-24 h-1 bg-alliance-green mx-auto"></div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Image Column -->
+                <div class="lg:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4">
+                            <div class="rounded-xl overflow-hidden shadow-lg">
+                                <img src="https://www.alliancehealth.co.zw/images/medical_equip.jpg" alt="Our Healthcare Team"
+                                    class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
+                            </div>
+                            <div class="rounded-xl overflow-hidden shadow-lg">
+                                <img src="https://www.alliancehealth.co.zw/images/incare.png" alt="Modern Healthcare"
+                                    class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105">
+                            </div>
+                        </div>
+                        <div class="space-y-4 pt-8">
+                            <div class="rounded-xl overflow-hidden shadow-lg">
+                                <img src="https://www.alliancehealth.co.zw/images/patient_care.jpg" alt="Patient Care"
+                                    class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105">
+                            </div>
+                            <div class="rounded-xl overflow-hidden shadow-lg">
+                                <img src="https://www.alliancehealth.co.zw/images/health_1.jpg" alt="Health Innovation"
+                                    class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Content Column -->
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-xl shadow-lg p-8 md:p-12">
+                        <div class="space-y-6 text-lg text-gray-700 leading-relaxed">
+                            <p class="text-xl font-medium text-alliance-blue border-l-4 border-alliance-green pl-4">
+                                We&#039;re all about supporting better health. Better health for corporates, individuals, couples and families that&#039;s easy to understand.
+                            </p>
+
+                                                        <p class="flex items-start">
+                                <i class="fas fa-rocket text-alliance-green text-xl mt-1 mr-3"></i>
+                                We strive for excellence in the delivery of innovative international health care solutions to the members of our different plans, programmes and schemes.
+                            </p>
+                                                        <p class="flex items-start">
+                                <i class="fas fa-star text-alliance-blue text-xl mt-1 mr-3"></i>
+                                We&#039;re a healthcare leader with a purpose that sets us apart from the rest: we&#039;re committed to helping in the delivery of innovative international health care solutions.
+                            </p>
+                                                        <p class="flex items-start">
+                                <i class="fas fa-compass text-alliance-green text-xl mt-1 mr-3"></i>
+                                We guide people to what they need most to help make their experience as seamless as possible.
+                            </p>
+                                                    </div>
+
+                        <!-- Stats Section -->
+                        <div class="mt-8 grid grid-cols-2 gap-4 pt-6 border-t border-gray-200">
+                                                        <div class="text-center">
+                                <div class="text-2xl font-bold text-alliance-blue">20+</div>
+                                <div class="text-sm text-gray-600">Years of Excellence</div>
+                            </div>
+                                                        <div class="text-center">
+                                <div class="text-2xl font-bold text-alliance-green">100K+</div>
+                                <div class="text-sm text-gray-600">Lives Impacted</div>
+                            </div>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Right, Text Left Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Text Content - Left Side -->
+                <div class="lg:w-1/2">
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="text-3xl font-semibold text-alliance-blue mb-3">The Brand Values</h2>
+                            <p class="text-gray-600  leading-relaxed">
+                                We&#039;re passionate about what we do and want to provide the best health and care for our customers. Our caring philosophy means we treat people with respect and kindness. We seek to listen and understand by being open and embracing diversity.
+                            </p>
+                            <br>
+                            <p class="text-gray-700  leading-relaxed">
+                                Our authentic and honest nature means we say what we mean and we mean what we say. We take ownership and are accountable for our actions.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-semibold text-alliance-green mb-3">The Visual Identity</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                The visual identity of the brand stems from the simple idea of happiness and health attained in simplicity. We are driven to deliver the highest standard in quality and this message will be conveyed using words and visuals that are simple and clear.
+                            </p>
+                        </div>
+
+                        <!-- Call to Action Button -->
+                        <div class="pt-4">
+                            <a href="https://www.alliancehealth.co.zw/client-login"
+                                class="bg-alliance-blue text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition inline-block">
+                                Access Your care
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative w-full" style="height: 70vh; max-height: 600px;">
+                        <img src="https://www.alliancehealth.co.zw/images/smiling_doc.jpg" alt="Healthcare Professionals"
+                            class="w-full h-full object-cover object-top rounded-xl shadow-lg">
+
+                        <!-- Optional: Decorative Element -->
+                        <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-alliance-green rounded-full opacity-20">
+                        </div>
+                        <div class="absolute -top-6 -right-6 w-16 h-16 bg-alliance-blue rounded-full opacity-20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="text-white py-12" style="background-color: rgb(2, 60, 90);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <img src="https://www.alliancehealth.co.zw/images/footer_logo.png" alt="Alliance Health Zimbabwe"
+                        class="h-16 w-auto">
+                    <p class="mt-4 text-2xl font-bold  text-white border-l-4 border-alliance-green pl-3">where service
+                        still matters</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold">Quick Links</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="/" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="/healthcare-schemes"
+                                class="text-gray-300 hover:text-white transition">Services</a></li>
+                        <li><a href="/#about-us" class="text-gray-300 hover:text-white transition">About Us</a></li>
+                        <li><a href="/contact" class="text-gray-300 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold">Contact Us</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3" style="color: rgb(255, 255, 255);"></i>
+                            <span class="text-gray-300">7 Fleetwood Road
+                                Alexandra Park
+                                Harare
+                                Zimbabwe</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-3" style="color: rgb(255, 255, 255);"></i>
+                            <span class="text-gray-300">+263 86 77 020 406 / 86 77 000 716 / 0772 126 119 / 0772 126
+                                120 / 0778 244 129
+                            </span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3" style="color: rgb(255, 255, 255);"></i>
+                            <span class="text-gray-300"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f89b9994949b9d968c8a9db8909d99948c90829195d69b9795">[email&#160;protected]</a></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold">Follow Us</h3>
+                    <div class="flex mt-4 space-x-4">
+                        <a href="https://www.facebook.com/people/Alliance-Health-Zim/61577695677597/"
+                            class="text-gray-300 hover:text-white transition"><i
+                                class="fab fa-facebook-f text-lg"></i></a>
+                        <!--<a href="#" class="text-gray-300 hover:text-white transition"><i-->
+                        <!--        class="fab fa-twitter text-lg"></i></a>-->
+                        <a href="https://www.instagram.com/alliance_health_zim/"
+                            class="text-gray-300 hover:text-white transition"><i
+                                class="fab fa-instagram text-lg"></i></a>
+                        <!--<a href="#" class="text-gray-300 hover:text-white transition"><i-->
+                        <!--        class="fab fa-linkedin-in text-lg"></i></a>-->
+                    </div>
+
+                    <h3 class="text-lg font-semibold mt-6">Download Our App</h3>
+                    <div class="flex mt-2 space-x-2">
+                        <a href="https://apps.apple.com/zw/app/alliance-health-zw/id6745626110"
+                            class="text-gray-300 hover:text-white transition"><i
+                                class="fab fa-apple text-2xl"></i></a>
+                        <a href="https://play.google.com/store/apps/details?id=dev.softify.alliance_health_flutter"
+                            class="text-gray-300 hover:text-white transition"><i
+                                class="fab fa-google-play text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-10 pt-6 text-sm text-gray-300 text-center">
+                <p>© 2025 Alliance Health Zimbabwe. All rights reserved.
+                    <br><br>
+                    <u>
+                        <a href="https://softifysolutionsgroup.com"
+                            class="text-gray-300 hover:text-white transition">Designed by Softify Solutions</a>
+                    </u>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mobile menu toggle
+            const menuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Submenu toggles
+            document.querySelectorAll('.submenu-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const submenu = button.nextElementSibling;
+                    submenu.classList.toggle('hidden');
+                    button.querySelector('svg').classList.toggle('rotate-180'); // rotate arrow
+                });
+            });
+
+            // Animate on scroll
+            const animatedElements = document.querySelectorAll('.animate__animated');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const animation = entry.target.getAttribute('data-animate');
+                        if (animation) entry.target.classList.add(animation);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <script>
+        // Cookie Banner Functionality
+        const cookieBanner = document.getElementById('cookieBanner');
+        const cookieOverlay = document.getElementById('cookieOverlay');
+        const confirmChoices = document.getElementById('confirmChoices');
+        const acceptAll = document.getElementById('acceptAll');
+        const cancelCookies = document.getElementById('cancelCookies');
+        const cookieToggles = document.querySelectorAll('.cookie-toggle:not([data-category="necessary"])');
+        const categoryHeaders = document.querySelectorAll('.category-header');
+
+        // Show cookie banner on page load
+        function showCookieBanner() {
+            // Check if user has already made a choice
+            const hasCookieChoice = localStorage.getItem('cookiePreferences');
+            if (!hasCookieChoice) {
+                setTimeout(() => {
+                    cookieBanner.style.display = 'block';
+                    cookieOverlay.style.display = 'block';
+                }, 1000);
+            }
+        }
+
+        // Initialize cookie toggles
+        cookieToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = this.classList.contains('active');
+            });
+        });
+
+        // Expand/collapse category details
+        categoryHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.parentElement.querySelector('.cookie-category-content');
+                content.classList.toggle('open');
+            });
+        });
+
+        // Confirm choices button
+        confirmChoices.addEventListener('click', function() {
+            const choices = {
+                performance: document.querySelector('[data-category="performance"]').classList.contains(
+                    'active'),
+                functional: document.querySelector('[data-category="functional"]').classList.contains('active'),
+                targeting: document.querySelector('[data-category="targeting"]').classList.contains('active')
+            };
+
+            // Save choices to localStorage
+            localStorage.setItem('cookiePreferences', JSON.stringify(choices));
+            hideCookieBanner();
+        });
+
+        // Accept all button
+        acceptAll.addEventListener('click', function() {
+            cookieToggles.forEach(toggle => {
+                toggle.classList.add('active');
+                const checkbox = toggle.querySelector('input[type="checkbox"]');
+                checkbox.checked = true;
+            });
+
+            const choices = {
+                performance: true,
+                functional: true,
+                targeting: true
+            };
+
+            localStorage.setItem('cookiePreferences', JSON.stringify(choices));
+            hideCookieBanner();
+        });
+
+        // Cancel button
+        cancelCookies.addEventListener('click', function() {
+            hideCookieBanner();
+        });
+
+        function hideCookieBanner() {
+            cookieBanner.style.display = 'none';
+            cookieOverlay.style.display = 'none';
+        }
+
+        // Show the cookie banner
+        showCookieBanner();
+    </script>
+
+
+
+    </body>
+
+</html>

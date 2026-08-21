@@ -1,0 +1,31 @@
+URL,Title,Accessed,Notes
+https://ahfoz.org/,AHFoZ official site,2026-07-27,Directory searched
+https://ahfoz.org/our-members/,AHFoZ members,2026-07-27,Directory searched
+https://cimas.co.zw/blue-zone/,CIMAS Blue Zone provider directory,2026-07-27,Directory searched
+https://data.humdata.org/dataset/zimbabwe-health-facilities/resource/c60fac4d-b3fb-48a7-9652-7d7e44b34a89,HDX / MoH Zimbabwe Health Facility List (with geo-codes),2026-07-27,Humanitarian Data Exchange facility master list with latitude/longitude
+https://hpa.co.zw/,Health Professions Authority,2026-07-27,Directory searched
+https://hpa.co.zw/registered-facilities/,Health Professions Authority - Registered Facilities,2026-07-27,Parsed from public registered facilities listing
+https://medical.co.zw/,Zimbabwe Medical Directory,2026-07-27,Directory searched
+https://portal.ahpcz.co.zw/,Allied Health Practitioners Council portal,2026-07-27,Directory searched
+https://psmas.co.zw/all-listings/,PSMAS All Listings,2026-07-27,Directory searched
+https://psmas.co.zw/view-download-provider-list/,PSMAS View/Download Provider List,2026-07-27,Directory searched
+https://psmas.co.zw/wp-content/uploads/2026/07/BULAWAYO-PROVINCE-PROVIDER-NETWORK-07-26.pdf,PSMAS BULAWAYO-PROVINCE-PROVIDER-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/BULAWAYO-SPECIALISTS-NETWORK-07-26.pdf,PSMAS BULAWAYO-SPECIALISTS-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/HARARE-PROVIDER-NETWORK-07-26.pdf,PSMAS HARARE-PROVIDER-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/HARARE-SPECIALISTS-NETWORK-07-26.pdf,PSMAS HARARE-SPECIALISTS-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/MANICALAND-NETWORK-07-26.pdf,PSMAS MANICALAND-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/MASHONALAND-CENTRAL-NETWORK-07-26.pdf,PSMAS MASHONALAND-CENTRAL-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/MASHONALAND-EAST-NETWORK-07-26.pdf,PSMAS MASHONALAND-EAST-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/MASHONALAND-WEST-NETWORK-07-26.pdf,PSMAS MASHONALAND-WEST-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/MASVINGO-PROVIDERS-LIST-07-26.pdf,PSMAS MASVINGO-PROVIDERS-LIST-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/MATEBELELAND-NORTH-PROVIDER-NETWORK-07-26.pdf,PSMAS MATEBELELAND-NORTH-PROVIDER-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/MATEBELELAND-SOUTH-PROVIDER-NETWORK-07-26.pdf,PSMAS MATEBELELAND-SOUTH-PROVIDER-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/MIDLANDS-PROVIDER-NETWORK-07-26.pdf,PSMAS MIDLANDS-PROVIDER-NETWORK-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-content/uploads/2026/07/PSMAS-PROVIDER-NETWORK-LIST-07-26.pdf,PSMAS PSMAS-PROVIDER-NETWORK-LIST-07-26,2026-07-27,Provincial/network PDF July 2026
+https://psmas.co.zw/wp-json/wp/v2/at_biz_dir?per_page=100,PSMAS WP/API listings probe,2026-07-27,
+https://www.hellodoctor.co.zw/,Hello Doctor Zimbabwe,2026-07-27,Directory searched
+https://www.mdpcz.co.zw/,MDPCZ home,2026-07-27,Directory searched
+https://www.mdpcz.co.zw/public_register,MDPCZ Public Register (full scrape),2026-07-27,4650 practitioners via Livewire pagination
+https://zach.org.zw/membership/,ZACH Membership Directory,2026-07-27,Mission hospitals and clinics
+https://zimmedicover.com/wp-content/uploads/2024/12/CellMed-Service-Provider-Directory.pdf,CellMed Service Provider Directory PDF,2026-07-27,No AHFoZ numbers in this directory
+local://wwwroot/PSMAS_Provider_Network_List.xlsx,PSMAS Provider Network List (repo Excel),2026-07-27,Local copy with AHFoZ/AFHOZ numbers

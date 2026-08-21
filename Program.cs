@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PindahWebsite3.Data;
 using PindahWebsite3.Areas.Identity.Data;
 using PindahWebsite3.Jobs;
+using PindahWebsite3.Routing;
 using PindahWebsite3.Services.Zimsec;
 using Quartz;
 var builder = WebApplication.CreateBuilder(args);
@@ -123,6 +124,17 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();
+
+app.MapControllerRoute(
+    name: "sop",
+    pattern: "sop",
+    defaults: new { controller = "Sop", action = "Index" });
+
+app.MapControllerRoute(
+    name: "seo-landing",
+    pattern: "{slug}",
+    defaults: new { controller = "Seo", action = "Landing" },
+    constraints: new { slug = new SeoSlugRouteConstraint() });
 
 app.MapControllerRoute(
     name: "default",

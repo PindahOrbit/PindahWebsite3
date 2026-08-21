@@ -1,0 +1,31 @@
+Zimbabwe Healthcare Providers Database
+Generated: 2026-07-27
+
+Number of providers collected: 15328
+Number with AHFoZ numbers: 1656
+Number with registration numbers: 4650
+Number of hospitals: 677
+Number of doctors: 5611
+Number of pharmacies: 1768
+Number of laboratories: 446
+Number with GPS coordinates: 1671
+Number of duplicates removed: 3495
+Websites searched: 30
+PDFs processed: 14
+Total rows: 15328
+
+Major sources:
+1. PSMAS Provider Network PDFs (July 2026) - main public source of AHFoZ / practice numbers
+2. PSMAS Excel provider list (repository)
+3. Health Professions Authority registered facilities
+4. MDPCZ Public Register (full ~4,650 practitioners with registration numbers)
+5. HDX / Ministry of Health health facility list with geo-codes
+6. CellMed Service Provider Directory PDF
+7. ZACH membership directory
+8. PSMAS website listings + directory crawls (CIMAS Blue Zone, Hello Doctor, medical.co.zw, AHFoZ)
+
+Important limitations:
+- AHFoZ does not publish a complete public payee directory. AHFoZ numbers here come from medical-aid network publications (mainly PSMAS). Blank AHFoZ means not found publicly - not fabricated.
+- Alliance Health's older provider PDF is no longer linked on their current website.
+- Some HDX/MoH facility records are historical master-list entries; names/types retained with source attribution.
+- CIMAS Blue Zone is an interactive directory without a bulk public export of AHFoZ numbers.

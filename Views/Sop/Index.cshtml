@@ -1,0 +1,12 @@
+@model string
+@{
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/sop.css" asp-append-version="true" />
+}
+
+<article class="sop-document container mb-5 pt-3">
+    @Html.Raw(Model)
+</article>
