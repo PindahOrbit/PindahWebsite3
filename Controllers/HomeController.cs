@@ -33,7 +33,7 @@ public class HomeController : Controller
     [
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/workflow.png",
+            IconClass = "bi-diagram-3",
             Title = "Enterprise Resource Planning",
             Description = "Centralized finance, procurement, inventory, sales, and project management. Native multi-currency support for Zimbabwe's USD/ZiG environment with IFRS compliance at transaction level.",
             LinkText = "ERP solutions",
@@ -41,7 +41,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/accounting.png",
+            IconClass = "bi-calculator",
             Title = "Accounting & Financial Management",
             Description = "General ledger, accounts payable, accounts receivable, fixed assets, and tax management. Automated ZIMRA fiscal device integration and statutory reporting.",
             LinkText = "Accounting solutions",
@@ -49,7 +49,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/group.png",
+            IconClass = "bi-people",
             Title = "Customer Relationship Management",
             Description = "Complete sales pipeline, lead tracking, quotation management, and service desk. Unified customer history across every touchpoint.",
             LinkText = "CRM solutions",
@@ -57,7 +57,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/hospital.png",
+            IconClass = "bi-hospital",
             Title = "Hospital & Healthcare Management",
             Description = "Patient registration, clinical records, outpatient and inpatient workflows, pharmacy, laboratory, and healthcare billing integrated end-to-end.",
             LinkText = "Healthcare solutions",
@@ -65,7 +65,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/school.png",
+            IconClass = "bi-mortarboard",
             Title = "School Management System",
             Description = "Student enrollment, academic records, attendance, fee billing, timetabling, and parent communication. Complete student lifecycle administration.",
             LinkText = "Education solutions",
@@ -73,7 +73,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/open-book.png",
+            IconClass = "bi-book",
             Title = "Pindah Course",
             Description = "Free Heritage-Based Curriculum lessons for Zimbabwe primary schools — grade courses, stories, practice, and teacher-guide PDFs. A Pindah.org product beside Frame and Basa.",
             LinkText = "Open Pindah Course",
@@ -81,7 +81,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/factory.png",
+            IconClass = "bi-gear-wide-connected",
             Title = "Manufacturing & Production",
             Description = "Bill of materials, production scheduling, shop floor control, quality management, costing, and maintenance. ISO-aligned manufacturing execution.",
             LinkText = "Manufacturing solutions",
@@ -89,7 +89,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/truck.png",
+            IconClass = "bi-truck",
             Title = "Logistics & Fleet Management",
             Description = "Route optimization, vehicle tracking, driver management, cross-border documentation, and delivery analytics for transport operators.",
             LinkText = "Logistics solutions",
@@ -97,7 +97,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/handshake.png",
+            IconClass = "bi-shield-plus",
             Title = "Insurance & Broker Management",
             Description = "Policy administration, underwriting, claims processing, premium collection, and broker management for insurance operations.",
             LinkText = "Insurance solutions",
@@ -105,7 +105,7 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
-            IconUrl = "https://img.icons8.com/3d-fluency/512/crane.png",
+            IconClass = "bi-bricks",
             Title = "Construction & Project Control",
             Description = "Project planning, cost control, progress billing, site management, and subcontractor coordination for construction firms.",
             LinkText = "Construction solutions",
