@@ -1,0 +1,19 @@
+@model PindahWebsite3.Models.ModuleCardViewModel
+
+<div class="col-md-6 col-lg-4">
+    <div class="card h-100 home-solution-card">
+        <div class="card-body">
+            <img src="@Model.IconUrl" alt="" class="home-solution-icon" width="48" height="48" loading="lazy" />
+            <h3 class="h6 fw-bold mb-2 card-title">@Model.Title</h3>
+            <p class="small mb-3">@Model.Description</p>
+            @if (!string.IsNullOrEmpty(Model.Href))
+            {
+                <a href="@Model.Href" class="text-decoration-none small fw-semibold" rel="@(Model.LinkRel ?? "noopener")">@Model.LinkText &rarr;</a>
+            }
+            else
+            {
+                <a asp-controller="@Model.Controller" asp-action="@Model.Action" class="text-decoration-none small fw-semibold">@Model.LinkText &rarr;</a>
+            }
+        </div>
+    </div>
+</div>

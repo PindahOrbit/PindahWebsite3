@@ -1,0 +1,6 @@
+/* Inter + system UI stack (Inter loaded via Google Fonts in _Layout.cshtml) */
+
+html,
+body.site-body {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}

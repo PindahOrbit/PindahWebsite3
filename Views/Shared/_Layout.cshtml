@@ -41,7 +41,10 @@
     <meta name="twitter:description" content="@(ViewData["Description"] ?? "Enterprise ERP, CRM, healthcare, education, manufacturing and logistics software for Zimbabwe and Southern Africa.")" />
     <meta name="twitter:image" content="@(ViewData["OgImage"] ?? "https://storage.pindah.org/IMAGES/pindah-og-default.jpg")" />
     <link rel="icon" type="image/x-icon" href="https://storage.pindah.org/IMAGES/PindahBranding.ico" />
-    <link rel="stylesheet" href="~/css/fonts-72.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" />
+    <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PindahWebsite3.styles.css" asp-append-version="true" />
@@ -101,6 +104,10 @@
                     <span>Pindah</span>
                 </a>
                 <div class="d-flex align-items-center flex-wrap gap-2 justify-content-end">
+                    <div class="small d-none d-md-flex align-items-center gap-3">
+                        <a class="text-muted text-decoration-none" asp-controller="News" asp-action="Index">Insights</a>
+                        <a class="text-muted text-decoration-none" asp-controller="Downloads" asp-action="Index">Resources</a>
+                    </div>
                     <div class="small text-muted d-none d-md-block">
                         <span class="me-3">admin@pindah.org</span>
                         <span>+263 714 856 897</span>
@@ -119,23 +126,25 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mainNav">
-                    <ul class="navbar-nav w-100 justify-content-lg-between gap-lg-0 gap-1 py-2 py-lg-0">
+                    <ul class="navbar-nav flex-grow-1 gap-lg-0 gap-1 py-2 py-lg-0">
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Erp" asp-action="Index">ERP</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Accounting" asp-action="Index">Accounting</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Crm" asp-action="Index">CRM</a></li>
+                        <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Hr" asp-action="Index">HR</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Manufacturing" asp-action="Index">Manufacturing</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Hospital" asp-action="Index">Healthcare</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Sms" asp-action="Index">Education</a></li>
-                        <li class="nav-item"><a class="nav-link py-lg-3 px-0" href="https://courses.edtech.co.zw" rel="noopener">Courses</a></li>
-                        <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Zimsec" asp-action="Index">Zimsec</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Logistics" asp-action="Index">Logistics</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Construction" asp-action="Index">Construction</a></li>
                         <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Insurance" asp-action="Index">Insurance</a></li>
-                        <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Hr" asp-action="Index">HR</a></li>
-                        <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="News" asp-action="Index">Insights</a></li>
-                        <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Downloads" asp-action="Index">Resources</a></li>
+                        <li class="nav-item"><a class="nav-link py-lg-3 px-0" href="https://courses.edtech.co.zw" rel="noopener">Courses</a></li>
+                        <li class="nav-item"><a class="nav-link py-lg-3 px-0" asp-controller="Zimsec" asp-action="Index">Zimsec</a></li>
                     </ul>
+                    <div class="d-flex flex-wrap gap-2 py-2 py-lg-0 ms-lg-3">
+                        <a href="/#contact" class="btn btn-outline-light btn-sm px-3">Request a Demo</a>
+                        <a href="mailto:admin@pindah.org" class="btn btn-primary btn-sm px-3">Start a conversation</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -162,16 +171,6 @@
                     </p>
                 </div>
                 <div class="col-6 col-lg-2">
-                    <p class="small fw-bold text-white text-uppercase mb-2">Platform</p>
-                    <ul class="list-unstyled small">
-                        <li class="mb-1"><a asp-controller="Erp" asp-action="Index">ERP</a></li>
-                        <li class="mb-1"><a asp-controller="Crm" asp-action="Index">CRM</a></li>
-                        <li class="mb-1"><a asp-controller="Accounting" asp-action="Index">Accounting</a></li>
-                        <li class="mb-1"><a asp-controller="Hr" asp-action="Index">HR</a></li>
-                        <li class="mb-1"><a asp-controller="Scm" asp-action="Index">SCM</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-lg-2">
                     <p class="small fw-bold text-white text-uppercase mb-2">Industries</p>
                     <ul class="list-unstyled small">
                         <li class="mb-1"><a asp-controller="Manufacturing" asp-action="Index">Manufacturing</a></li>
@@ -180,6 +179,16 @@
                         <li class="mb-1"><a href="https://courses.edtech.co.zw" rel="noopener">Pindah Course</a></li>
                         <li class="mb-1"><a asp-controller="Logistics" asp-action="Index">Logistics</a></li>
                         <li class="mb-1"><a asp-controller="Construction" asp-action="Index">Construction</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <p class="small fw-bold text-white text-uppercase mb-2">Platform</p>
+                    <ul class="list-unstyled small">
+                        <li class="mb-1"><a asp-controller="Erp" asp-action="Index">ERP</a></li>
+                        <li class="mb-1"><a asp-controller="Crm" asp-action="Index">CRM</a></li>
+                        <li class="mb-1"><a asp-controller="Accounting" asp-action="Index">Accounting</a></li>
+                        <li class="mb-1"><a asp-controller="Hr" asp-action="Index">HR</a></li>
+                        <li class="mb-1"><a asp-controller="Scm" asp-action="Index">SCM</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-lg-2">

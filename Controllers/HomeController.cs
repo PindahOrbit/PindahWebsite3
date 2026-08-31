@@ -1,15 +1,117 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PindahWebsite3.Data;
 using PindahWebsite3.Models;
 
 namespace PindahWebsite3.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly PindahWebsite3Context _context;
+
+    public HomeController(PindahWebsite3Context context)
     {
-        return View();
+        _context = context;
     }
+
+    public async Task<IActionResult> Index()
+    {
+        var model = new HomeIndexViewModel
+        {
+            FeaturedNews = await _context.News
+                .OrderByDescending(n => n.DateCreated)
+                .Take(3)
+                .ToListAsync(),
+            Modules = GetModuleCards()
+        };
+
+        return View(model);
+    }
+
+    private static List<ModuleCardViewModel> GetModuleCards() =>
+    [
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/workflow.png",
+            Title = "Enterprise Resource Planning",
+            Description = "Centralized finance, procurement, inventory, sales, and project management. Native multi-currency support for Zimbabwe's USD/ZiG environment with IFRS compliance at transaction level.",
+            LinkText = "ERP solutions",
+            Controller = "Erp"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/accounting.png",
+            Title = "Accounting & Financial Management",
+            Description = "General ledger, accounts payable, accounts receivable, fixed assets, and tax management. Automated ZIMRA fiscal device integration and statutory reporting.",
+            LinkText = "Accounting solutions",
+            Controller = "Accounting"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/group.png",
+            Title = "Customer Relationship Management",
+            Description = "Complete sales pipeline, lead tracking, quotation management, and service desk. Unified customer history across every touchpoint.",
+            LinkText = "CRM solutions",
+            Controller = "Crm"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/hospital.png",
+            Title = "Hospital & Healthcare Management",
+            Description = "Patient registration, clinical records, outpatient and inpatient workflows, pharmacy, laboratory, and healthcare billing integrated end-to-end.",
+            LinkText = "Healthcare solutions",
+            Controller = "Hospital"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/school.png",
+            Title = "School Management System",
+            Description = "Student enrollment, academic records, attendance, fee billing, timetabling, and parent communication. Complete student lifecycle administration.",
+            LinkText = "Education solutions",
+            Controller = "Sms"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/open-book.png",
+            Title = "Pindah Course",
+            Description = "Free Heritage-Based Curriculum lessons for Zimbabwe primary schools — grade courses, stories, practice, and teacher-guide PDFs. A Pindah.org product beside Frame and Basa.",
+            LinkText = "Open Pindah Course",
+            Href = "https://courses.edtech.co.zw"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/factory.png",
+            Title = "Manufacturing & Production",
+            Description = "Bill of materials, production scheduling, shop floor control, quality management, costing, and maintenance. ISO-aligned manufacturing execution.",
+            LinkText = "Manufacturing solutions",
+            Controller = "Manufacturing"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/truck.png",
+            Title = "Logistics & Fleet Management",
+            Description = "Route optimization, vehicle tracking, driver management, cross-border documentation, and delivery analytics for transport operators.",
+            LinkText = "Logistics solutions",
+            Controller = "Logistics"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/handshake.png",
+            Title = "Insurance & Broker Management",
+            Description = "Policy administration, underwriting, claims processing, premium collection, and broker management for insurance operations.",
+            LinkText = "Insurance solutions",
+            Controller = "Insurance"
+        },
+        new ModuleCardViewModel
+        {
+            IconUrl = "https://img.icons8.com/3d-fluency/512/crane.png",
+            Title = "Construction & Project Control",
+            Description = "Project planning, cost control, progress billing, site management, and subcontractor coordination for construction firms.",
+            LinkText = "Construction solutions",
+            Controller = "Construction"
+        }
+    ];
 
     [Route("/privacy")]
     [Route("/home/privacy")]

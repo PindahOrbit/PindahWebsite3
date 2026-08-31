@@ -8,7 +8,7 @@
   --pindah-border: #E2E5E9;
   --pindah-text: #1A1A2E;
   --pindah-muted: #5C6672;
-  --sap-font-family: "72", "72full", Arial, Helvetica, sans-serif;
+  --sap-font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --sap-font-size-body: 1rem;         /* 16px — paragraphs, lists, card copy */
   --sap-font-size-ui: 1rem;           /* 16px — default reading size + controls */
   --sap-font-size-large: 1.125rem;    /* 18px — item titles, page headers */
@@ -135,6 +135,18 @@
   color: #fff;
 }
 
+/* btn-secondary — sizing parity with primary (no color change) */
+.site-body .btn-secondary {
+  min-height: 2.25rem;
+  padding: 0.4375rem 0.75rem;
+  font-weight: 600;
+}
+
+.site-body .btn-secondary.btn-sm {
+  min-height: 1.875rem;
+  padding: 0.3125rem 0.625rem;
+}
+
 /* badge text-bg-primary */
 .site-body .badge.text-bg-primary,
 .site-body .text-bg-primary {
@@ -236,6 +248,43 @@
 /* === HEADER === */
 .site-header-top {
   border-bottom: 1px solid var(--pindah-border);
+}
+
+/* Navbar — tighter vertical rhythm, consistent height */
+.site-body .navbar {
+  min-height: 2.75rem;
+}
+
+.site-body .navbar .navbar-collapse {
+  align-items: center;
+}
+
+.site-body .navbar .btn-sm {
+  min-height: 1.875rem;
+  padding: 0.3125rem 0.75rem;
+}
+
+/* Module / industry cards — uniform tile anatomy */
+.site-body .home-solution-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.site-body .home-solution-card .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.site-body .home-solution-card .card-body > .small {
+  flex: 1 1 auto;
+}
+
+.site-body .home-page .row.g-3 {
+  --bs-gutter-x: 1rem;
+  --bs-gutter-y: 1rem;
 }
 
 .site-body header .btn-primary {
@@ -700,8 +749,8 @@
 /* Marketing hero bands keep larger display type */
 .site-body h1.home-landing-headline,
 .site-body h1.module-landing-headline {
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
-  line-height: 1.1;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.08;
   letter-spacing: -0.025em;
 }
 
