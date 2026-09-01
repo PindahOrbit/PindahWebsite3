@@ -101,6 +101,38 @@
   display: none !important;
 }
 
+.home-page .home-solution-card,
+.home-page .home-pillar-card {
+  overflow: hidden;
+}
+
+.home-page .home-solution-photo,
+.home-page .home-pillar-photo {
+  display: block;
+  width: 100%;
+  height: 8.75rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+.home-page .home-inline-photo,
+.home-page .home-industry-photo {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid var(--pindah-border);
+}
+
+.home-page .home-inline-photo {
+  height: 12rem;
+}
+
+.home-page .home-industry-photo {
+  height: 7.5rem;
+  border: 0;
+}
+
 .home-page .home-solution-card .card-body,
 .home-page .home-pillar-card .card-body {
   display: flex;

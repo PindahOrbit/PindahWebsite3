@@ -3,6 +3,7 @@ namespace PindahWebsite3.Models;
 public class ModuleCardViewModel
 {
     public string IconClass { get; set; } = string.Empty;
+    public string ImageUrl { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string LinkText { get; set; } = string.Empty;

@@ -2,6 +2,10 @@
 
 <div class="col-md-6 col-lg-4">
     <div class="card h-100 home-solution-card">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="" class="card-img-top home-solution-photo" width="640" height="360" loading="lazy" />
+        }
         <div class="card-body">
             <i class="bi @Model.IconClass home-solution-icon" aria-hidden="true"></i>
             <h3 class="h6 fw-bold mb-1 card-title">@Model.Title</h3>
