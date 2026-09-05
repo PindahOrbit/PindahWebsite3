@@ -69,6 +69,15 @@ public class HomeController : Controller
         },
         new ModuleCardViewModel
         {
+            IconClass = "bi-capsule",
+            ImageUrl = "/images/heroes/hero-hospital.jpg",
+            Title = "BasaRx — Pharmacy, EHR & Healthcare ERP",
+            Description = "Dispensing, pharmacist verification, FEFO stock, refills, medical aid claims, and full electronic health records on one ERP — clinic, counter, and ledger together.",
+            LinkText = "Explore BasaRx",
+            Controller = "Basarx"
+        },
+        new ModuleCardViewModel
+        {
             IconClass = "bi-mortarboard",
             ImageUrl = "/images/heroes/hero-education.jpg",
             Title = "School Management System",

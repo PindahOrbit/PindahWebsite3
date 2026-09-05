@@ -196,19 +196,19 @@ public static class SeoLandingCatalog
 
     yield return Page(
         "pharmacy-management-software-zimbabwe",
-        "Pharmacy Management Software Zimbabwe | Hospital & Retail Pharmacy",
-        "Pharmacy management software for Zimbabwe. Stock control, expiry tracking, dispensing, billing, and integration with hospital and clinic workflows.",
-        "pharmacy management software Zimbabwe, pharmacy software Zimbabwe, ERP for pharmacies Zimbabwe, clinic pharmacy software Harare",
+        "Pharmacy Management Software Zimbabwe | BasaRx by Pindah",
+        "BasaRx pharmacy management software for Zimbabwe. FEFO stock, expiry tracking, dispensing, refills, medical aid claims, EHR, and billing on one healthcare ERP.",
+        "pharmacy management software Zimbabwe, pharmacy software Zimbabwe, ERP for pharmacies Zimbabwe, clinic pharmacy software Harare, BasaRx, EHR Zimbabwe",
         "Pharmacy Management Software Zimbabwe",
-        "Pharmacy · Stock & dispensing",
-        "Manage formulary, batches, expiry dates, and dispensing with pharmacy software integrated into Pindah's wider healthcare and billing platform.",
-        "/hospital/pharmacy",
-        "Pharmacy module details",
-        "Batch and expiry management",
-        "Dispensing linked to patient records",
-        "Stock valuation and reorder alerts",
-        "Integrated billing and medical aid",
-        "Audit-ready transaction history");
+        "BasaRx · Pharmacy & EHR ERP",
+        "Manage formulary, FEFO batches, expiry, dispensing, refills, and medical aid with BasaRx — pharmacy and electronic health records on Pindah's unified ERP.",
+        "/basarx",
+        "Explore BasaRx",
+        "FEFO batch and expiry management",
+        "Dispensing linked to patient EHR",
+        "Refills, labels, and pharmacist verification",
+        "Integrated billing and medical aid claims",
+        "One ERP for clinic, counter, and ledger");
 
     yield return Page(
         "pos-system-zimbabwe",
