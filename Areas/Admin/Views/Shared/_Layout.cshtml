@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-ZW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>@(ViewData["Title"] ?? "CMS") | Pindah Admin</title>
+    <link rel="icon" type="image/x-icon" href="https://storage.pindah.org/IMAGES/PindahBranding.ico" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        .admin-shell { min-height: 100vh; }
+        .admin-nav { width: 240px; }
+        .admin-nav .nav-link.active { background: rgba(13,110,253,.1); font-weight: 600; }
+        @@media (max-width: 767.98px) {
+            .admin-nav { width: 100%; }
+        }
+    </style>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="bg-light">
+    <div class="admin-shell d-flex flex-column flex-md-row">
+        <aside class="admin-nav border-end bg-white p-3 flex-shrink-0">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <img src="https://storage.pindah.org/IMAGES/pindah_logo_webp.webp" alt="" width="22" height="22" />
+                <strong>Pindah CMS</strong>
+            </div>
+            <nav class="nav flex-column gap-1">
+                <a class="nav-link rounded px-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : null)"
+                   asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                <a class="nav-link rounded px-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Articles" ? "active" : null)"
+                   asp-area="Admin" asp-controller="Articles" asp-action="Index">Articles</a>
+                @if (User.IsInRole(CmsConstants.RoleAdmin))
+                {
+                    <a class="nav-link rounded px-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Users" ? "active" : null)"
+                       asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
+                    <a class="nav-link rounded px-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Downloads" ? "active" : null)"
+                       asp-area="Admin" asp-controller="Downloads" asp-action="Index">Downloads</a>
+                }
+                <hr />
+                <a class="nav-link rounded px-2" asp-area="" asp-controller="Home" asp-action="Index">View site</a>
+                <a class="nav-link rounded px-2" asp-area="" asp-controller="News" asp-action="Generate">AI draft</a>
+            </nav>
+        </aside>
+        <main class="flex-grow-1 p-3 p-md-4">
+            @if (TempData["Success"] is string success)
+            {
+                <div class="alert alert-success">@success</div>
+            }
+            @if (TempData["Error"] is string error)
+            {
+                <div class="alert alert-danger">@error</div>
+            }
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

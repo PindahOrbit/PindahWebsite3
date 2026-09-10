@@ -1,28 +1,24 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PindahWebsite3.Data;
 using PindahWebsite3.Models;
+using PindahWebsite3.Services;
 
 namespace PindahWebsite3.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly PindahWebsite3Context _context;
+    private readonly FeaturedNewsService _featuredNews;
 
-    public HomeController(PindahWebsite3Context context)
+    public HomeController(FeaturedNewsService featuredNews)
     {
-        _context = context;
+        _featuredNews = featuredNews;
     }
 
     public async Task<IActionResult> Index()
     {
         var model = new HomeIndexViewModel
         {
-            FeaturedNews = await _context.News
-                .OrderByDescending(n => n.DateCreated)
-                .Take(3)
-                .ToListAsync(),
+            FeaturedNews = await _featuredNews.GetLandingFeaturedAsync(),
             Modules = GetModuleCards()
         };
 

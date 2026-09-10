@@ -1,0 +1,85 @@
+@model List<News>
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+        <h1 class="h3 mb-1">CMS Dashboard</h1>
+        <p class="text-muted mb-0">Manage articles, featured slots, and site users.</p>
+    </div>
+    <a class="btn btn-primary btn-sm" asp-area="Admin" asp-controller="Articles" asp-action="Create">New article</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Published</div>
+                <div class="fs-3 fw-semibold">@ViewBag.PublishedCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Drafts</div>
+                <div class="fs-3 fw-semibold">@ViewBag.DraftCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Featured slots</div>
+                <div class="fs-3 fw-semibold">@ViewBag.FeaturedCount / @ViewBag.MaxFeatured</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Users</div>
+                <div class="fs-3 fw-semibold">@ViewBag.UserCount</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h5 mb-3">Recent articles</h2>
+<div class="table-responsive bg-white border rounded">
+    <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Heading</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Featured</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var article in Model)
+        {
+            <tr>
+                <td>@article.Heading</td>
+                <td class="small text-muted">@article.AuthorDisplayName</td>
+                <td><span class="badge text-bg-secondary">@article.Status</span></td>
+                <td>
+                    @if (article.IsFeatured)
+                    {
+                        <span class="badge text-bg-warning">#@article.FeaturedRank</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                </td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" asp-area="Admin" asp-controller="Articles" asp-action="Edit" asp-route-id="@article.Id">Edit</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

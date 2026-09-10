@@ -1,0 +1,38 @@
+@model AdminUserCreateModel
+@{
+    ViewData["Title"] = "Add user";
+}
+
+<nav aria-label="breadcrumb" class="mb-2">
+    <ol class="breadcrumb small mb-0">
+        <li class="breadcrumb-item"><a asp-action="Index">Users</a></li>
+        <li class="breadcrumb-item active">Add</li>
+    </ol>
+</nav>
+
+<h1 class="h3 mb-3">Add user</h1>
+
+<form asp-action="Create" method="post" class="bg-white border rounded p-3" style="max-width: 480px;">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" autocomplete="username" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control" autocomplete="new-password" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Role" class="form-label"></label>
+        <select asp-for="Role" class="form-select">
+            <option value="@CmsConstants.RoleContributor">Contributor</option>
+            <option value="@CmsConstants.RoleAdmin">Admin</option>
+        </select>
+    </div>
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Create user</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</form>

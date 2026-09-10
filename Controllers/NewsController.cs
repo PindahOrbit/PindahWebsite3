@@ -1,11 +1,12 @@
+using System.Security.Claims;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PindahWebsite3.Data;
 using PindahWebsite3.Models;
 using PindahWebsite3.Services;
-using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace PindahWebsite3.Controllers;
 
@@ -28,13 +29,16 @@ public class NewsController : Controller
     public async Task<IActionResult> Index()
     {
         var articles = await _context.News
-            .OrderByDescending(n => n.DateCreated)
+            .AsNoTracking()
+            .Include(n => n.Author)
+            .Where(n => n.Status == NewsStatus.Published)
+            .OrderByDescending(n => n.DatePublished ?? n.DateCreated)
             .ToListAsync();
-        
+
         ViewData["Title"] = "Enterprise Software News & Insights | Pindah Blog";
         ViewData["Description"] = "Latest insights on ERP, CRM, Manufacturing, Insurance, and digital transformation. Real-world case studies, ROI metrics, and implementation best practices for Zimbabwean businesses.";
         ViewData["Keywords"] = "enterprise software, ERP, CRM, digital transformation, Zimbabwe business, software implementation, case studies, ROI, business automation";
-        
+
         var structuredData = new Dictionary<string, object>
         {
             ["@context"] = "https://schema.org",
@@ -47,11 +51,11 @@ public class NewsController : Controller
                 ["@type"] = "BlogPosting",
                 ["headline"] = a.Heading,
                 ["url"] = Url.Action("Details", "News", new { slug = a.Slug }, Request.Scheme)!,
-                ["datePublished"] = a.DateCreated.ToString("yyyy-MM-ddTHH:mm:ssZ"),
+                ["datePublished"] = (a.DatePublished ?? a.DateCreated).ToString("yyyy-MM-ddTHH:mm:ssZ"),
                 ["author"] = new Dictionary<string, object>
                 {
-                    ["@type"] = "Organization",
-                    ["name"] = "Pindah Private Limited"
+                    ["@type"] = "Person",
+                    ["name"] = a.AuthorDisplayName
                 },
                 ["publisher"] = new Dictionary<string, object>
                 {
@@ -66,22 +70,22 @@ public class NewsController : Controller
                 ["image"] = a.CoverImageUrl ?? string.Empty
             }).ToArray()
         };
-        
-        ViewData["StructuredData"] = System.Text.Json.JsonSerializer.Serialize(structuredData, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-        
+
+        ViewData["StructuredData"] = JsonSerializer.Serialize(structuredData, new JsonSerializerOptions { WriteIndented = true });
+
         return View(articles);
     }
 
-    [Authorize]
+    [Authorize(Roles = $"{CmsConstants.RoleAdmin},{CmsConstants.RoleContributor}")]
     public IActionResult Generate()
     {
         ViewData["Title"] = "Generate News Article | Pindah Blog";
         ViewData["Description"] = "Create and publish enterprise software news articles with AI-assisted drafting.";
         ViewData["Robots"] = "noindex, nofollow";
-        return View(new NewsSaveModel());
+        return View(new NewsSaveModel { Status = NewsStatus.Published });
     }
 
-    [Authorize]
+    [Authorize(Roles = $"{CmsConstants.RoleAdmin},{CmsConstants.RoleContributor}")]
     [HttpGet]
     public async Task Stream([FromQuery] string field, [FromQuery] string? heading, CancellationToken cancellationToken)
     {
@@ -100,10 +104,10 @@ public class NewsController : Controller
             return;
         }
 
-        await StreamPromptAsync(prompt, field, cancellationToken);
+        await StreamPromptAsync(prompt, field ?? "unknown", cancellationToken);
     }
 
-    [Authorize]
+    [Authorize(Roles = $"{CmsConstants.RoleAdmin},{CmsConstants.RoleContributor}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task StreamConversation([FromBody] NewsConversationRequest request, CancellationToken cancellationToken)
@@ -183,7 +187,7 @@ public class NewsController : Controller
         }
     }
 
-    [Authorize]
+    [Authorize(Roles = $"{CmsConstants.RoleAdmin},{CmsConstants.RoleContributor}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Save([FromForm] NewsSaveModel model, CancellationToken cancellationToken)
@@ -192,6 +196,12 @@ public class NewsController : Controller
         {
             TempData["Error"] = "Please complete all required fields before publishing.";
             return View("Generate", model);
+        }
+
+        var authorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(authorId))
+        {
+            return Challenge();
         }
 
         var slug = string.IsNullOrWhiteSpace(model.Slug)
@@ -206,17 +216,30 @@ public class NewsController : Controller
             counter++;
         }
 
+        var now = DateTime.UtcNow;
+        var status = model.Status == NewsStatus.Draft ? NewsStatus.Draft : NewsStatus.Published;
+
         var news = new News
         {
             Heading = model.Heading.Trim(),
             Content = model.Content.Trim(),
             CoverImageUrl = model.CoverImageUrl.Trim(),
             Slug = slug,
-            DateCreated = DateTime.UtcNow
+            DateCreated = now,
+            DateModified = now,
+            DatePublished = status == NewsStatus.Published ? now : null,
+            Status = status,
+            AuthorId = authorId
         };
 
         _context.News.Add(news);
         await _context.SaveChangesAsync(cancellationToken);
+
+        if (status == NewsStatus.Draft)
+        {
+            TempData["Success"] = "Draft saved. Open CMS to edit or publish.";
+            return RedirectToAction("Edit", "Articles", new { area = "Admin", id = news.Id });
+        }
 
         return RedirectToAction(nameof(Details), new { slug });
     }
@@ -229,19 +252,30 @@ public class NewsController : Controller
         }
 
         var article = await _context.News
+            .AsNoTracking()
+            .Include(n => n.Author)
             .FirstOrDefaultAsync(n => n.Slug == slug);
 
         if (article == null)
         {
             return NotFound();
         }
-        
+
+        var canPreview = User.IsInRole(CmsConstants.RoleAdmin)
+            || (User.Identity?.IsAuthenticated == true
+                && article.AuthorId == User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        if (article.Status != NewsStatus.Published && !canPreview)
+        {
+            return NotFound();
+        }
+
         ViewData["Title"] = $"{article.Heading} | Pindah Blog";
         var plainDescription = StripHtml(article.Content);
         ViewData["Description"] = plainDescription.Length > 160 ? plainDescription[..157] + "..." : plainDescription;
         ViewData["Keywords"] = "enterprise software, ERP, CRM, digital transformation, Zimbabwe, business automation, case study";
         ViewData["CanonicalUrl"] = Url.Action("Details", "News", new { slug = article.Slug }, Request.Scheme);
-        
+
         var structuredData = new Dictionary<string, object>
         {
             ["@context"] = "https://schema.org",
@@ -249,13 +283,12 @@ public class NewsController : Controller
             ["headline"] = article.Heading,
             ["description"] = plainDescription.Length > 160 ? plainDescription[..157] + "..." : plainDescription,
             ["url"] = Url.Action("Details", "News", new { slug = article.Slug }, Request.Scheme)!,
-            ["datePublished"] = article.DateCreated.ToString("yyyy-MM-ddTHH:mm:ssZ"),
-            ["dateModified"] = article.DateCreated.ToString("yyyy-MM-ddTHH:mm:ssZ"),
+            ["datePublished"] = (article.DatePublished ?? article.DateCreated).ToString("yyyy-MM-ddTHH:mm:ssZ"),
+            ["dateModified"] = (article.DateModified ?? article.DateCreated).ToString("yyyy-MM-ddTHH:mm:ssZ"),
             ["author"] = new Dictionary<string, object>
             {
-                ["@type"] = "Organization",
-                ["name"] = "Pindah Private Limited",
-                ["url"] = "https://pindah.org"
+                ["@type"] = "Person",
+                ["name"] = article.AuthorDisplayName
             },
             ["publisher"] = new Dictionary<string, object>
             {
@@ -276,8 +309,8 @@ public class NewsController : Controller
                 ["@id"] = Url.Action("Details", "News", new { slug = article.Slug }, Request.Scheme)!
             }
         };
-        
-        ViewData["StructuredData"] = System.Text.Json.JsonSerializer.Serialize(structuredData, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+
+        ViewData["StructuredData"] = JsonSerializer.Serialize(structuredData, new JsonSerializerOptions { WriteIndented = true });
 
         return View(article);
     }

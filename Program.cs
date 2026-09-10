@@ -66,6 +66,13 @@ if (!builder.Environment.IsDevelopment())
 
 builder.Services.AddHttpClient<PindahWebsite3.Services.OllamaChatService>();
 builder.Services.AddScoped<PindahWebsite3.Services.SalesAgentService>();
+builder.Services.AddScoped<PindahWebsite3.Services.FeaturedNewsService>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
 
 
 // Quartz: Scheduled news generation (runs daily at 02:00 UTC)
@@ -124,6 +131,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "sop",

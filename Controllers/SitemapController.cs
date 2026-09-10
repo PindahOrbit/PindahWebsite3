@@ -98,6 +98,7 @@ public class SitemapController : Controller
             CreateUrlEntry($"{baseUrl}/basarx/inventory", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/basarx/refills", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/basarx/claims", now.AddDays(-1), "weekly", "0.7"),
+            CreateUrlEntry($"{baseUrl}/basarx/claims-processing-gateway", now.AddDays(-1), "weekly", "0.85"),
             CreateUrlEntry($"{baseUrl}/basarx/patients", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/basarx/integration", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/manufacturing", now.AddDays(-1), "weekly", "0.9"),
@@ -169,11 +170,12 @@ public class SitemapController : Controller
 
         var articles = await _context.News
             .AsNoTracking()
-            .Select(n => new { n.Slug, n.DateCreated })
+            .Where(n => n.Status == Models.NewsStatus.Published)
+            .Select(n => new { n.Slug, Date = n.DatePublished ?? n.DateCreated })
             .ToListAsync();
 
         urls.AddRange(articles.Select(a =>
-            CreateUrlEntry($"{baseUrl}/news/details/{a.Slug}", a.DateCreated, "monthly", "0.7")));
+            CreateUrlEntry($"{baseUrl}/news/details/{a.Slug}", a.Date, "monthly", "0.7")));
 
         var sitemap = new XElement(ns + "urlset",
             new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),

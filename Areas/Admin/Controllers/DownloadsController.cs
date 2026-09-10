@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using PindahWebsite3.Data;
 using PindahWebsite3.Models;
 
-namespace PindahWebsite3.Controllers;
+namespace PindahWebsite3.Areas.Admin.Controllers;
 
+[Area("Admin")]
+[Authorize(Roles = CmsConstants.RoleAdmin)]
 public class DownloadsController : Controller
 {
     private readonly PindahWebsite3Context _context;
@@ -18,31 +20,23 @@ public class DownloadsController : Controller
     public async Task<IActionResult> Index()
     {
         var downloads = await _context.Downloads
-            .AsNoTracking()
-            .Where(d => d.IsPublished)
             .OrderBy(d => d.SortOrder)
             .ThenByDescending(d => d.DateAdded)
             .ToListAsync();
-
-        ViewData["Title"] = "Downloads | Pindah Software & Mobile Apps";
-        ViewData["Description"] = "Download Pindah mobile apps, installers, and software resources. Android APK and other releases maintained by Pindah Private Limited.";
-        ViewData["Keywords"] = "Pindah downloads, mobile app, Android APK, software download, Zimbabwe enterprise software";
-
         return View(downloads);
     }
 
-    [Authorize(Roles = CmsConstants.RoleAdmin)]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(DownloadSaveModel model)
     {
         if (!ModelState.IsValid)
         {
-            TempData["DownloadError"] = "Could not add download. Check the form and try again.";
+            TempData["Error"] = "Could not add download. Check the form and try again.";
             return RedirectToAction(nameof(Index));
         }
 
-        var download = new Download
+        _context.Downloads.Add(new Download
         {
             Title = model.Title.Trim(),
             Description = model.Description?.Trim() ?? string.Empty,
@@ -52,16 +46,12 @@ public class DownloadsController : Controller
             IsPublished = model.IsPublished,
             SortOrder = model.SortOrder,
             DateAdded = DateTime.UtcNow
-        };
-
-        _context.Downloads.Add(download);
+        });
         await _context.SaveChangesAsync();
-
-        TempData["DownloadSuccess"] = $"Added \"{download.Title}\".";
+        TempData["Success"] = "Download added.";
         return RedirectToAction(nameof(Index));
     }
 
-    [Authorize(Roles = CmsConstants.RoleAdmin)]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
@@ -69,14 +59,13 @@ public class DownloadsController : Controller
         var download = await _context.Downloads.FindAsync(id);
         if (download == null)
         {
-            TempData["DownloadError"] = "Download not found.";
+            TempData["Error"] = "Download not found.";
             return RedirectToAction(nameof(Index));
         }
 
         _context.Downloads.Remove(download);
         await _context.SaveChangesAsync();
-
-        TempData["DownloadSuccess"] = $"Removed \"{download.Title}\".";
+        TempData["Success"] = $"Removed \"{download.Title}\".";
         return RedirectToAction(nameof(Index));
     }
 

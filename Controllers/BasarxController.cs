@@ -18,6 +18,9 @@ public class BasarxController : Controller
 
     public IActionResult Claims() => View();
 
+    [HttpGet("/basarx/claims-processing-gateway")]
+    public IActionResult ClaimsProcessingGateway() => View();
+
     public IActionResult Patients() => View();
 
     public IActionResult Integration() => View();
