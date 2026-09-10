@@ -28,6 +28,8 @@ public class SitemapController : Controller
             CreateUrlEntry($"{baseUrl}/privacy", now.AddDays(-7), "monthly", "0.3"),
             CreateUrlEntry($"{baseUrl}/sop", now, "weekly", "0.6"),
             CreateUrlEntry($"{baseUrl}/news", now.AddDays(-1), "daily", "0.8"),
+            CreateUrlEntry($"{baseUrl}/video-guides", now.AddDays(-1), "weekly", "0.7"),
+            CreateUrlEntry($"{baseUrl}/downloads", now.AddDays(-1), "weekly", "0.6"),
             CreateUrlEntry($"{baseUrl}/crm", now.AddDays(-1), "weekly", "0.9"),
             CreateUrlEntry($"{baseUrl}/crm/dashboard", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/crm/leads", now.AddDays(-1), "weekly", "0.7"),

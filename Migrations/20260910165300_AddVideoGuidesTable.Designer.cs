@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PindahWebsite3.Data;
 
@@ -10,9 +11,11 @@ using PindahWebsite3.Data;
 namespace PindahWebsite3.Migrations
 {
     [DbContext(typeof(PindahWebsite3Context))]
-    partial class PindahWebsite3ContextModelSnapshot : ModelSnapshot
+    [Migration("20260910165300_AddVideoGuidesTable")]
+    partial class AddVideoGuidesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.28");
@@ -505,3 +508,4 @@ namespace PindahWebsite3.Migrations
         }
     }
 }
+

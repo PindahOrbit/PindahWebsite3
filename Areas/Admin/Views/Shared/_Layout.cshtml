@@ -37,6 +37,8 @@
                        asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
                     <a class="nav-link rounded px-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Downloads" ? "active" : null)"
                        asp-area="Admin" asp-controller="Downloads" asp-action="Index">Downloads</a>
+                    <a class="nav-link rounded px-2 @(ViewContext.RouteData.Values["controller"]?.ToString() == "VideoGuides" ? "active" : null)"
+                       asp-area="Admin" asp-controller="VideoGuides" asp-action="Index">Video Guides</a>
                 }
                 <hr />
                 <a class="nav-link rounded px-2" asp-area="" asp-controller="Home" asp-action="Index">View site</a>

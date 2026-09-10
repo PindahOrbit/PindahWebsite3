@@ -1,0 +1,96 @@
+@model List<VideoGuide>
+@using PindahWebsite3.Services
+@{
+    ViewData["Title"] = "Video Guides";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h1 class="h3 mb-1">Video Guides</h1>
+        <p class="text-muted mb-0">Add YouTube links to publish walkthroughs on the public Video Guides page.</p>
+    </div>
+    <a class="btn btn-outline-secondary btn-sm" asp-area="" asp-controller="VideoGuides" asp-action="Index" target="_blank" rel="noopener">View public page</a>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <h2 class="h6">Add YouTube video</h2>
+        <form asp-action="Create" method="post" class="row g-3">
+            @Html.AntiForgeryToken()
+            <div class="col-md-6">
+                <label class="form-label small fw-semibold">Title</label>
+                <input type="text" name="Title" class="form-control form-control-sm" required maxlength="200" placeholder="e.g. BasaRx dispensing walkthrough" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label small fw-semibold">YouTube URL</label>
+                <input type="url" name="YouTubeUrl" class="form-control form-control-sm" required maxlength="500" placeholder="https://www.youtube.com/watch?v=..." />
+            </div>
+            <div class="col-12">
+                <label class="form-label small fw-semibold">Description / content notes</label>
+                <textarea name="Description" class="form-control form-control-sm" rows="2" maxlength="2000" placeholder="Short summary shown under the video"></textarea>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label small fw-semibold">Category</label>
+                <input type="text" name="Category" class="form-control form-control-sm" maxlength="100" placeholder="e.g. BasaRx, Frame, ERP" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label small fw-semibold">Sort order</label>
+                <input type="number" name="SortOrder" class="form-control form-control-sm" value="0" />
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <div class="form-check mb-2">
+                    <input type="hidden" name="IsPublished" value="false" />
+                    <input class="form-check-input" type="checkbox" name="IsPublished" value="true" id="videoPublished" checked />
+                    <label class="form-check-label small" for="videoPublished">Published</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-sm">Add video guide</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive bg-white border rounded">
+    <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Published</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (Model.Count == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-muted small py-4 text-center">No video guides yet. Paste a YouTube URL above.</td>
+            </tr>
+        }
+        @foreach (var item in Model)
+        {
+            var videoId = YouTubeUrlHelper.TryGetVideoId(item.YouTubeUrl, out var id) ? id : null;
+            <tr>
+                <td>
+                    <div class="fw-semibold">@item.Title</div>
+                    <div class="small text-muted text-truncate" style="max-width: 360px;">@item.YouTubeUrl</div>
+                    @if (videoId != null)
+                    {
+                        <div class="small text-muted">ID: @videoId</div>
+                    }
+                </td>
+                <td>@(string.IsNullOrWhiteSpace(item.Category) ? "—" : item.Category)</td>
+                <td>@(item.IsPublished ? "Yes" : "Draft")</td>
+                <td class="text-end">
+                    <form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('Remove this video guide?');">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
