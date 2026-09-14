@@ -15,7 +15,7 @@
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-body">
         <h2 class="h6">Add YouTube video</h2>
-        <form asp-action="Create" method="post" class="row g-3">
+        <form asp-area="Admin" asp-controller="VideoGuides" asp-action="Create" method="post" class="row g-3">
             @Html.AntiForgeryToken()
             <div class="col-md-6">
                 <label class="form-label small fw-semibold">Title</label>
@@ -81,9 +81,30 @@
                     }
                 </td>
                 <td>@(string.IsNullOrWhiteSpace(item.Category) ? "—" : item.Category)</td>
-                <td>@(item.IsPublished ? "Yes" : "Draft")</td>
-                <td class="text-end">
-                    <form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('Remove this video guide?');">
+                <td>
+                    @if (item.IsPublished)
+                    {
+                        <span class="badge text-bg-success">Published</span>
+                    }
+                    else
+                    {
+                        <span class="badge text-bg-secondary">Draft</span>
+                    }
+                </td>
+                <td class="text-end text-nowrap">
+                    <form asp-area="Admin" asp-controller="VideoGuides" asp-action="TogglePublished" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@item.Id" />
+                        @if (item.IsPublished)
+                        {
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">Unpublish</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-sm btn-primary">Publish</button>
+                        }
+                    </form>
+                    <form asp-area="Admin" asp-controller="VideoGuides" asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('Remove this video guide?');">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="id" value="@item.Id" />
                         <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>

@@ -13,9 +13,7 @@ public class VideoGuidesController : Controller
         _context = context;
     }
 
-    [Route("video-guides")]
-    [Route("VideoGuides")]
-    [Route("VideoGuides/Index")]
+    [HttpGet("/video-guides")]
     public async Task<IActionResult> Index()
     {
         var guides = await _context.VideoGuides

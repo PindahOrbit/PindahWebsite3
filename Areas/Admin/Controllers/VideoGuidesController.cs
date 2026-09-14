@@ -34,7 +34,7 @@ public class VideoGuidesController : Controller
         if (!ModelState.IsValid || !YouTubeUrlHelper.TryGetVideoId(model.YouTubeUrl, out _))
         {
             TempData["Error"] = "Could not add video. Paste a valid YouTube link (watch, youtu.be, shorts, or embed).";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAdminList();
         }
 
         _context.VideoGuides.Add(new VideoGuide
@@ -49,7 +49,26 @@ public class VideoGuidesController : Controller
         });
         await _context.SaveChangesAsync();
         TempData["Success"] = "Video guide added.";
-        return RedirectToAction(nameof(Index));
+        return RedirectToAdminList();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> TogglePublished(int id)
+    {
+        var guide = await _context.VideoGuides.FindAsync(id);
+        if (guide == null)
+        {
+            TempData["Error"] = "Video guide not found.";
+            return RedirectToAdminList();
+        }
+
+        guide.IsPublished = !guide.IsPublished;
+        await _context.SaveChangesAsync();
+        TempData["Success"] = guide.IsPublished
+            ? $"Published \"{guide.Title}\"."
+            : $"Moved \"{guide.Title}\" to draft.";
+        return RedirectToAdminList();
     }
 
     [HttpPost]
@@ -60,12 +79,15 @@ public class VideoGuidesController : Controller
         if (guide == null)
         {
             TempData["Error"] = "Video guide not found.";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAdminList();
         }
 
         _context.VideoGuides.Remove(guide);
         await _context.SaveChangesAsync();
         TempData["Success"] = $"Removed \"{guide.Title}\".";
-        return RedirectToAction(nameof(Index));
+        return RedirectToAdminList();
     }
+
+    private RedirectToActionResult RedirectToAdminList() =>
+        RedirectToAction(nameof(Index), "VideoGuides", new { area = "Admin" });
 }

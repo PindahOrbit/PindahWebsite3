@@ -230,6 +230,22 @@ namespace PindahWebsite3.Data
                     );
                     """);
             }
+
+            if (!await TableExistsAsync(context, "VideoGuides"))
+            {
+                await context.Database.ExecuteSqlRawAsync("""
+                    CREATE TABLE IF NOT EXISTS "VideoGuides" (
+                        "Id" INTEGER NOT NULL CONSTRAINT "PK_VideoGuides" PRIMARY KEY AUTOINCREMENT,
+                        "Title" TEXT NOT NULL,
+                        "Description" TEXT NOT NULL,
+                        "YouTubeUrl" TEXT NOT NULL,
+                        "Category" TEXT NOT NULL,
+                        "IsPublished" INTEGER NOT NULL,
+                        "SortOrder" INTEGER NOT NULL,
+                        "DateAdded" TEXT NOT NULL
+                    );
+                    """);
+            }
         }
 
         private static async Task TryAddColumnAsync(PindahWebsite3Context context, string table, string column, string definition)
