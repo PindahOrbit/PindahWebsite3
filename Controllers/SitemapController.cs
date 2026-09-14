@@ -10,10 +10,12 @@ public class SitemapController : Controller
 {
     private static readonly XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
     private readonly PindahWebsite3Context _context;
+    private readonly ProductGuideService _productGuides;
 
-    public SitemapController(PindahWebsite3Context context)
+    public SitemapController(PindahWebsite3Context context, ProductGuideService productGuides)
     {
         _context = context;
+        _productGuides = productGuides;
     }
 
     [Route("sitemap.xml")]
@@ -29,6 +31,7 @@ public class SitemapController : Controller
             CreateUrlEntry($"{baseUrl}/sop", now, "weekly", "0.6"),
             CreateUrlEntry($"{baseUrl}/news", now.AddDays(-1), "daily", "0.8"),
             CreateUrlEntry($"{baseUrl}/video-guides", now.AddDays(-1), "weekly", "0.7"),
+            CreateUrlEntry($"{baseUrl}/product-guides", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/downloads", now.AddDays(-1), "weekly", "0.6"),
             CreateUrlEntry($"{baseUrl}/crm", now.AddDays(-1), "weekly", "0.9"),
             CreateUrlEntry($"{baseUrl}/crm/dashboard", now.AddDays(-1), "weekly", "0.7"),
@@ -178,6 +181,9 @@ public class SitemapController : Controller
 
         urls.AddRange(articles.Select(a =>
             CreateUrlEntry($"{baseUrl}/news/details/{a.Slug}", a.Date, "monthly", "0.7")));
+
+        urls.AddRange(_productGuides.ListGuides().Select(g =>
+            CreateUrlEntry($"{baseUrl}/product-guides/{g.Slug}", g.LastModifiedUtc, "monthly", "0.65")));
 
         var sitemap = new XElement(ns + "urlset",
             new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
