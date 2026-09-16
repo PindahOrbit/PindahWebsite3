@@ -69,8 +69,9 @@ public class HomeController : Controller
             ImageUrl = "/images/heroes/hero-hospital.jpg",
             Title = "BasaRx — Pharmacy, EHR & Healthcare ERP",
             Description = "Dispensing, pharmacist verification, FEFO stock, refills, medical aid claims, and full electronic health records on one ERP — clinic, counter, and ledger together.",
-            LinkText = "Explore BasaRx",
-            Controller = "Basarx"
+            LinkText = "Open BasaRx",
+            Href = "https://basarx.com",
+            LinkRel = "noopener"
         },
         new ModuleCardViewModel
         {
