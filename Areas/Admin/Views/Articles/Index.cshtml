@@ -1,0 +1,81 @@
+@model List<News>
+@{
+    ViewData["Title"] = "Articles";
+    bool isAdmin = ViewBag.IsAdmin == true;
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h1 class="h3 mb-1">Articles</h1>
+        <p class="text-muted mb-0">
+            Featured on landing: @ViewBag.FeaturedCount / @ViewBag.MaxFeatured
+            @(isAdmin ? "" : " (your articles only)")
+        </p>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary btn-sm" asp-action="Index" asp-route-status="">All</a>
+        <a class="btn btn-outline-secondary btn-sm" asp-action="Index" asp-route-status="Draft">Drafts</a>
+        <a class="btn btn-outline-secondary btn-sm" asp-action="Index" asp-route-status="Published">Published</a>
+        <a class="btn btn-primary btn-sm" asp-action="Create">New article</a>
+    </div>
+</div>
+
+<div class="table-responsive bg-white border rounded">
+    <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Heading</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Featured</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Any())
+        {
+            <tr><td colspan="6" class="text-muted p-4">No articles yet.</td></tr>
+        }
+        @foreach (var article in Model)
+        {
+            <tr>
+                <td>
+                    <div class="fw-semibold">@article.Heading</div>
+                    <div class="small text-muted">/@article.Slug</div>
+                </td>
+                <td class="small">@article.AuthorDisplayName</td>
+                <td><span class="badge text-bg-secondary">@article.Status</span></td>
+                <td class="small text-muted">@article.DateCreated.ToString("yyyy-MM-dd")</td>
+                <td>
+                    @if (article.IsFeatured)
+                    {
+                        <span class="badge text-bg-warning">#@article.FeaturedRank</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                </td>
+                <td class="text-end text-nowrap">
+                    <a class="btn btn-sm btn-outline-secondary" asp-area="" asp-controller="News" asp-action="Details" asp-route-slug="@article.Slug" target="_blank">View</a>
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@article.Id">Edit</a>
+                    @if (isAdmin && article.Status == NewsStatus.Published)
+                    {
+                        <form asp-action="ToggleFeatured" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@article.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-warning">@(article.IsFeatured ? "Unfeature" : "Feature")</button>
+                        </form>
+                    }
+                    <form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('Delete this article?');">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@article.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

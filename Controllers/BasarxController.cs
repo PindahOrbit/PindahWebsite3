@@ -2,23 +2,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PindahWebsite3.Controllers;
 
+/// <summary>
+/// Legacy /basarx routes redirect to the dedicated BasaRx product site.
+/// </summary>
 public class BasarxController : Controller
 {
-    public IActionResult Index() => View();
+    private const string BasarxBase = "https://basarx.com";
 
-    public IActionResult Dashboard() => View();
+    public IActionResult Index() => RedirectPermanent($"{BasarxBase}/");
 
-    public IActionResult Dispensing() => View();
+    public IActionResult Dashboard() => RedirectPermanent($"{BasarxBase}/dashboard");
 
-    public IActionResult Ehr() => View();
+    public IActionResult Dispensing() => RedirectPermanent($"{BasarxBase}/dispensing");
 
-    public IActionResult Inventory() => View();
+    public IActionResult Ehr() => RedirectPermanent($"{BasarxBase}/ehr");
 
-    public IActionResult Refills() => View();
+    public IActionResult Inventory() => RedirectPermanent($"{BasarxBase}/inventory");
 
-    public IActionResult Claims() => View();
+    public IActionResult Refills() => RedirectPermanent($"{BasarxBase}/refills");
 
-    public IActionResult Patients() => View();
+    public IActionResult Claims() => RedirectPermanent($"{BasarxBase}/claims");
 
-    public IActionResult Integration() => View();
+    [HttpGet("/basarx/claims-processing-gateway")]
+    public IActionResult ClaimsProcessingGateway() =>
+        RedirectPermanent($"{BasarxBase}/claims-processing-gateway");
+
+    public IActionResult Patients() => RedirectPermanent($"{BasarxBase}/patients");
+
+    public IActionResult Integration() => RedirectPermanent($"{BasarxBase}/integration");
 }

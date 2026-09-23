@@ -2,7 +2,7 @@
   --home-section-gap: 1.75rem;
 }
 
-/* Home hero — midnight navy + electric blue + amber (distinct from BasaRx teal) */
+/* Home hero — midnight navy + electric blue (no amber) */
 .home-page .home-landing-banner.home-landing-banner--mesh {
   position: relative;
   overflow: hidden;
@@ -12,10 +12,10 @@
   color: #f5f8ff;
   border-bottom: none;
   background:
-    radial-gradient(ellipse 58% 72% at 100% -8%, rgba(251, 191, 36, 0.28) 0%, transparent 52%),
     radial-gradient(ellipse 55% 65% at -8% 100%, rgba(12, 99, 231, 0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 100% -5%, rgba(96, 165, 250, 0.28) 0%, transparent 52%),
     radial-gradient(ellipse 42% 48% at 58% 42%, rgba(37, 99, 235, 0.35) 0%, transparent 62%),
-    linear-gradient(135deg, #030712 0%, #0a1628 26%, #12264a 48%, #0c63e7 78%, #081428 100%);
+    linear-gradient(135deg, #030712 0%, #0a1628 28%, #12264a 52%, #0c63e7 82%, #081428 100%);
 }
 
 .home-page .home-hero-glow,
@@ -29,7 +29,7 @@
 
 .home-page .home-hero-glow {
   background:
-    linear-gradient(108deg, transparent 30%, rgba(147, 197, 253, 0.18) 46%, rgba(251, 191, 36, 0.12) 52%, transparent 68%);
+    linear-gradient(108deg, transparent 30%, rgba(147, 197, 253, 0.2) 48%, transparent 68%);
   mix-blend-mode: screen;
   animation: home-sheen 9s ease-in-out infinite;
 }
@@ -54,7 +54,7 @@
   left: -14%;
   width: min(36rem, 70vw);
   height: min(36rem, 70vw);
-  background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.5) 0%, transparent 70%);
   animation: home-drift-b 17s ease-in-out infinite;
 }
 
@@ -79,7 +79,7 @@
 
 .home-page .home-hero-nodes {
   opacity: 0.34;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='112' viewBox='0 0 112 112'%3E%3Cg fill='none' stroke='%2393c5fd' stroke-width='1.35'%3E%3Ccircle cx='22' cy='20' r='2.8'/%3E%3Ccircle cx='88' cy='28' r='2.2'/%3E%3Ccircle cx='64' cy='78' r='2.6'/%3E%3Ccircle cx='30' cy='86' r='1.8'/%3E%3Cpath d='M22 20l42 8M88 28l-24 50M30 86l34-8' stroke-opacity='0.55'/%3E%3Crect x='70' y='58' width='10' height='10' rx='1.5' stroke='%23fbbf24' stroke-opacity='0.75'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='112' viewBox='0 0 112 112'%3E%3Cg fill='none' stroke='%2393c5fd' stroke-width='1.35'%3E%3Ccircle cx='22' cy='20' r='2.8'/%3E%3Ccircle cx='88' cy='28' r='2.2'/%3E%3Ccircle cx='64' cy='78' r='2.6'/%3E%3Ccircle cx='30' cy='86' r='1.8'/%3E%3Cpath d='M22 20l42 8M88 28l-24 50M30 86l34-8' stroke-opacity='0.55'/%3E%3Crect x='70' y='58' width='10' height='10' rx='1.5' stroke='%2360a5fa' stroke-opacity='0.75'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 112px 112px;
   mask-image: linear-gradient(120deg, transparent 0%, #000 28%, #000 74%, transparent 100%);
 }
@@ -90,7 +90,7 @@
 }
 
 .home-page .home-landing-banner--mesh .home-landing-kicker {
-  color: #fcd34d;
+  color: #93c5fd;
   letter-spacing: 0.1em;
 }
 
@@ -139,31 +139,6 @@
   color: #020617;
 }
 
-.home-page .home-hero-visual {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.home-page .home-hero-illustration-wrap {
-  border: 1px solid rgba(147, 197, 253, 0.35);
-  background: rgba(2, 6, 23, 0.35);
-  overflow: hidden;
-  max-height: 18rem;
-  border-radius: 0.35rem;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(251, 191, 36, 0.12);
-}
-
-.home-page .home-hero-illustration {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-height: 18rem;
-  object-fit: cover;
-  object-position: center 28%;
-  opacity: 0.92;
-}
-
 .home-page .home-hero-panel {
   padding: 1rem 1.1rem;
   background: rgba(15, 23, 42, 0.55);
@@ -171,6 +146,17 @@
   border-radius: 0.35rem;
   backdrop-filter: blur(14px);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+  max-width: 48rem;
+}
+
+.home-page .home-hero-panel--inline {
+  margin-top: 0.25rem;
+}
+
+.home-page .home-hero-visual,
+.home-page .home-hero-illustration-wrap,
+.home-page .home-hero-illustration {
+  display: none !important;
 }
 
 .home-page .home-landing-banner--mesh .home-stat-value {

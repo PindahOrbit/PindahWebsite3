@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Large desktop installers (served from wwwroot/installers; copy from PindahBasaDesktopApp/installer/output)
+wwwroot/installers/*.exe

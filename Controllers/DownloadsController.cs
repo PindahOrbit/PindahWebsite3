@@ -17,14 +17,9 @@ public class DownloadsController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var query = _context.Downloads.AsQueryable();
-
-        if (User.Identity?.IsAuthenticated != true)
-        {
-            query = query.Where(d => d.IsPublished);
-        }
-
-        var downloads = await query
+        var downloads = await _context.Downloads
+            .AsNoTracking()
+            .Where(d => d.IsPublished)
             .OrderBy(d => d.SortOrder)
             .ThenByDescending(d => d.DateAdded)
             .ToListAsync();
@@ -36,7 +31,7 @@ public class DownloadsController : Controller
         return View(downloads);
     }
 
-    [Authorize]
+    [Authorize(Roles = CmsConstants.RoleAdmin)]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(DownloadSaveModel model)
@@ -66,7 +61,7 @@ public class DownloadsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [Authorize]
+    [Authorize(Roles = CmsConstants.RoleAdmin)]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)

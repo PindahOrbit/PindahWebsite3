@@ -1,0 +1,39 @@
+@model ProductGuideViewModel
+@{
+    ViewData["Title"] = ViewData["Title"] ?? Model.Title;
+    ViewData["OgType"] = "article";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/product-guides.css" asp-append-version="true" />
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a asp-controller="ProductGuides" asp-action="Index">Product Guides</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <p class="small text-muted mb-3">
+        Updated @Model.LastModifiedUtc.ToString("MMMM dd, yyyy") UTC · Read-only documentation
+        @if (Model.HasPdf && !string.IsNullOrWhiteSpace(Model.PdfUrl))
+        {
+            <span> · </span>
+            <a href="@Model.PdfUrl" download class="link-primary">Download PDF</a>
+        }
+    </p>
+
+    <article class="product-guide-document">
+        @Html.Raw(Model.Html)
+    </article>
+
+    <div class="mt-5 pt-3 border-top d-flex flex-wrap gap-2 align-items-center">
+        <a asp-controller="ProductGuides" asp-action="Index" class="btn btn-outline-secondary btn-sm">&larr; All product guides</a>
+        @if (Model.HasPdf && !string.IsNullOrWhiteSpace(Model.PdfUrl))
+        {
+            <a href="@Model.PdfUrl" download class="btn btn-outline-primary btn-sm">Download PDF</a>
+        }
+    </div>
+</div>

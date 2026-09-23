@@ -18,10 +18,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using PindahWebsite3;
 using PindahWebsite3.Areas.Identity.Data;
 
 namespace PindahWebsite3.Areas.Identity.Pages.Account
 {
+    /// <summary>Public self-registration is disabled. Admins create users in /Admin/Users.</summary>
+    [Authorize(Roles = CmsConstants.RoleAdmin)]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<PindahWebsite3User> _signInManager;

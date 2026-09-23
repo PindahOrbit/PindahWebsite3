@@ -202,13 +202,29 @@ public static class SeoLandingCatalog
         "Pharmacy Management Software Zimbabwe",
         "BasaRx · Pharmacy & EHR ERP",
         "Manage formulary, FEFO batches, expiry, dispensing, refills, and medical aid with BasaRx — pharmacy and electronic health records on Pindah's unified ERP.",
-        "/basarx",
-        "Explore BasaRx",
+        "https://basarx.com",
+        "Open BasaRx",
         "FEFO batch and expiry management",
         "Dispensing linked to patient EHR",
         "Refills, labels, and pharmacist verification",
         "Integrated billing and medical aid claims",
         "One ERP for clinic, counter, and ledger");
+
+    yield return Page(
+        "medical-aid-claims-switching-zimbabwe",
+        "Medical Aid Claims Switch Zimbabwe | Pindah Gateway",
+        "Real-time medical aid claims switching for Zimbabwe's healthcare providers and funders. Verify eligibility, submit claims, and settle electronically.",
+        "medical aid claims switching Zimbabwe, healthcare claims gateway Zimbabwe, claims switching platform Africa, medical aid eligibility verification Zimbabwe, electronic claims processing Zimbabwe, Pindah Claims Gateway",
+        "Medical Aid Claims Switching Zimbabwe",
+        "Pindah Claims Gateway",
+        "A neutral switch connecting healthcare providers and medical aid societies for real-time eligibility checks, electronic claims, and settlement — without replacing systems you already run.",
+        "https://basarx.com/claims-processing-gateway",
+        "Open Claims Gateway",
+        "Real-time eligibility verification",
+        "Electronic claim routing to funders",
+        "Faster settlement decisions",
+        "Works with existing provider systems",
+        "Built for Zimbabwe USD/ZiG workflows");
 
     yield return Page(
         "pos-system-zimbabwe",

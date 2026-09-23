@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using PindahWebsite3.Areas.Identity.Data;
 using PindahWebsite3.Data;
 using PindahWebsite3.Models;
 using PindahWebsite3.Services;
@@ -47,6 +50,8 @@ public class NewsGenerationJob : IJob
 
         using var scope = _serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<PindahWebsite3Context>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<PindahWebsite3User>>();
+        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
         var originalSlug = slug;
         var counter = 1;
@@ -56,13 +61,26 @@ public class NewsGenerationJob : IJob
             counter++;
         }
 
+        string? authorId = null;
+        var adminEmail = configuration["Admin:Email"];
+        if (!string.IsNullOrWhiteSpace(adminEmail))
+        {
+            var admin = await userManager.FindByEmailAsync(adminEmail);
+            authorId = admin?.Id;
+        }
+
+        var now = DateTime.UtcNow;
         var news = new News
         {
             Heading = heading,
             Content = content,
             Slug = slug,
-            DateCreated = DateTime.UtcNow,
-            CoverImageUrl = coverImageUrl
+            DateCreated = now,
+            DateModified = now,
+            DatePublished = now,
+            CoverImageUrl = coverImageUrl,
+            Status = NewsStatus.Published,
+            AuthorId = authorId
         };
 
         dbContext.News.Add(news);

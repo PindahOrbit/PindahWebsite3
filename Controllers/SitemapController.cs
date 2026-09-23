@@ -10,10 +10,12 @@ public class SitemapController : Controller
 {
     private static readonly XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
     private readonly PindahWebsite3Context _context;
+    private readonly ProductGuideService _productGuides;
 
-    public SitemapController(PindahWebsite3Context context)
+    public SitemapController(PindahWebsite3Context context, ProductGuideService productGuides)
     {
         _context = context;
+        _productGuides = productGuides;
     }
 
     [Route("sitemap.xml")]
@@ -28,6 +30,9 @@ public class SitemapController : Controller
             CreateUrlEntry($"{baseUrl}/privacy", now.AddDays(-7), "monthly", "0.3"),
             CreateUrlEntry($"{baseUrl}/sop", now, "weekly", "0.6"),
             CreateUrlEntry($"{baseUrl}/news", now.AddDays(-1), "daily", "0.8"),
+            CreateUrlEntry($"{baseUrl}/video-guides", now.AddDays(-1), "weekly", "0.7"),
+            CreateUrlEntry($"{baseUrl}/product-guides", now.AddDays(-1), "weekly", "0.7"),
+            CreateUrlEntry($"{baseUrl}/downloads", now.AddDays(-1), "weekly", "0.6"),
             CreateUrlEntry($"{baseUrl}/crm", now.AddDays(-1), "weekly", "0.9"),
             CreateUrlEntry($"{baseUrl}/crm/dashboard", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/crm/leads", now.AddDays(-1), "weekly", "0.7"),
@@ -91,15 +96,6 @@ public class SitemapController : Controller
             CreateUrlEntry($"{baseUrl}/hospital/pharmacy", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/hospital/radiology", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/hospital/billing", now.AddDays(-1), "weekly", "0.7"),
-            CreateUrlEntry($"{baseUrl}/basarx", now.AddDays(-1), "weekly", "0.9"),
-            CreateUrlEntry($"{baseUrl}/basarx/dashboard", now.AddDays(-1), "weekly", "0.7"),
-            CreateUrlEntry($"{baseUrl}/basarx/dispensing", now.AddDays(-1), "weekly", "0.7"),
-            CreateUrlEntry($"{baseUrl}/basarx/ehr", now.AddDays(-1), "weekly", "0.7"),
-            CreateUrlEntry($"{baseUrl}/basarx/inventory", now.AddDays(-1), "weekly", "0.7"),
-            CreateUrlEntry($"{baseUrl}/basarx/refills", now.AddDays(-1), "weekly", "0.7"),
-            CreateUrlEntry($"{baseUrl}/basarx/claims", now.AddDays(-1), "weekly", "0.7"),
-            CreateUrlEntry($"{baseUrl}/basarx/patients", now.AddDays(-1), "weekly", "0.7"),
-            CreateUrlEntry($"{baseUrl}/basarx/integration", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/manufacturing", now.AddDays(-1), "weekly", "0.9"),
             CreateUrlEntry($"{baseUrl}/manufacturing/dashboard", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/manufacturing/billofmaterials", now.AddDays(-1), "weekly", "0.7"),
@@ -169,11 +165,15 @@ public class SitemapController : Controller
 
         var articles = await _context.News
             .AsNoTracking()
-            .Select(n => new { n.Slug, n.DateCreated })
+            .Where(n => n.Status == Models.NewsStatus.Published)
+            .Select(n => new { n.Slug, Date = n.DatePublished ?? n.DateCreated })
             .ToListAsync();
 
         urls.AddRange(articles.Select(a =>
-            CreateUrlEntry($"{baseUrl}/news/details/{a.Slug}", a.DateCreated, "monthly", "0.7")));
+            CreateUrlEntry($"{baseUrl}/news/details/{a.Slug}", a.Date, "monthly", "0.7")));
+
+        urls.AddRange(_productGuides.ListGuides().Select(g =>
+            CreateUrlEntry($"{baseUrl}/product-guides/{g.Slug}", g.LastModifiedUtc, "monthly", "0.65")));
 
         var sitemap = new XElement(ns + "urlset",
             new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),

@@ -20,8 +20,17 @@ namespace PindahWebsite3.Data
         {
             await EnsureDatabaseSchemaAsync(context);
             await SeedAdminUserAsync(context, userManager, roleManager, configuration);
+
+            var adminEmail = configuration["Admin:Email"];
+            string? adminUserId = null;
+            if (!string.IsNullOrWhiteSpace(adminEmail))
+            {
+                var admin = await userManager.FindByEmailAsync(adminEmail);
+                adminUserId = admin?.Id;
+            }
+
             await SeedDownloadsAsync(context);
-            await SeedNewsAsync(context);
+            await SeedNewsAsync(context, adminUserId);
 
             if (!context.ZimsecCategories.Any())
             {
@@ -184,9 +193,25 @@ namespace PindahWebsite3.Data
                         "Content" TEXT NOT NULL,
                         "Slug" TEXT NOT NULL,
                         "DateCreated" TEXT NOT NULL,
-                        "CoverImageUrl" TEXT NOT NULL
+                        "DatePublished" TEXT NULL,
+                        "DateModified" TEXT NULL,
+                        "CoverImageUrl" TEXT NOT NULL,
+                        "Status" INTEGER NOT NULL DEFAULT 1,
+                        "IsFeatured" INTEGER NOT NULL DEFAULT 0,
+                        "FeaturedRank" INTEGER NULL,
+                        "AuthorId" TEXT NULL,
+                        CONSTRAINT "FK_News_AspNetUsers_AuthorId" FOREIGN KEY ("AuthorId") REFERENCES "AspNetUsers" ("Id") ON DELETE SET NULL
                     );
                     """);
+            }
+            else
+            {
+                await TryAddColumnAsync(context, "News", "DatePublished", "TEXT NULL");
+                await TryAddColumnAsync(context, "News", "DateModified", "TEXT NULL");
+                await TryAddColumnAsync(context, "News", "Status", "INTEGER NOT NULL DEFAULT 1");
+                await TryAddColumnAsync(context, "News", "IsFeatured", "INTEGER NOT NULL DEFAULT 0");
+                await TryAddColumnAsync(context, "News", "FeaturedRank", "INTEGER NULL");
+                await TryAddColumnAsync(context, "News", "AuthorId", "TEXT NULL");
             }
 
             if (!await TableExistsAsync(context, "Downloads"))
@@ -205,35 +230,128 @@ namespace PindahWebsite3.Data
                     );
                     """);
             }
+
+            if (!await TableExistsAsync(context, "VideoGuides"))
+            {
+                await context.Database.ExecuteSqlRawAsync("""
+                    CREATE TABLE IF NOT EXISTS "VideoGuides" (
+                        "Id" INTEGER NOT NULL CONSTRAINT "PK_VideoGuides" PRIMARY KEY AUTOINCREMENT,
+                        "Title" TEXT NOT NULL,
+                        "Description" TEXT NOT NULL,
+                        "YouTubeUrl" TEXT NOT NULL,
+                        "Category" TEXT NOT NULL,
+                        "IsPublished" INTEGER NOT NULL,
+                        "SortOrder" INTEGER NOT NULL,
+                        "DateAdded" TEXT NOT NULL
+                    );
+                    """);
+            }
+        }
+
+        private static async Task TryAddColumnAsync(PindahWebsite3Context context, string table, string column, string definition)
+        {
+            try
+            {
+#pragma warning disable EF1002
+                await context.Database.ExecuteSqlRawAsync(
+                    $"ALTER TABLE \"{table}\" ADD COLUMN \"{column}\" {definition};");
+#pragma warning restore EF1002
+            }
+            catch
+            {
+                // Column already exists.
+            }
         }
 
         private static async Task SeedDownloadsAsync(PindahWebsite3Context context)
         {
-            const string seedUrl = "https://storage.pindah.org/mobile-apps/app-release.apk";
-
-            if (await context.Downloads.AnyAsync(d => d.FileUrl == seedUrl))
+            var seeds = new[]
             {
-                return;
+                new Download
+                {
+                    Title = "Pindah Mobile App (Android)",
+                    Description = "Android release build of the Pindah mobile application.",
+                    FileUrl = "https://storage.pindah.org/mobile-apps/app-release.apk",
+                    FileType = "APK",
+                    Platform = "Android",
+                    IsPublished = true,
+                    SortOrder = 0,
+                    DateAdded = DateTime.UtcNow
+                },
+                new Download
+                {
+                    Title = "Pindah Basa Desktop (Windows)",
+                    Description = "Windows installer for Pindah Basa Desktop (includes local API and app shell).",
+                    FileUrl = "https://pindah.org/installers/PindahBasaDesktopSetup-1.0.0.exe",
+                    FileType = "EXE",
+                    Platform = "Windows",
+                    IsPublished = true,
+                    SortOrder = 1,
+                    DateAdded = DateTime.UtcNow
+                }
+            };
+
+            foreach (var seed in seeds)
+            {
+                if (await context.Downloads.AnyAsync(d => d.FileUrl == seed.FileUrl))
+                {
+                    continue;
+                }
+
+                context.Downloads.Add(seed);
             }
-
-            context.Downloads.Add(new Download
-            {
-                Title = "Pindah Mobile App (Android)",
-                Description = "Android release build of the Pindah mobile application.",
-                FileUrl = seedUrl,
-                FileType = "APK",
-                Platform = "Android",
-                IsPublished = true,
-                SortOrder = 0,
-                DateAdded = DateTime.UtcNow
-            });
 
             await context.SaveChangesAsync();
         }
 
-        private static async Task SeedNewsAsync(PindahWebsite3Context context)
+        private static async Task SeedNewsAsync(PindahWebsite3Context context, string? adminUserId)
         {
-            var articles = GetSeoSeedArticles();
+            // Backfill CMS fields on legacy rows.
+            var legacy = await context.News
+                .Where(n => n.DatePublished == null || n.AuthorId == null)
+                .ToListAsync();
+            foreach (var row in legacy)
+            {
+                if (row.DatePublished == null && row.Status == NewsStatus.Published)
+                {
+                    row.DatePublished = row.DateCreated;
+                }
+
+                if (row.AuthorId == null && !string.IsNullOrEmpty(adminUserId))
+                {
+                    row.AuthorId = adminUserId;
+                }
+
+                row.DateModified ??= row.DateCreated;
+            }
+
+            if (legacy.Count > 0)
+            {
+                await context.SaveChangesAsync();
+            }
+
+            // Ensure up to 5 seed articles are featured when none are curated yet.
+            if (!await context.News.AnyAsync(n => n.IsFeatured))
+            {
+                var toFeature = await context.News
+                    .Where(n => n.Status == NewsStatus.Published)
+                    .OrderByDescending(n => n.DatePublished ?? n.DateCreated)
+                    .Take(CmsConstants.MaxFeaturedSlots)
+                    .ToListAsync();
+
+                for (var i = 0; i < toFeature.Count; i++)
+                {
+                    toFeature[i].IsFeatured = true;
+                    toFeature[i].FeaturedRank = i + 1;
+                }
+
+                if (toFeature.Count > 0)
+                {
+                    await context.SaveChangesAsync();
+                }
+            }
+
+            var articles = GetSeoSeedArticles(adminUserId);
             var seedSlugs = articles.Select(a => a.Slug).ToList();
             var existingSlugs = await context.News
                 .Where(n => seedSlugs.Contains(n.Slug))
@@ -250,19 +368,23 @@ namespace PindahWebsite3.Data
             await context.SaveChangesAsync();
         }
 
-        private static List<News> GetSeoSeedArticles()
+        private static List<News> GetSeoSeedArticles(string? adminUserId)
         {
             var cover = "https://storage.pindah.org/IMAGES/pindah-blog-default.jpg";
             var now = DateTime.UtcNow;
 
-            return
-            [
+            var articles = new List<News>
+            {
                 new News
                 {
                     Heading = "How Zimbabwean Schools Can Digitize Fee Collection in USD and ZiG",
                     Slug = "zimbabwe-school-fee-collection-usd-zig",
                     CoverImageUrl = cover,
                     DateCreated = now.AddDays(-12),
+                    DatePublished = now.AddDays(-12),
+                    DateModified = now.AddDays(-12),
+                    Status = NewsStatus.Published,
+                    AuthorId = adminUserId,
                     Content = """
                         <p>School fees in Zimbabwe rarely stay in one currency. Parents pay in USD, ZiG, EcoCash, or bank transfer — often in the same term. Finance officers then reconcile statements by hand, chase arrears, and rebuild reports for boards and auditors.</p>
                         <h2>Why fee spreadsheets break at scale</h2>
@@ -419,7 +541,17 @@ namespace PindahWebsite3.Data
                         <p>Digitization succeeds when pastors and treasurers agree on workflows before data migration — start with membership cleansing and offering categories, then automate statements.</p>
                         """
                 }
-            ];
+            };
+
+            foreach (var article in articles)
+            {
+                article.Status = NewsStatus.Published;
+                article.AuthorId = adminUserId;
+                article.DatePublished ??= article.DateCreated;
+                article.DateModified ??= article.DateCreated;
+            }
+
+            return articles;
         }
 
         private static async Task<bool> TableExistsAsync(PindahWebsite3Context context, string tableName)

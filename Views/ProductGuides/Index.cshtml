@@ -1,0 +1,69 @@
+@model List<ProductGuideInfo>
+@{
+    ViewData["Title"] = ViewData["Title"] ?? "Product Guides | Pindah Basa User Manuals";
+    ViewData["OgType"] = "website";
+}
+
+<div class="container py-4">
+    <header class="mb-4">
+        <h1 class="mb-2">Product Guides</h1>
+        <p class="lead text-muted mb-0">
+            Read-only Pindah Basa module manuals — accounting, inventory, pharmacy, school, and more.
+            Hosted as markdown; displayed as formatted guides.
+        </p>
+    </header>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-3">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="product-guide-card h-100">
+                        <h2 class="h5 mb-2">
+                            <a asp-controller="ProductGuides" asp-action="Details" asp-route-slug="@item.Slug">@item.Title</a>
+                        </h2>
+                        @if (!string.IsNullOrWhiteSpace(item.Summary))
+                        {
+                            <p class="text-muted small mb-3">@item.Summary</p>
+                        }
+                        <p class="mb-0 small">
+                            <a asp-controller="ProductGuides" asp-action="Details" asp-route-slug="@item.Slug">Open guide</a>
+                            @if (item.HasPdf && !string.IsNullOrWhiteSpace(item.PdfUrl))
+                            {
+                                <span class="text-muted"> · </span>
+                                <a href="@item.PdfUrl" download>Download PDF</a>
+                            }
+                            <span class="text-muted"> · Updated @item.LastModifiedUtc.ToString("MMM dd, yyyy")</span>
+                        </p>
+                    </article>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            No product guides are available yet.
+        </div>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .product-guide-card {
+            padding: 1.1rem 1.15rem;
+            border: 1px solid var(--pindah-border, #e5e7eb);
+            border-radius: 0.35rem;
+            background: #fff;
+            height: 100%;
+        }
+        .product-guide-card a {
+            color: var(--pindah-accent, #0c63e7);
+            text-decoration: none;
+        }
+        .product-guide-card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+}

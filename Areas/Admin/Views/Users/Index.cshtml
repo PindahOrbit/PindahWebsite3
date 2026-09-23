@@ -1,0 +1,65 @@
+@model List<AdminUserListItem>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h1 class="h3 mb-1">Users</h1>
+        <p class="text-muted mb-0">Add, remove, and assign Admin or Contributor roles.</p>
+    </div>
+    <a class="btn btn-primary btn-sm" asp-action="Create">Add user</a>
+</div>
+
+<div class="table-responsive bg-white border rounded">
+    <table class="table table-hover mb-0 align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Articles</th>
+                <th>Confirmed</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    @foreach (var role in user.Roles)
+                    {
+                        <span class="badge text-bg-primary me-1">@role</span>
+                    }
+                </td>
+                <td>@user.ArticleCount</td>
+                <td>@(user.EmailConfirmed ? "Yes" : "No")</td>
+                <td class="text-end text-nowrap">
+                    <form asp-action="SetRole" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@user.Id" />
+                        <select name="role" class="form-select form-select-sm d-inline-block w-auto" onchange="this.form.submit()">
+                            @if (user.Roles.Contains(CmsConstants.RoleAdmin))
+                            {
+                                <option value="@CmsConstants.RoleContributor">Contributor</option>
+                                <option value="@CmsConstants.RoleAdmin" selected>Admin</option>
+                            }
+                            else
+                            {
+                                <option value="@CmsConstants.RoleContributor" selected>Contributor</option>
+                                <option value="@CmsConstants.RoleAdmin">Admin</option>
+                            }
+                        </select>
+                    </form>
+                    <form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('Delete this user? Their articles stay, with authorship cleared.');">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@user.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

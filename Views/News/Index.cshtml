@@ -12,9 +12,12 @@
             <h1 class="mb-2">Enterprise Software News & Insights</h1>
             <p class="lead text-muted mb-0">Real-world case studies, implementation insights, and ROI metrics for ERP, CRM, Manufacturing, Insurance, and digital transformation in Zimbabwe.</p>
         </div>
-        @if (User.Identity?.IsAuthenticated == true)
+        @if (User.IsInRole(CmsConstants.RoleAdmin) || User.IsInRole(CmsConstants.RoleContributor))
         {
-            <a asp-action="Generate" class="btn btn-primary btn-sm px-3 flex-shrink-0">Generate article</a>
+            <div class="d-flex gap-2 flex-shrink-0">
+                <a asp-area="Admin" asp-controller="Articles" asp-action="Index" class="btn btn-outline-primary btn-sm px-3">CMS</a>
+                <a asp-action="Generate" class="btn btn-primary btn-sm px-3">AI draft</a>
+            </div>
         }
     </header>
     
@@ -32,7 +35,13 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">@article.Heading</h5>
                             <p class="card-text text-muted small mb-2">
-                                <i class="bi bi-calendar"></i> @article.DateCreated.ToString("MMMM dd, yyyy")
+                                <i class="bi bi-calendar"></i> @((article.DatePublished ?? article.DateCreated).ToString("MMMM dd, yyyy"))
+                                <span class="mx-1">·</span>
+                                <i class="bi bi-person"></i> @article.AuthorDisplayName
+                                @if (article.IsFeatured)
+                                {
+                                    <span class="badge text-bg-warning ms-1">Featured</span>
+                                }
                             </p>
                             @{
                                 var excerpt = System.Text.RegularExpressions.Regex.Replace(article.Content, "<[^>]*>", " ");
