@@ -1,9 +1,15 @@
+<<<<<<< Updated upstream
 @model List<ProductGuideInfo>
+=======
+@model IReadOnlyList<PindahWebsite3.ViewModels.ProductGuideListItem>
+
+>>>>>>> Stashed changes
 @{
     ViewData["Title"] = ViewData["Title"] ?? "Product Guides | Pindah Basa User Manuals";
     ViewData["OgType"] = "website";
 }
 
+<<<<<<< Updated upstream
 <div class="container py-4">
     <header class="mb-4">
         <h1 class="mb-2">Product Guides</h1>
@@ -17,10 +23,43 @@
     {
         <div class="row g-3">
             @foreach (var item in Model)
+=======
+@section Styles {
+    <link rel="stylesheet" href="~/css/product-guides.css" asp-append-version="true" />
+}
+
+<section class="module-landing-banner product-guides-landing-banner mb-4" aria-label="Product Guides introduction">
+    <div class="pg-hero-glow" aria-hidden="true"></div>
+    <div class="pg-hero-orb pg-hero-orb--a" aria-hidden="true"></div>
+    <div class="pg-hero-orb pg-hero-orb--b" aria-hidden="true"></div>
+    <div class="pg-hero-orb pg-hero-orb--c" aria-hidden="true"></div>
+    <div class="pg-hero-grid" aria-hidden="true"></div>
+    <div class="pg-hero-pages" aria-hidden="true"></div>
+    <div class="container">
+        <p class="module-landing-kicker mb-2">Documentation · Pindah Basa</p>
+        <h1 class="module-landing-headline text-white mb-3">Product Guides</h1>
+        <p class="module-landing-dek mb-4 col-lg-10 px-0">
+            Read-only Pindah Basa module manuals — accounting, inventory, pharmacy, school, and more.
+            Hosted as markdown; displayed as formatted guides.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="#guide-library" class="btn btn-primary btn-sm">Browse guides</a>
+            <a href="/sop" class="btn btn-light btn-sm">Operations SOP</a>
+        </div>
+    </div>
+</section>
+
+<div class="container pb-4" id="guide-library">
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="row g-3">
+            @foreach (var guide in Model)
+>>>>>>> Stashed changes
             {
                 <div class="col-12 col-md-6 col-lg-4">
                     <article class="product-guide-card h-100">
                         <h2 class="h5 mb-2">
+<<<<<<< Updated upstream
                             <a asp-controller="ProductGuides" asp-action="Details" asp-route-slug="@item.Slug">@item.Title</a>
                         </h2>
                         @if (!string.IsNullOrWhiteSpace(item.Summary))
@@ -35,6 +74,19 @@
                                 <a href="@item.PdfUrl" download>Download PDF</a>
                             }
                             <span class="text-muted"> · Updated @item.LastModifiedUtc.ToString("MMM dd, yyyy")</span>
+=======
+                            <a asp-action="Guide" asp-route-slug="@guide.Slug">@guide.Title</a>
+                        </h2>
+                        <p class="text-muted small mb-3">@guide.Summary</p>
+                        <p class="mb-0 small">
+                            <a asp-action="Guide" asp-route-slug="@guide.Slug">Open guide</a>
+                            @if (guide.HasPdf)
+                            {
+                                <span class="text-muted"> · </span>
+                                <a href="/product-guides/@guide.Slug.pdf" download>Download PDF</a>
+                            }
+                            <span class="text-muted"> · Updated @guide.UpdatedUtc.ToString("MMM dd, yyyy")</span>
+>>>>>>> Stashed changes
                         </p>
                     </article>
                 </div>
@@ -44,6 +96,7 @@
     else
     {
         <div class="alert alert-info" role="alert">
+<<<<<<< Updated upstream
             No product guides are available yet.
         </div>
     }
@@ -67,3 +120,9 @@
         }
     </style>
 }
+=======
+            Product guides are being published. Check back shortly.
+        </div>
+    }
+</div>
+>>>>>>> Stashed changes

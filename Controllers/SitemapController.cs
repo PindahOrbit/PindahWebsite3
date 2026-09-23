@@ -29,6 +29,7 @@ public class SitemapController : Controller
             CreateUrlEntry($"{baseUrl}", now, "daily", "1.0"),
             CreateUrlEntry($"{baseUrl}/privacy", now.AddDays(-7), "monthly", "0.3"),
             CreateUrlEntry($"{baseUrl}/sop", now, "weekly", "0.6"),
+            CreateUrlEntry($"{baseUrl}/product-guides", now, "weekly", "0.8"),
             CreateUrlEntry($"{baseUrl}/news", now.AddDays(-1), "daily", "0.8"),
             CreateUrlEntry($"{baseUrl}/video-guides", now.AddDays(-1), "weekly", "0.7"),
             CreateUrlEntry($"{baseUrl}/product-guides", now.AddDays(-1), "weekly", "0.7"),
