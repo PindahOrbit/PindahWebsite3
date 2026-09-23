@@ -265,24 +265,41 @@ namespace PindahWebsite3.Data
 
         private static async Task SeedDownloadsAsync(PindahWebsite3Context context)
         {
-            const string seedUrl = "https://storage.pindah.org/mobile-apps/app-release.apk";
-
-            if (await context.Downloads.AnyAsync(d => d.FileUrl == seedUrl))
+            var seeds = new[]
             {
-                return;
+                new Download
+                {
+                    Title = "Pindah Mobile App (Android)",
+                    Description = "Android release build of the Pindah mobile application.",
+                    FileUrl = "https://storage.pindah.org/mobile-apps/app-release.apk",
+                    FileType = "APK",
+                    Platform = "Android",
+                    IsPublished = true,
+                    SortOrder = 0,
+                    DateAdded = DateTime.UtcNow
+                },
+                new Download
+                {
+                    Title = "Pindah Basa Desktop (Windows)",
+                    Description = "Windows installer for Pindah Basa Desktop (includes local API and app shell).",
+                    FileUrl = "https://pindah.org/installers/PindahBasaDesktopSetup-1.0.0.exe",
+                    FileType = "EXE",
+                    Platform = "Windows",
+                    IsPublished = true,
+                    SortOrder = 1,
+                    DateAdded = DateTime.UtcNow
+                }
+            };
+
+            foreach (var seed in seeds)
+            {
+                if (await context.Downloads.AnyAsync(d => d.FileUrl == seed.FileUrl))
+                {
+                    continue;
+                }
+
+                context.Downloads.Add(seed);
             }
-
-            context.Downloads.Add(new Download
-            {
-                Title = "Pindah Mobile App (Android)",
-                Description = "Android release build of the Pindah mobile application.",
-                FileUrl = seedUrl,
-                FileType = "APK",
-                Platform = "Android",
-                IsPublished = true,
-                SortOrder = 0,
-                DateAdded = DateTime.UtcNow
-            });
 
             await context.SaveChangesAsync();
         }
