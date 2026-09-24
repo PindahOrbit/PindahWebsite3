@@ -45,13 +45,9 @@ The module is built around your **chart of accounts**. Day-to-day operators use 
 
 Accounting works hand in hand with **Inventory & Stock**: every POS sale and invoice line reduces stock; stock receipts update costs that feed valuation. Pharmacy dispenses can collect payment through the same sales flow. Supplier bills and supplier payments live under **Procurement**, but appear under Purchases and Payables in the Accounting menu for convenience.
 
-<<<<<<< Updated upstream
-Document numbers (**INV-**, **JE-**, **ORD-**, **S-**, **RX-**, and similar) are assigned at **create** time. Status (`Draft`, `Pending`, `Paid`, …) is separate — numbers do not change when you verify or post.
-=======
 For the full **quote → order → receive → bill → pay → reconcile** purchasing cycle — and for day-to-day cash expenses — see [Purchasing and Accounting Workflow](#purchasing-and-accounting-workflow). That section maps common finance outcomes to the exact screens and journals in Pindah Basa.
 
 Document numbers (**INV-**, **JE-**, **ORD-**, **S-**, **RX-**, **RFQ-**, **PO-**, and similar) are assigned at **create** time. Status (`Draft`, `Pending`, `Paid`, …) is separate — numbers do not change when you verify or post.
->>>>>>> Stashed changes
 
 ---
 
@@ -63,11 +59,7 @@ Document numbers (**INV-**, **JE-**, **ORD-**, **S-**, **RX-**, **RFQ-**, **PO-*
 | **Bookkeepers** | Daily receive/spend money, invoice payments, bank import, trial balance |
 | **Cashiers and retail staff** | Point of Sale, receipt printing, sales register |
 | **Sales teams** | Quotations, invoices, customers, sales orders |
-<<<<<<< Updated upstream
-| **Procurement** | Purchase orders (commitment); supplier bills/payments in Procurement |
-=======
 | **Procurement** | RFQs, purchase orders; supplier bills/payments; supplier statements |
->>>>>>> Stashed changes
 | **Business owners** | Financial dashboard, statements, consolidation overview |
 
 ---
@@ -88,10 +80,7 @@ Document numbers (**INV-**, **JE-**, **ORD-**, **S-**, **RX-**, **RFQ-**, **PO-*
 - Point of Sale with till, customer, barcode, tax codes
 - Invoices with real `INV-` numbers at create, payments, credit notes, reverse, email, PDF
 - Quotations, sales orders, sales register, purchase orders
-<<<<<<< Updated upstream
-=======
 - Purchase-to-pay path: RFQ → PO → GRN → supplier bill → pay → supplier statement
->>>>>>> Stashed changes
 - Customers (clients), payment methods, banks, currencies (including RBZ rates)
 - Tax codes (VAT, withholding, excise, fees)
 - CoA templates and report layouts
@@ -114,12 +103,6 @@ Document numbers (**INV-**, **JE-**, **ORD-**, **S-**, **RX-**, **RFQ-**, **PO-*
 | **Hard close** | Period locked after close checklist passes |
 | **Consolidate** | Creates missing journals from sales/invoices already in the system |
 | **Invoice** | Customer bill — `INV-` number at create; GL posts when status leaves Draft |
-<<<<<<< Updated upstream
-| **Quotation** | Price offer before sale — no GL until invoiced |
-| **Purchase order** | Supplier commitment — no stock/GL until GRN / supplier invoice |
-| **POS sale** | Over-the-counter sale — stock + journals immediately |
-| **Settlement account** | GL account a payment method posts into (Cash, Ecocash, Paynow, …) |
-=======
 | **Quotation** | Customer price offer (Sales) — no GL until invoiced |
 | **RFQ** | Vendor request for quotation (Procurement) — competitive sourcing; no GL |
 | **Purchase order** | Supplier commitment — no stock/GL until GRN / supplier invoice |
@@ -129,7 +112,6 @@ Document numbers (**INV-**, **JE-**, **ORD-**, **S-**, **RX-**, **RFQ-**, **PO-*
 | **POS sale** | Over-the-counter sale — stock + journals immediately |
 | **Settlement account** | GL account a payment method posts into (Cash, Ecocash, Paynow, …) |
 | **Cash and Bank** | Receive Money, Spend Money, bank import — day-to-day cash book equivalent |
->>>>>>> Stashed changes
 | **Ledger health** | Diagnostics: unbalanced entries, unposted docs, AR/AP/inventory recon |
 
 ---
@@ -150,10 +132,7 @@ Open **Accounting** in the left sidebar of **Pindah Basa**.
 | **Purchases and Payables** | Purchase Orders | `/accounting/purchase-orders` |
 | | Supplier Bills | `/procurement/supplier-invoices` |
 | | Pay Suppliers | `/procurement/payments` |
-<<<<<<< Updated upstream
-=======
 | | Supplier Statement | `/stock/suppliers/statement` |
->>>>>>> Stashed changes
 | **Cash and Bank** | Receive Money | `/accounting/cash/receive-money` |
 | | Spend Money | `/accounting/cash/spend-money` |
 | | Import Bank Statement | `/accounting/cash/import-statement` |
@@ -176,8 +155,6 @@ Open **Accounting** in the left sidebar of **Pindah Basa**.
 | | CoA Templates | `/accounting/charts-of-accounts/coa-templates` |
 | | Report Layouts | `/accounting/charts-of-accounts/report-layouts` |
 
-<<<<<<< Updated upstream
-=======
 Related screens outside the Accounting sidebar (same organisation):
 
 | Area | Menu item | Route | Role in the books |
@@ -185,7 +162,6 @@ Related screens outside the Accounting sidebar (same organisation):
 | **Procurement** | RFQs | `/procurement/rfqs` | Vendor quotations — no GL |
 | **Stock** | Goods Receipts / Receive Stock | `/stock/orders`, `/stock/orders/receive` | GRN — inventory + GRNI |
 
->>>>>>> Stashed changes
 ---
 
 ## Table of Contents
@@ -207,19 +183,6 @@ Related screens outside the Accounting sidebar (same organisation):
 15. [Quotations](#quotations)
 16. [Sales Orders](#sales-orders)
 17. [Purchase Orders](#purchase-orders)
-<<<<<<< Updated upstream
-18. [Customers](#customers)
-19. [Currencies](#currencies)
-20. [Tax Codes](#tax-codes)
-21. [Trial Balance](#trial-balance)
-22. [Financial Statements](#financial-statements)
-23. [VAT Return](#vat-return)
-24. [Ledger Health](#ledger-health)
-25. [Consolidation and Month-End](#consolidation-and-month-end)
-26. [How Accounting Connects to Other Modules](#how-accounting-connects-to-other-modules)
-27. [Daily and Month-End Routines](#daily-and-month-end-routines)
-28. [Troubleshooting](#troubleshooting)
-=======
 18. [Purchasing and Accounting Workflow](#purchasing-and-accounting-workflow)
 19. [Customers](#customers)
 20. [Currencies](#currencies)
@@ -232,7 +195,6 @@ Related screens outside the Accounting sidebar (same organisation):
 27. [How Accounting Connects to Other Modules](#how-accounting-connects-to-other-modules)
 28. [Daily and Month-End Routines](#daily-and-month-end-routines)
 29. [Troubleshooting](#troubleshooting)
->>>>>>> Stashed changes
 
 ---
 
@@ -506,11 +468,8 @@ Close checklist typically checks: no open posting failures, suspense/rounding cl
 
 ## Receive Money and Spend Money
 
-<<<<<<< Updated upstream
-=======
 **Cash and Bank** is the day-to-day cash book in Pindah Basa: ad-hoc inflows and outflows that are not tied to a customer invoice or supplier bill. Posted lines appear in **Journals**, **General Ledger**, and **Account Activity** for the Cash system account (and for bank lines after statement import).
 
->>>>>>> Stashed changes
 ### Receive Money
 
 **Path:** Accounting → Cash and Bank → Receive Money
@@ -538,9 +497,6 @@ Click **Receive Money**. System debits **Cash** (system account) and credits the
 
 Same pattern for outflows: Expense Account, optional **Job Card** link for job profitability, Amount, Reference, Description → **Spend Money**.
 
-<<<<<<< Updated upstream
-**Use for:** rent, utilities, petty cash, expenses not tied to a purchase order.
-=======
 Posted effect: **Dr Expense / Cr Cash** (Cash system account).
 
 **Use for:** rent, utilities, petty cash, fuel, and other general expenditures that are not on a purchase order or supplier bill.
@@ -552,7 +508,6 @@ Posted effect: **Dr Expense / Cr Cash** (Cash system account).
 | Supplier invoice payment | Do **not** use Spend Money — use **Pay Suppliers** so AP clears correctly |
 
 To review cash movements like a cash book register: open **Account Activity** for the Cash (and bank) accounts, or filter **Journals** by date.
->>>>>>> Stashed changes
 
 ---
 
@@ -745,11 +700,6 @@ Order numbers look like `ORD-########`.
 3. View / Download PDF.
 4. Delete only while Draft.
 
-<<<<<<< Updated upstream
-A PO is a **commitment**, not a stock receipt. Goods receipt (GRN) and supplier invoice approval in Stock / Procurement create the GL (`GOODS_RECEIVED`, `SUPPLIER_INVOICE_APPROVED`).
-
-Supplier Bills and Pay Suppliers open the **Procurement** module from the same menu group.
-=======
 A PO is a **commitment**, not a stock receipt and not an accounts-payable entry. No inventory or AP journal posts when you create or send a PO.
 
 Next steps after the PO is issued:
@@ -885,7 +835,6 @@ Before live purchasing and payables:
 4. Fiscal period for the transaction date is open (or soft-closed with permission).
 
 Detail on RFQs, match tolerances, and procurement settings lives in the **Procurement** product guide. Stock receiving screens are covered in **Inventory & Stock**.
->>>>>>> Stashed changes
 
 ---
 
@@ -996,11 +945,7 @@ Common Fail examples and what to do:
 
 | Check | Typical fix |
 |-------|-------------|
-<<<<<<< Updated upstream
-| Unbalanced journal entries | Reverse/correct listed POS or journal numbers |
-=======
 | Unbalanced journal entries | Open the journal → **Repair balance** (appends Suspense plug), or Ledger Health **Fix** on ENTRY_BALANCE |
->>>>>>> Stashed changes
 | Trial balance imbalance | Same — find the difference amount |
 | Missing system keys | Map on System Accounts |
 | Unposted invoices | Click **Fix** (backfill journals) |
@@ -1039,13 +984,8 @@ From the Financial Dashboard **Consolidate** action:
 
 | Module | Connection |
 |--------|------------|
-<<<<<<< Updated upstream
-| **Stock** | POS/invoices reduce stock; GRN posts inventory; Issue/Transfer moves stock |
-| **Procurement** | Supplier invoices & payments post AP; linked from Purchases and Payables menu |
-=======
 | **Stock** | POS/invoices reduce stock; GRN posts inventory vs GRNI; Issue/Transfer moves stock |
 | **Procurement** | RFQs (no GL); supplier invoices & payments post AP; linked from Purchases and Payables |
->>>>>>> Stashed changes
 | **Pharmacy** | Dispense can create sales/invoices; same GL |
 | **HR & Payroll** | Payroll approve/pay posts expense and cash journals |
 | **Projects / Job Cards** | Spend Money can link expenses to jobs |
@@ -1059,14 +999,6 @@ From the Financial Dashboard **Consolidate** action:
 | Invoice (non-Draft) | Dr AR / Cr revenue (+ VAT); COGS as applicable |
 | Invoice payment | Dr cash/bank / Cr AR |
 | Credit note / reverse | Reverses sale economics |
-<<<<<<< Updated upstream
-| Goods received | Dr inventory / Cr GRNI |
-| Supplier invoice approved | Dr GRNI (+ VAT in) / Cr AP |
-| Supplier payment | Dr AP / Cr bank |
-| Tax return filed | Clears VAT output/input into control |
-| Year close | Closes P&L to retained earnings |
-
-=======
 | Goods received (GRN) | Dr inventory / Cr GRNI |
 | Supplier invoice approved | Dr GRNI (+ VAT in) / Cr AP |
 | Supplier payment | Dr AP / Cr cash/bank (payment method settlement) |
@@ -1077,47 +1009,30 @@ From the Financial Dashboard **Consolidate** action:
 
 For the step-by-step purchase-to-pay and cash-expense path, see [Purchasing and Accounting Workflow](#purchasing-and-accounting-workflow).
 
->>>>>>> Stashed changes
 ---
 
 ## Daily and Month-End Routines
 
 ### Daily
 
-<<<<<<< Updated upstream
-1. Open tills; process **POS** sales.
-2. Raise / send **invoices** and **quotations**.
-3. **Receive Money** / **Spend Money** for ad-hoc cash.
-4. Record invoice **payments**.
-5. Glance at **Dashboard** and any **Ledger Health** failures.
-=======
 1. Open tills; process **POS** sales (revenue + COGS + stock).
 2. Raise / send customer **invoices** and **quotations**.
 3. **Receive Money** / **Spend Money** for ad-hoc cash (cash-book style expenses and income).
 4. Record customer invoice **payments**.
 5. Receive goods (**GRN**), capture/approve **supplier bills**, and **Pay Suppliers** as deliveries and invoices arrive.
 6. Glance at **Dashboard**, **Supplier Statement** balances, and any **Ledger Health** failures.
->>>>>>> Stashed changes
 
 ### Weekly
 
 1. Import bank statements and map lines.
 2. Fulfil **sales orders**.
 3. Follow up overdue invoices (Overdue tab).
-<<<<<<< Updated upstream
-4. Review journals for unexpected drafts.
-
-### Month-end
-
-Follow [Consolidation and Month-End](#consolidation-and-month-end).
-=======
 4. Clear open **GRNI** by matching outstanding receipts to supplier bills.
 5. Review journals for unexpected drafts.
 
 ### Month-end
 
 Follow [Consolidation and Month-End](#consolidation-and-month-end). Confirm GRNI is zero or fully explained, and AP control agrees with Supplier Statement totals.
->>>>>>> Stashed changes
 
 ---
 
@@ -1128,24 +1043,17 @@ Follow [Consolidation and Month-End](#consolidation-and-month-end). Confirm GRNI
 | Cannot Receive/Spend Money | Map **CASH** on System Accounts |
 | POS shows “Select a till” / no products | Choose till; confirm stock at that location |
 | Invoice has no journal | Leave Draft → Pending/Paid, or run Consolidate / Ledger Health **Fix** |
-<<<<<<< Updated upstream
-| Trial balance does not balance | Ledger Health → unbalanced journals; reverse/repost |
-=======
 | Trial balance does not balance | Ledger Health → unbalanced journals; **Repair balance** or Fix ENTRY_BALANCE |
->>>>>>> Stashed changes
 | Period will not close | Open Checklist; clear drafts, failures, recon gaps |
 | Payment method fails health check | Set **Settles Into** account |
 | FX revaluation fails | Configure `FX_GAIN` and `FX_LOSS` |
 | Bank import commit fails | Ensure Cash system account + accounts assigned on lines |
 | Wrong invoice number expected later | Numbers are final at create — use Status, do not re-mint |
 | Supplier bill not in Accounting | Use Purchases → Supplier Bills (Procurement) |
-<<<<<<< Updated upstream
-=======
 | Expected AP on goods receipt, but only GRNI moved | Correct — AP posts when the **supplier invoice is approved**; see [Purchasing and Accounting Workflow](#purchasing-and-accounting-workflow) |
 | Cannot see what is owed to suppliers | Purchases → **Supplier Statement** |
 | Paid a supplier with Spend Money; AP still open | Reverse/correct and use **Pay Suppliers** instead |
 | Vendor quote posted to the ledger | Use Procurement → **RFQs** for supplier quotes; Accounting Quotations are for customers |
->>>>>>> Stashed changes
 
 ---
 

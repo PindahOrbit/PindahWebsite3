@@ -66,7 +66,6 @@ if (!builder.Environment.IsDevelopment())
 
 builder.Services.AddHttpClient<PindahWebsite3.Services.OllamaChatService>();
 builder.Services.AddScoped<PindahWebsite3.Services.SalesAgentService>();
-<<<<<<< Updated upstream
 builder.Services.AddScoped<PindahWebsite3.Services.FeaturedNewsService>();
 builder.Services.Configure<PindahWebsite3.Services.ProductGuidesOptions>(
     builder.Configuration.GetSection(PindahWebsite3.Services.ProductGuidesOptions.SectionName));
@@ -79,9 +78,6 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Identity/Account/Login";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
-=======
-builder.Services.AddSingleton<PindahWebsite3.Services.ProductGuideCatalog>();
->>>>>>> Stashed changes
 
 
 // Quartz: Scheduled news generation (runs daily at 02:00 UTC)

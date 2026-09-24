@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-/* Rendered product documentation markdown (/product-guides) */
-
-=======
-/* Product Guides — index cards + rendered markdown */
+/* Product Guides — index cards, hero banner, rendered markdown */
 
 .product-guide-card {
   padding: 1.1rem 1.15rem;
@@ -23,9 +19,6 @@
 
 /* Index hero — ink + indigo documentation mesh (distinct from Home navy / BasaRx teal) */
 .product-guides-landing-banner.module-landing-banner {
-  --pg-ink: #0c1222;
-  --pg-indigo: #3730a3;
-  --pg-sky: #38bdf8;
   overflow: hidden;
   min-height: clamp(18rem, 40vw, 24rem);
   padding: 3rem 0 2.75rem;
@@ -172,8 +165,7 @@
   }
 }
 
-/* Rendered product documentation markdown */
->>>>>>> Stashed changes
+/* Rendered product documentation markdown (/product-guides) */
 .product-guide-document {
   max-width: 52rem;
   font-size: 0.95rem;
